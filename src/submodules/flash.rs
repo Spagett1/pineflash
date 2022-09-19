@@ -1,4 +1,5 @@
 use std::fs::File;
+use std::{process::Command};
 use std::io::{Read, Cursor};
 use std::path::Path;
 
@@ -16,16 +17,20 @@ impl Flasher {
         
         let target_dir = Path::new(target.as_str()); // Doesn't need to exist
 
-        // The third parameter allows you to strip away toplevel directories.
-        // If `archive` contained a single folder, that folder's contents would be extracted instead.
         zip_extract::extract(Cursor::new(data), &target_dir, true).unwrap();
-            
 
-        // unzip(, target_path)
-        // let command = Command::new("/bin/sh")
-            // .arg("-c")
-            // .arg(com)
-            // .output()
-            // .expect("Failed to get amount of releases");
+        let firmware_path = format!("{}/{}_{}.dfu", target, self.iron, self.lang);
+        let flash_command = format!("dfu-util -D \"{}\"", firmware_path);
+        let command = Command::new("/bin/sh")
+            .arg("-c")
+            .arg(flash_command)
+            .output()
+            .expect("Could not flash soldering iron");
+        println!("{:?}", command);
+        let output: String = String::from_utf8(command.stdout).unwrap();
+        let output_err: String = String::from_utf8(command.stderr).unwrap();
+        println!("{}", output);
+        println!("{}", output_err)
+            
     }
 }

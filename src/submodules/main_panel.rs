@@ -30,6 +30,18 @@ impl Flasher {
                     );
                 });
             });
+            
+            menu::bar(ui, |ui|{
+                 egui::ComboBox::from_label("Select Your Language.")
+                    .selected_text(format!("{}", self.lang))
+                    .show_ui(ui, |ui| {
+                        for i in &self.langs {
+                            ui.selectable_value(&mut self.lang, i.clone(), i);
+                        }
+                    }
+                );               
+            });
+
             ui.vertical_centered(|ui|{
                 if ui.button("Flash!").clicked() {
                     Flasher::download(self);

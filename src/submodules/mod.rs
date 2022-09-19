@@ -3,5 +3,5 @@ mod top_panel;
 mod flash;
 mod download;
 mod versions;
-mod fonts;
-// mod urls;
+// fonts will be used for styling the final thing
+// mod fonts;
