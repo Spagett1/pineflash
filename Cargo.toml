@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 eframe = "0.19.0"
+zip-extract = "0.1.1"

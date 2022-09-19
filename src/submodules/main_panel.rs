@@ -32,8 +32,8 @@ impl Flasher {
             });
             ui.vertical_centered(|ui|{
                 if ui.button("Flash!").clicked() {
-                    Flasher::grab_urls(self);
                     Flasher::download(self);
+                    Flasher::flash(self);
                 };
             })
         });
