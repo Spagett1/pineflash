@@ -13,7 +13,7 @@ struct Flasher {
 impl Default for Flasher {
     fn default() -> Self {
         Self {
-            iron: "Pinecil".to_string(),
+            iron: "Pinecil V1".to_string(),
             version: "v2.19".to_string(),
             langs: vec!["EN".to_string(),"BE".to_string(),"BG".to_string(),"CS".to_string(),"DA".to_string(),"DE".to_string(),"EL".to_string(),"ES".to_string(),"FI".to_string(),"FR".to_string(),"HR".to_string(),"HU".to_string(),"IT".to_string(),"JA".to_string(),"LT".to_string(),"NL".to_string(),"NO".to_string(),"PL".to_string(),"PT".to_string(),"RO".to_string(),"RU".to_string(),"SK".to_string(),"SL".to_string(),"SR".to_string(),"SV".to_string(),"TR".to_string(),"UK".to_string(),"VI".to_string(),"YUE".to_string(),"ZH".to_string()],
             lang: "EN".to_string(),

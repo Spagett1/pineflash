@@ -20,17 +20,20 @@ impl Flasher {
         zip_extract::extract(Cursor::new(data), &target_dir, true).unwrap();
 
         let firmware_path = format!("{}/{}_{}.dfu", target, self.iron, self.lang);
-        let flash_command = format!("dfu-util -D \"{}\"", firmware_path);
-        let command = Command::new("/bin/sh")
-            .arg("-c")
-            .arg(flash_command)
-            .output()
-            .expect("Could not flash soldering iron");
-        println!("{:?}", command);
-        let output: String = String::from_utf8(command.stdout).unwrap();
-        let output_err: String = String::from_utf8(command.stderr).unwrap();
-        println!("{}", output);
-        println!("{}", output_err)
+
+        if self.iron == "Pinecil V1" {
+            let flash_command = format!("dfu-util -D \"{}\"", firmware_path);
+            let command = Command::new("/bin/sh")
+                .arg("-c")
+                .arg(flash_command)
+                .output()
+                .expect("Could not flash soldering iron");
+            println!("{:?}", command);
+            let output: String = String::from_utf8(command.stdout).unwrap();
+            let output_err: String = String::from_utf8(command.stderr).unwrap();
+            println!("{}", output);
+            println!("{}", output_err)
+        }
             
     }
 }

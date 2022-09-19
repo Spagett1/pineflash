@@ -10,9 +10,10 @@ impl Flasher {
                 egui::ComboBox::from_label("Select Your Soldering Iron.")
                     .selected_text(format!("{}", self.iron))
                     .show_ui(ui, |ui| {
-                        ui.selectable_value(&mut self.iron, "Pinecil".to_string(), "Pinecil");
-                        ui.selectable_value(&mut self.iron, "TS100".to_string(), "Ts100");
-                        ui.selectable_value(&mut self.iron, "TS80".to_string(), "Ts80");
+                        ui.selectable_value(&mut self.iron, "Pinecil V1".to_string(), "Pinecil V1");
+                        ui.selectable_value(&mut self.iron, "Pinecil V2".to_string(), "Pinecil V2 Work in Progress");
+                        ui.selectable_value(&mut self.iron, "TS100".to_string(), "Ts100 Work in Progress");
+                        ui.selectable_value(&mut self.iron, "TS80".to_string(), "Ts80 Work in Progress");
                     }
                 );
                 ui.with_layout(Layout::right_to_left(Align::TOP), |ui|{
