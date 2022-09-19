@@ -13,7 +13,7 @@ impl Default for Flasher {
     fn default() -> Self {
         Self {
             iron: "Pinecil".to_string(),
-            version: "Latest".to_string(),
+            version: "v2.19".to_string(),
             versions_checked: false,
             urls: vec![],
             vers: vec![],
