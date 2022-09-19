@@ -5,7 +5,6 @@ struct Flasher {
     iron: String,
     version: String,
     versions_checked: bool,
-    urls: Vec<String>,
     vers: Vec<String>,
     run_once: bool
 }
@@ -15,7 +14,6 @@ impl Default for Flasher {
             iron: "Pinecil".to_string(),
             version: "v2.19".to_string(),
             versions_checked: false,
-            urls: vec![],
             vers: vec![],
             run_once: true
         }
