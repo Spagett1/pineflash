@@ -1,16 +1,23 @@
 use eframe::egui;
 mod submodules;
+use tinyjson::JsonValue;
+use poll_promise::Promise;
 
-struct Flasher {
+struct FlasherConfig {
     iron: String,
     version: String,
     langs: Vec<String>,
     lang: String,
     versions_checked: bool,
     vers: Vec<String>,
-    run_once: bool
+    promise: Option<Promise<ehttp::Result<Vec<String>>>>,
+    run_once: bool,
 }
-impl Default for Flasher {
+struct Flasher {
+    config: FlasherConfig,
+}
+
+impl Default for FlasherConfig {
     fn default() -> Self {
         Self {
             iron: "Pinecil V1".to_string(),
@@ -19,20 +26,59 @@ impl Default for Flasher {
             lang: "EN".to_string(),
             versions_checked: false,
             vers: vec![],
-            run_once: true
+            run_once: true,
+            promise: None
         }
     }
 }
+
+impl Flasher {
+    fn new() -> Flasher {
+        let config: FlasherConfig = FlasherConfig::default();
+
+
+        Flasher { config }
+    }
+}
+
 impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
-         if self.run_once {
+        let promise = self.config.promise.get_or_insert_with(|| {
+                let ctx = ctx.clone();
+                let (sender, promise) = Promise::new();
+                let request = ehttp::Request::get("https://api.github.com/repos/Ralim/IronOS/releases");
+                ehttp::fetch(request, move | result: ehttp::Result<ehttp::Response>|{
+                    let json_string = String::from_utf8(result.unwrap().bytes).unwrap();
+                    let json: JsonValue = json_string.parse().unwrap();
+                    let mut results = vec![];
+                    for i in 0..5 {
+                        let version = json[i]["tag_name"].stringify().unwrap();
+                        results.push(version);
+                    }
+                    sender.send(Ok(results));
+                    ctx.request_repaint(); // wake up UI thread
+                });
+                promise
+            });
+        if !self.config.versions_checked {
+            match promise.ready() {
+                Some(Ok(vers)) => {
+                    self.config.vers = vers.clone();
+                    self.config.versions_checked = true;
+                },
+                Some(Err(_)) => (),
+                None => (),
+            }   
+        }
+        // if self.config.run_once {
             // Fonts will be used for styling later
             // Flasher::configure_fonts(ctx);
-        }       
+        // }       
+        // println!("{:?}", Flasher::default().vers);
         Flasher::render_header(self, ctx, frame);
         Flasher::render_main_windows(self, ctx);
 
-        self.run_once = false;
+        self.config.run_once = false;
     }
 }
 
@@ -42,7 +88,8 @@ fn main() {
     eframe::run_native(
         "Tangello Music",
         options,
-        Box::new(|_cc| Box::new(Flasher::default())),
-    );
+        Box::new(|_cc| Box::new(Flasher::new())));
+
+
 
 }

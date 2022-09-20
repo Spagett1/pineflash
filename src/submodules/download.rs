@@ -3,7 +3,7 @@ use crate::Flasher;
 
 impl Flasher {
     pub fn download (&mut self) {
-        let com = format!("curl -sL https://github.com/Ralim/IronOS/releases/download/{}/{}.zip -o /tmp/{}-{}.zip", self.version, self.iron, self.version, self.iron);
+        let com = format!("curl -sL https://github.com/Ralim/IronOS/releases/download/{}/{}.zip -o /tmp/{}-{}.zip", self.config.version, self.config.iron, self.config.version, self.config.iron);
         let command = Command::new("/bin/sh")
             .arg("-c")
             .arg(com)

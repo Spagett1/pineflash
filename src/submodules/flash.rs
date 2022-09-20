@@ -8,9 +8,9 @@ use crate::Flasher;
 
 impl Flasher {
     pub fn flash(&mut self) {
-        let path = format!("/tmp/{}-{}.zip", self.version, self.iron);
+        let path = format!("/tmp/{}-{}.zip", self.config.version, self.config.iron);
 
-        let target= format!("/tmp/{}-{}/", self.version, self.iron);
+        let target= format!("/tmp/{}-{}/", self.config.version, self.config.iron);
         let mut file = File::open(path).unwrap();
         let mut data = Vec::new();
         file.read_to_end(&mut data).unwrap();
@@ -19,9 +19,9 @@ impl Flasher {
 
         zip_extract::extract(Cursor::new(data), &target_dir, true).unwrap();
 
-        let firmware_path = format!("{}/{}_{}.dfu", target, self.iron, self.lang);
+        let firmware_path = format!("{}/{}_{}.dfu", target, self.config.iron, self.config.lang);
 
-        if self.iron == "Pinecil V1" {
+        if self.config.iron == "Pinecil V1" {
             let flash_command = format!("dfu-util -D \"{}\"", firmware_path);
             let command = Command::new("/bin/sh")
                 .arg("-c")
