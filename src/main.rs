@@ -126,10 +126,7 @@ fn main() {
 
     let options = eframe::NativeOptions::default();
     eframe::run_native(
-        "Tangello Music",
+        "PineFlash",
         options,
         Box::new(|_cc| Box::new(Flasher::new())));
-
-
-
 }

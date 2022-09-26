@@ -12,8 +12,6 @@ impl Flasher {
                     .show_ui(ui, |ui| {
                         ui.selectable_value(&mut self.config.iron, "Pinecil V1".to_string(), "Pinecil V1");
                         ui.selectable_value(&mut self.config.iron, "Pinecil V2".to_string(), "Pinecil V2 Work in Progress");
-                        ui.selectable_value(&mut self.config.iron, "TS100".to_string(), "Ts100 Work in Progress");
-                        ui.selectable_value(&mut self.config.iron, "TS80".to_string(), "Ts80 Work in Progress");
                     }
                 );
             if self.config.iron == "Pinecil V1" || self.config.iron == "Pinecil V2" {

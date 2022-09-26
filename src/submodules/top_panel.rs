@@ -7,7 +7,7 @@ impl Flasher {
         TopBottomPanel::top("top_panel").show(ctx, |ui| {
             menu::bar(ui, |ui|{
                 ui.vertical_centered(|ui|{
-                    ui.heading("IronOs Flasher")
+                    ui.heading("PineFlash")
                 });
                 ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
                     ui.add_space(5.);
