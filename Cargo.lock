@@ -772,17 +772,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ironos_flasher"
-version = "0.1.1"
-dependencies = [
- "eframe",
- "ehttp",
- "poll-promise",
- "tinyjson",
- "zip-extract",
-]
-
-[[package]]
 name = "jni"
 version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1162,6 +1151,17 @@ name = "pin-project-lite"
 version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e0a7ae3ac2f1173085d398531c705756c94a4c56843785df85a60c1a0afac116"
+
+[[package]]
+name = "pineflash"
+version = "0.1.1"
+dependencies = [
+ "eframe",
+ "ehttp",
+ "poll-promise",
+ "tinyjson",
+ "zip-extract",
+]
 
 [[package]]
 name = "pkg-config"
