@@ -1,5 +1,6 @@
 # PineFlash
 A tool to flash ironos to the pinecil and in the future other pine products
+![image](https://user-images.githubusercontent.com/77225642/192240698-96690330-82b2-42fe-beed-0ceb097d49b8.png)
 
 # Dependancies
 ```
