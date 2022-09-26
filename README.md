@@ -1,5 +1,5 @@
-# IronOs-Flasher
-A tool to flash ironos to the pinecil and ts irons 
+# PineFlash
+A tool to flash ironos to the pinecil and in the future other pine products
 
 # Dependancies
 ```
@@ -12,6 +12,5 @@ This will allow you to choose an iron and ironOs version and download it (curren
 
 It should flash to the pinecil however mine hasnt actually arrived yet so there is a possibility i have gotten it wrong there. 
 
-I also want to experiment with the async library in rust so the whole program doesnt freeze when downloading.
-
-Also some sort of toast while stuff is downloading, flashing, etc.
+# Todo
+Some sort of toast while stuff is downloading, flashing, etc.
