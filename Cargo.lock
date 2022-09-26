@@ -773,7 +773,7 @@ dependencies = [
 
 [[package]]
 name = "ironos_flasher"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "eframe",
  "ehttp",
