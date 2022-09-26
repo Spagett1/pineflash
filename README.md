@@ -8,6 +8,15 @@ dfu-util
 curl (you probably have this installed already)
 ```
 
+# Building
+Install all the dependancies in addition to rust 
+
+After that run 
+```
+cargo build --release
+```
+The resulting binary will be in `target/release/pineflash`, this can be moved into your path or just run as a portable executable
+
 # Current State
 This will allow you to choose an iron and ironOs version and download it (current path is /tmp)
 
