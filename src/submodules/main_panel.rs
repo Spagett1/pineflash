@@ -35,7 +35,7 @@ impl Flasher {
                             }
                         }
                     }
-                    egui::ComboBox::from_label("Specify Release Version")
+                    egui::ComboBox::from_label("Specify Version")
                         .selected_text(self.config.version.to_string())
                         .show_ui(ui, |ui| {
                             if self.config.versions_checked {
