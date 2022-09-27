@@ -1,4 +1,6 @@
-use eframe::{egui::{CentralPanel, self, menu, Layout}, emath::Align};
+use std::time::Duration;
+
+use eframe::{egui::{CentralPanel, self, menu, Layout, RichText}, emath::Align};
 
 use crate::Flasher;
 
@@ -14,10 +16,25 @@ impl Flasher {
                         ui.selectable_value(&mut self.config.iron, "Pinecil V2".to_string(), "Pinecil V2 Work in Progress");
                     }
                 );
-            if self.config.iron == "Pinecil V1" || self.config.iron == "Pinecil V2" {
-                self.config.int_name = "Pinecil".to_string();
-            }
+                if self.config.iron == "Pinecil V1" || self.config.iron == "Pinecil V2" {
+                    self.config.int_name = "Pinecil".to_string();
+                }
+
                 ui.with_layout(Layout::right_to_left(Align::TOP), |ui|{
+                    if ui.button(RichText::new("").size(17.)).clicked() {
+                        if let Some(path) = rfd::FileDialog::new().pick_file() {
+                            if !path.display().to_string().contains("dfu") {
+                                self.toasts.dismiss_all_toasts();
+                                self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                            } else {
+                                self.config.picked_path = Some(path.display().to_string());
+                                self.config.version = "Custom".to_string();
+                                self.toasts.dismiss_all_toasts();
+                                self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                                self.config.ready_to_flash = true;
+                            }
+                        }
+                    }
                     egui::ComboBox::from_label("Specify Release Version")
                         .selected_text(self.config.version.to_string())
                         .show_ui(ui, |ui| {
@@ -25,11 +42,13 @@ impl Flasher {
                                 for i in &self.config.vers {
                                     ui.selectable_value(&mut self.config.version, i.clone(), i);
                                 }
+                                ui.selectable_value(&mut self.config.version, "Custom".to_string(), "Custom");
                             }
 
                         }
                     );
                 });
+
             });
             
             menu::bar(ui, |ui|{
@@ -41,13 +60,29 @@ impl Flasher {
                         }
                     }
                 );               
+
+
             });
 
             ui.vertical_centered(|ui|{
-                if ui.button("Flash!").clicked() {
-                    self.config.download = true;
-                    // Flasher::download(self);
-                };
+
+                if self.config.version != "Custom".to_string() && self.config.version != "Select".to_string() {
+                    self.config.ready_to_flash = true
+                } else if self.config.version == "Custom".to_string() && self.config.picked_path == None {
+                    self.config.ready_to_flash = false
+                }
+
+                if !self.config.ready_to_flash {
+                    ui.add_enabled(false, egui::Button::new("Flash!")).on_disabled_hover_text("Select a firmware version or custom file");
+                } else {
+                    if ui.button("Flash!").clicked() {
+                        if self.config.version != "Custom".to_string() {
+                            self.config.download = true;
+                        } else {
+                            Flasher::flash(self)
+                        }
+                    };
+                }
             })
         });
     }
