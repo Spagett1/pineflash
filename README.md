@@ -37,6 +37,11 @@ This currently only supports unixlike operating systems (macos and linux), windo
 It should flash to the pinecil however mine hasnt actually arrived yet so there is a possibility i have gotten it wrong there. 
 
 # Todo
+
 ~~Some sort of toast while stuff is downloading, flashing, etc.~~
+
 Windows support
+
 V2 support 
+
+In app instructions for getting the pinecil ready to flash
