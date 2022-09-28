@@ -31,7 +31,7 @@ The resulting binary will be in `target/release/pineflash`, this can be moved in
 
 # Current State
 This will allow you to choose an iron and ironOs version and download it (current path is /tmp)
-
+This currently only supports unixlike operating systems (macos and linux), windows support is in the works.
 It should flash to the pinecil however mine hasnt actually arrived yet so there is a possibility i have gotten it wrong there. 
 
 # Todo
