@@ -5,7 +5,6 @@ A tool to flash ironos to the pinecil and in the future other pine products
 # Dependancies
 ```
 dfu-util
-curl (you probably have this installed already)
 ```
 # Installing
 Go over to https://github.com/Laar3/PineFlash/releases and download the latest version for your os
