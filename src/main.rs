@@ -1,8 +1,8 @@
 use std::{fs::File, io::Write, time::Duration};
 
-use eframe::{egui::{self}, CreationContext};
+use eframe::{egui::{self}, CreationContext, emath, Theme};
 mod submodules;
-use egui_notify::Toasts;
+use egui_notify::{Toasts, Anchor};
 use tinyjson::JsonValue;
 use poll_promise::Promise;
 
@@ -19,7 +19,8 @@ struct FlasherConfig {
     download: bool,
     download_notify: bool, 
     picked_path: Option<String>,
-    ready_to_flash: bool
+    ready_to_flash: bool,
+    logs: String
 }
 struct Flasher {
     config: FlasherConfig,
@@ -41,7 +42,8 @@ impl Default for FlasherConfig {
             download: false,
             download_notify: true,
             picked_path: None,
-            ready_to_flash: false
+            ready_to_flash: false,
+            logs: "".to_string()
         }
         
     }
@@ -52,7 +54,7 @@ impl Flasher {
         let config: FlasherConfig = FlasherConfig::default();
         Flasher::configure_fonts(&cc.egui_ctx);
 
-        let toasts = Toasts::default();
+        let toasts = Toasts::default().with_anchor(Anchor::BottomRight);
 
         Flasher { config, toasts }
     }
@@ -66,41 +68,50 @@ impl eframe::App for Flasher {
                 let (sender, promise) = Promise::new();
                 let request = ehttp::Request::get("https://api.github.com/repos/Ralim/IronOS/releases");
                 ehttp::fetch(request, move | result: ehttp::Result<ehttp::Response>|{
-                    let json_string = String::from_utf8(result.unwrap().bytes).unwrap();
-                    let json: JsonValue = json_string.parse().unwrap();
                     let mut results = vec![];
-                    for i in 0..5 {
-                        let version = json[i]["tag_name"].stringify().unwrap();
-                        let version = &version[1..version.len()-1];
-                        results.push(version.to_string());
+                    match result {
+                        Ok(_) => {
+                            let json_string = String::from_utf8(result.unwrap().bytes).unwrap();
+                            let json: JsonValue = json_string.parse().unwrap();
+                            for i in 0..5 {
+                                let version = json[i]["tag_name"].stringify().unwrap();
+                                let version = &version[1..version.len()-1];
+                                results.push(version.to_string());
+                            }
+                            sender.send(Ok(results));
+                        },
+                        Err(_) => {
+                            sender.send(Err("Error".to_string()));
+                        },
                     }
-                    sender.send(Ok(results));
+
                     ctx.request_repaint(); // wake up UI thread
                 });
                 promise
             });
-        self.toasts.show(ctx);
         if !self.config.versions_checked {
             match promise.ready() {
                 Some(Ok(vers)) => {
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Versions Found").set_duration(Some(Duration::from_secs(5))).set_closable(false);
                     self.config.vers = vers.clone();
+                    self.config.logs.push_str("Versions successfully fetched.\n");
                     self.config.versions_checked = true;
                 },
                 Some(Err(_)) => {
-                    self.toasts.dismiss_all_toasts();
-                    self.toasts.info("Something went wrong with fetching the versions, check your internet and try again.").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+                    self.toasts.dismiss_latest_toast();
+                    self.toasts.info("Could not find versions online,\ncheck your internet and try again").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+                    self.config.logs.push_str("Error fetching versions.\n");
+                    self.config.versions_checked = true;
                 },
-                None => {
-                    // self.toasts.info("Hello world!").;
-                },
+                None => (),
             }   
         }
         Flasher::render_header(self, ctx, frame);
         Flasher::render_main_windows(self, ctx);
 
         if self.config.download {
+            let ctx = ctx.clone();
             let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name);
             let path = format!("/tmp/{}-{}.zip", self.config.version, self.config.int_name);
             if self.config.download_notify {
@@ -124,6 +135,7 @@ impl eframe::App for Flasher {
                     // results.push(string);
 
                     sender.send(Ok(results));
+                    ctx.request_repaint(); // wake up UI thread
                 });
                 promise                                    
             });                                            
@@ -132,6 +144,7 @@ impl eframe::App for Flasher {
                 Some(Ok(_)) => {                               
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
+                    self.config.logs.push_str("Download Complete.\n");
                     self.toasts.info("Flashing.").set_duration(None).set_closable(false);
                     self.config.download = false;
                     Flasher::flash(self)
@@ -139,9 +152,11 @@ impl eframe::App for Flasher {
                 Some(Err(_)) => {
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Something went wrong with the download, check your internet and try again.").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+                    self.config.logs.push_str("Error downloading firmware.\n");
                     self.config.download = false;
                 },
-                None => (),
+                None => {
+                },
             }
         }
     }
@@ -149,7 +164,14 @@ impl eframe::App for Flasher {
 
 fn main() {
 
-    let options = eframe::NativeOptions::default();
+    let mut options = eframe::NativeOptions::default();
+    options.decorated = false;
+    options.resizable = false;
+    options.follow_system_theme = false;
+    options.default_theme = Theme::Dark;
+    options.initial_window_size = Some(emath::Vec2{ x: 300., y: 200. });
+    options.max_window_size = Some(emath::Vec2{ x: 300., y: 200. });
+    options.min_window_size = Some(emath::Vec2{ x: 300., y: 200. });
     eframe::run_native(
         "PineFlash",
         options,
