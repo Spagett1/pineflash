@@ -36,7 +36,7 @@ cargo build --release
 ```
 The resulting binary will be in `target/release/pineflash`, this can be moved into your path or just run as a portable executable
 
-Note, on linux root permissions are needed for dfu-util, in order to solve this you need to run the program with the following command if running from the terminal `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY`.
+Note, on linux root permissions are needed for dfu-util, in order to solve this you need to run the program with the following command if running from the terminal `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.
 
 This is already in the .desktop file so dont worry about that if you just use it.
 
