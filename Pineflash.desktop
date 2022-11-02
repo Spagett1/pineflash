@@ -1,20 +1,10 @@
 [Desktop Entry]
-Comment[en_AU]=
-Comment=
-Encoding=UTF-8
-Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash
-GenericName[en_AU]=
-GenericName=
-MimeType=
-Name[en_AU]="PineFlash"
-Name="PineFlash"
-Path=
-StartupNotify=true
+Name=PineFlash
+GenericName=PineFlash
+Comment=Tool to flash pine64 devices
+Exec=sh -c "pkexec env DISPLAY=\\$DISPLAY XAUTHORITY=\\$XAUTHORITY pineflash >> /dev/null"
+Icon=pine64logo
 Terminal=false
-TerminalOptions=
 Type=Application
-Version=1.0
-X-DBUS-ServiceName=
-X-DBUS-StartupType=
-X-KDE-SubstituteUID=false
-X-KDE-Username=
+Categories=System
+X-Desktop-File-Install-Version=0.26
