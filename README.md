@@ -22,11 +22,24 @@ Then to run
 # Building
 Install all the dependancies in addition to rust 
 
-After that run 
+# Linux
+On linux just run the `generic_linux_install.sh` file which will build and install Pineflash.
+
+## Arch based distro's
+You can use the PKGBUILD which will handle everything for you.
+Just run `makepkg -si` in the main directory to build and install it.
+
+
+# Manual build
 ```
 cargo build --release
 ```
 The resulting binary will be in `target/release/pineflash`, this can be moved into your path or just run as a portable executable
+
+Note, on linux root permissions are needed for dfu-util, in order to solve this you need to run the program with the following command if running from the terminal `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY`.
+
+This is already in the .desktop file so dont worry about that if you just use it.
+
 
 # Current State
 This will allow you to choose an iron and ironOs version and download it (current path is /tmp
