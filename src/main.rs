@@ -16,6 +16,8 @@ struct FlasherConfig {
     vers: Vec<String>,
     promise: Option<Promise<ehttp::Result<Vec<String>>>>,
     promise_2: Option<Promise<ehttp::Result<Vec<String>>>>,
+    promise_3: Option<Promise<ehttp::Result<Vec<String>>>>,
+    metadata_fetched: bool,
     download: bool,
     download_notify: bool, 
     picked_path: Option<String>,
@@ -39,6 +41,8 @@ impl Default for FlasherConfig {
             vers: vec![],
             promise: None,
             promise_2: None,
+            promise_3: None,
+            metadata_fetched: false,
             download: false,
             download_notify: true,
             picked_path: None,
@@ -52,7 +56,7 @@ impl Default for FlasherConfig {
 impl Flasher {
     fn new(cc: &CreationContext) -> Flasher {
         let config: FlasherConfig = FlasherConfig::default();
-        Flasher::configure_fonts(&cc.egui_ctx);
+        // Flasher::configure_fonts(&cc.egui_ctx);
 
         let toasts = Toasts::default().with_anchor(Anchor::BottomRight);
 
@@ -107,6 +111,8 @@ impl eframe::App for Flasher {
                 None => (),
             }   
         }
+
+
         Flasher::render_header(self, ctx, frame);
         Flasher::render_main_windows(self, ctx);
 
@@ -166,12 +172,12 @@ fn main() {
 
     let mut options = eframe::NativeOptions::default();
     options.decorated = false;
-    options.resizable = false;
+    options.resizable = true;
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
-    options.initial_window_size = Some(emath::Vec2{ x: 300., y: 200. });
-    options.max_window_size = Some(emath::Vec2{ x: 300., y: 200. });
-    options.min_window_size = Some(emath::Vec2{ x: 300., y: 200. });
+    options.initial_window_size = Some(emath::Vec2{ x: 300., y: 275. });
+    options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
+    options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(
         "PineFlash",
         options,

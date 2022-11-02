@@ -8,8 +8,9 @@ impl Flasher {
     pub fn render_main_windows(&mut self, ctx: &egui::Context) {
         CentralPanel::default().show(ctx, |ui|{
 
+            ui.label("Selecy your Soldering Iron");
             menu::bar(ui, |ui|{
-                egui::ComboBox::from_label("Select Your Soldering Iron.")
+                egui::ComboBox::from_label(" ")
                     .selected_text(self.config.iron.to_string())
                     .show_ui(ui, |ui| {
                         ui.selectable_value(&mut self.config.iron, "Pinecil V1".to_string(), "Pinecil V1");
@@ -19,27 +20,25 @@ impl Flasher {
                 if self.config.iron == "Pinecil V1" || self.config.iron == "Pinecil V2" {
                     self.config.int_name = "Pinecil".to_string();
                 }
-
-                // ui.with_layout(Layout::right_to_left(Align::TOP), |ui|{
-
-
-                // });
-
             });
-            menu::bar(ui, |ui|{
-                 egui::ComboBox::from_label("")
-                    .selected_text(self.config.version.to_string())
-                    .show_ui(ui, |ui| {
-                        if self.config.versions_checked {
-                            for i in &self.config.vers {
-                                ui.selectable_value(&mut self.config.version, i.clone(), i);
-                            }
-                            ui.selectable_value(&mut self.config.version, "Custom".to_string(), "Custom");
-                        }
 
-                    }
-                );           
-                if ui.button(RichText::new("").size(17.)).clicked() {
+            ui.label("Specify Version");
+            menu::bar(ui, |ui|{
+                ui.add_enabled_ui(self.config.versions_checked, |ui|{
+                    egui::ComboBox::from_label("")
+                        .selected_text(self.config.version.to_string())
+                        .show_ui(ui, |ui| {
+                            if self.config.versions_checked {
+                                for i in &self.config.vers {
+                                    ui.selectable_value(&mut self.config.version, i.clone(), i);
+                                }
+                                ui.selectable_value(&mut self.config.version, "Custom".to_string(), "Custom");
+                            }
+
+                        }
+                    );           
+                });
+                if ui.button(RichText::new("📁").size(17.)).clicked() {
                     if let Some(path) = rfd::FileDialog::new().pick_file() {
                         if !path.display().to_string().contains("dfu") {
                             self.toasts.dismiss_all_toasts();
@@ -55,21 +54,22 @@ impl Flasher {
                         }
                     }
                 }
-                ui.label("Specify Version");
             });
 
-            menu::bar(ui, |ui|{
-                 egui::ComboBox::from_label("Select Your Language.")
-                    .selected_text(self.config.lang.to_string())
-                    .show_ui(ui, |ui| {
-                        for i in &self.config.langs {
-                            ui.selectable_value(&mut self.config.lang, i.clone(), i);
+            ui.label("Select Your Language.");
+            ui.add_enabled_ui(false, |ui|{
+                menu::bar(ui, |ui|{
+                    egui::ComboBox::from_label("  ")
+                        .selected_text(self.config.lang.to_string())
+                        .show_ui(ui, |ui| {
+                            for i in &self.config.langs {
+                                ui.selectable_value(&mut self.config.lang, i.clone(), i);
+                            }
                         }
-                    }
-                );               
-
-
+                    );               
+                });
             });
+
 
             // ui.vertical_centered(|ui|{
 

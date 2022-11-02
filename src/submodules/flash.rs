@@ -1,7 +1,8 @@
 use std::fs::File;
+use std::process::Stdio;
 use std::time::Duration;
 use std::{process::Command};
-use std::io::{Read, Cursor};
+use std::io::{Read, Cursor, Write};
 use std::path::{Path, PathBuf};
 #[cfg(target_os = "macos")]
 static DFU_COMMAND: &str = "dfu-util";
@@ -66,14 +67,22 @@ impl Flasher {
         }
 
         if self.config.iron == "Pinecil V1" {
-            let command = Command::new(DFU_COMMAND)
-                .arg("-D")
-                .arg(firmware_path)
-                .output()
-                .expect("Could not flash soldering iron");
-            let output: String = String::from_utf8(command.stdout).unwrap();
-            let output_err: String = String::from_utf8(command.stderr).unwrap();
-            self.config.logs.push_str(format!("{}{}\n", output, output_err).as_str());
+            // let command = Command::new(DFU_COMMAND)
+                // .arg("-D")
+                // .arg(firmware_path)
+                // .output()
+                // .expect("Could not flash soldering iron");
+                let mut command = Command::new("doas")
+                    .arg("ls")
+                    .arg("/")
+                    .stdin(Stdio::from("test": &str))
+                    .spawn()
+                    .unwrap();
+                command.stdin.as_mut().unwrap().write("1L8R28a7&".as_bytes());
+                println!("{:?}", command.stdout.unwrap());
+            // let output: String = String::from_utf8(command.stdout).unwrap();
+            // let output_err: String = String::from_utf8(command.stderr).unwrap();
+            // self.config.logs.push_str(format!("{}{}\n", output, output_err).as_str());
         }
         self.toasts.dismiss_all_toasts();
         self.toasts.info("Flashing completed").set_duration(Some(Duration::from_secs(5))).set_closable(false);
