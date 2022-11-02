@@ -74,10 +74,14 @@ impl Flasher {
                 .expect("Could not flash soldering iron");
             let output: String = String::from_utf8(command.stdout).unwrap();
             let output_err: String = String::from_utf8(command.stderr).unwrap();
+            if command.status.success() {
+                self.toasts.info("Flashing completed").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+            } else {
+                self.toasts.info("Flashing failed, is your pinecil plugged in?").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+            }
             self.config.logs.push_str(format!("{}{}\n", output, output_err).as_str());
         }
         self.toasts.dismiss_all_toasts();
-        self.toasts.info("Flashing completed").set_duration(Some(Duration::from_secs(5))).set_closable(false);
             
     }
 }
