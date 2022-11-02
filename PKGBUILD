@@ -6,7 +6,7 @@ arch=('any')
 pkgdesc='A rust program for flashing pinecils and in the future other pine64 products.'
 url='https://github.com/Laar3/PineFlash'
 license=('GPLv2')
-depends=('polkit')
+depends=('polkit' 'dfu-util')
 makedepends=('rust')
 source=(PineFlash::git+https://github.com/Laar3/PineFlash#branch=main)
 md5sums=('SKIP')
