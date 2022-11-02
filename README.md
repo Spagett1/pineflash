@@ -34,7 +34,9 @@ Just run `makepkg -si` in the main directory to build and install it.
 ```
 cargo build --release
 ```
-The resulting binary will be in `target/release/pineflash`, this can be moved into your path or just run as a portable executable
+The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
+
+Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
 
 Note, on linux root permissions are needed for dfu-util, in order to solve this you need to run the program with the following command if running from the terminal `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.
 
