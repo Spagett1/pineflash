@@ -1,8 +1,7 @@
 use std::fs::File;
-use std::process::Stdio;
 use std::time::Duration;
 use std::{process::Command};
-use std::io::{Read, Cursor, Write};
+use std::io::{Read, Cursor};
 use std::path::{Path, PathBuf};
 #[cfg(target_os = "macos")]
 static DFU_COMMAND: &str = "dfu-util";
@@ -67,6 +66,7 @@ impl Flasher {
         }
 
         if self.config.iron == "Pinecil V1" {
+            self.config.logs.push_str(format!("Attempting to flash {}.", firmware_path).as_str());
             let command = Command::new(DFU_COMMAND)
                 .arg("-D")
                 .arg(firmware_path)

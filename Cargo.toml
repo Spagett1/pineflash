@@ -17,3 +17,6 @@ egui-notify = "0.4"
 rfd = "0.10.0"
 regex = "1.6.0"
 whoami = "1.2.3"
+serde = { version = "^1.0.145", features = ["derive"] }
+serde_json = { version="1.0.89" }
+

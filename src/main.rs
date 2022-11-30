@@ -1,28 +1,42 @@
-use std::{fs::File, io::Write, time::Duration};
+use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap};
 
 use eframe::{egui::{self}, CreationContext, emath, Theme};
 mod submodules;
 use egui_notify::{Toasts, Anchor};
+use serde::{Serialize, Deserialize};
 use tinyjson::JsonValue;
 use poll_promise::Promise;
+
+#[derive(Serialize, Deserialize)]
+struct Language {
+    language_code: String,
+    language_name: String,
+}
+
+#[derive(Serialize, Deserialize)]
+struct YourValue {
+    contents: HashMap<String, Language>,
+}
 
 struct FlasherConfig {
     iron: String,
     int_name: String,
     version: String,
-    langs: Vec<String>,
+    fancy_names: Vec<String>,
+    code_names: Vec<String>,
     lang: String,
     versions_checked: bool,
     vers: Vec<String>,
     promise: Option<Promise<ehttp::Result<Vec<String>>>>,
     promise_2: Option<Promise<ehttp::Result<Vec<String>>>>,
     promise_3: Option<Promise<ehttp::Result<Vec<String>>>>,
-    metadata_fetched: bool,
+    download_metadata: bool,
     download: bool,
     download_notify: bool, 
     picked_path: Option<String>,
     ready_to_flash: bool,
-    logs: String
+    logs: String,
+    json: String,
 }
 struct Flasher {
     config: FlasherConfig,
@@ -35,26 +49,28 @@ impl Default for FlasherConfig {
             iron: "Pinecil V1".to_string(),
             int_name: "Pinecil".to_string(),
             version: "Select".to_string(),
-            langs: vec!["EN".to_string(),"BE".to_string(),"BG".to_string(),"CS".to_string(),"DA".to_string(),"DE".to_string(),"EL".to_string(),"ES".to_string(),"FI".to_string(),"FR".to_string(),"HR".to_string(),"HU".to_string(),"IT".to_string(),"JA".to_string(),"LT".to_string(),"NL".to_string(),"NO".to_string(),"PL".to_string(),"PT".to_string(),"RO".to_string(),"RU".to_string(),"SK".to_string(),"SL".to_string(),"SR".to_string(),"SV".to_string(),"TR".to_string(),"UK".to_string(),"VI".to_string(),"YUE".to_string(),"ZH".to_string()],
+            fancy_names: vec![],
+            code_names: vec![],
             lang: "EN".to_string(),
             versions_checked: false,
             vers: vec![],
             promise: None,
             promise_2: None,
             promise_3: None,
-            metadata_fetched: false,
+            download_metadata: false,
             download: false,
             download_notify: true,
             picked_path: None,
             ready_to_flash: false,
-            logs: "".to_string()
+            logs: "".to_string(),
+            json: "".to_string()
         }
         
     }
 }
 
 impl Flasher {
-    fn new(cc: &CreationContext) -> Flasher {
+    fn new(_cc: &CreationContext) -> Flasher {
         let config: FlasherConfig = FlasherConfig::default();
         // Flasher::configure_fonts(&cc.egui_ctx);
 
@@ -101,6 +117,7 @@ impl eframe::App for Flasher {
                     self.config.vers = vers.clone();
                     self.config.logs.push_str("Versions successfully fetched.\n");
                     self.config.versions_checked = true;
+                    self.config.download_metadata = true;
                 },
                 Some(Err(_)) => {
                     self.toasts.dismiss_latest_toast();
@@ -160,6 +177,67 @@ impl eframe::App for Flasher {
                     self.toasts.info("Something went wrong with the download, check your internet and try again.").set_duration(Some(Duration::from_secs(5))).set_closable(false);
                     self.config.logs.push_str("Error downloading firmware.\n");
                     self.config.download = false;
+                },
+                None => {
+                },
+            }
+        }
+            if self.config.version !="Select".to_string() && self.config.download_metadata {
+                let ctx = ctx.clone();
+                let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
+                let path = format!("/tmp/metadata.zip");
+                if self.config.download_notify {
+                    self.toasts.info("Downloading Language information.").set_duration(None).set_closable(false);
+                    self.config.download_notify = false
+                }
+
+                let promise = self.config.promise_3.get_or_insert_with(|| {
+                    let (sender, promise) = Promise::new();
+                    let request = ehttp::Request::get(url);
+                    ehttp::fetch(request, move | result: ehttp::Result<ehttp::Response>|{
+                        let data = result.unwrap().bytes;
+                        let mut file = File::create(path).unwrap();
+
+                        if file.write_all(data.as_slice()).is_err() {
+                            println!("Could not write bytes to zip file");
+                        }
+                        let results = vec![];
+
+                        sender.send(Ok(results));
+                        ctx.request_repaint(); // wake up UI thread
+                    });
+                    promise                                    
+                });
+            match promise.ready() {                        
+                Some(Ok(_)) => {                               
+                    self.toasts.dismiss_all_toasts();
+                    self.config.logs.push_str("Download of Language Info Complete.\n");
+                    self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
+                    let path = PathBuf::from("/tmp/metadata.zip");
+                    let mut file = File::open(path).unwrap();
+                    let mut data = Vec::new();
+                    file.read_to_end(&mut data).unwrap();
+                    let target_dir = PathBuf::from("/tmp/metadata");
+                    zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
+                    self.config.json = fs::read_to_string(PathBuf::from("/tmp/metadata/Pinecil.json")).unwrap();
+
+
+                    let value = serde_json::from_str::<YourValue>(&self.config.json.as_str()).unwrap();
+                    self.config.logs.push_str("Extraction of Language Info Successful.\n");
+                    self.config.download_metadata = false;
+                    for i in value.contents {
+                        if !i.0.contains(".hex") {
+                            let a = i.1;
+                            self.config.fancy_names.push(a.language_name);
+                            self.config.code_names.push(a.language_code);
+                        }
+                    }
+                },
+                Some(Err(_)) => {
+                    self.toasts.dismiss_all_toasts();
+                    self.toasts.info("Something went wrong with the download, check your internet and try again.").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+                    self.config.logs.push_str("Error downloading metadata.\n");
+                    self.config.download_metadata = false
                 },
                 None => {
                 },

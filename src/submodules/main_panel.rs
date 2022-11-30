@@ -56,14 +56,21 @@ impl Flasher {
                 }
             });
 
+
             ui.label("Select Your Language.");
-            ui.add_enabled_ui(false, |ui|{
+            ui.add_enabled_ui({
+                if self.config.version != "Select".to_string() 
+                    && !self.config.download_metadata 
+                {true} else {false}
+            }, |ui|{
                 menu::bar(ui, |ui|{
                     egui::ComboBox::from_label("  ")
                         .selected_text(self.config.lang.to_string())
                         .show_ui(ui, |ui| {
-                            for i in &self.config.langs {
-                                ui.selectable_value(&mut self.config.lang, i.clone(), i);
+                            for i in 0..self.config.code_names.len() {
+                                let code_name = &self.config.code_names[i];
+                                let fancy_name = &self.config.fancy_names[i];
+                                ui.selectable_value(&mut self.config.lang, code_name.to_string(), fancy_name);
                             }
                         }
                     );               
