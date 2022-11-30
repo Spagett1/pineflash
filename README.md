@@ -16,8 +16,8 @@ Move the binary into your path
 `mv ./pineflash_linux_x86 /bin/pineflash`
 
 Then to run 
-
-`pineflash`
+`pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
+On macos simply running `pineflash` will work fine as it doesnt need root privledges. 
 
 # Building
 Install all the dependancies in addition to rust 
