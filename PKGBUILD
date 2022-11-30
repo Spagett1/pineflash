@@ -1,6 +1,6 @@
 #Maintainer: Kartoffel <laar@tutanota.com>
 pkgname=pineflash-git
-pkgver=0.2.1
+pkgver=0.2.2
 pkgrel=1
 arch=('any')
 pkgdesc='A rust program for flashing pinecils and in the future other pine64 products.'
