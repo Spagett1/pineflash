@@ -182,7 +182,7 @@ impl eframe::App for Flasher {
                 },
             }
         }
-            if self.config.version !="Select".to_string() && self.config.download_metadata {
+            if self.config.version != "Select".to_string() && self.config.version != "Custom".to_string() && self.config.download_metadata {
                 let ctx = ctx.clone();
                 let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
                 let path = format!("/tmp/metadata.zip");
