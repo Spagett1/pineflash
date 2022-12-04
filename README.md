@@ -7,13 +7,7 @@ A tool to flash ironos to the pinecil and in the future other pine products
 dfu-util
 ```
 # Installing
-Go over to https://github.com/Laar3/PineFlash/releases and download the latest version for your os
-
-Make sure `dfu-util` is installed
-
-Move the binary into your path 
-
-`mv ./pineflash_linux_x86 /bin/pineflash`
+Go over to https://github.com/Laar3/PineFlash/releases, intructions can be found there.
 
 Then to run 
 `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
