@@ -1,3 +1,5 @@
+## Disclaimer: This does not currently work on wayland.
+
 # PineFlash
 A tool to flash ironos to the pinecil and in the future other pine products
 ![image](https://user-images.githubusercontent.com/77225642/192753666-1a0e2bf4-b5ec-4e35-ba31-aae9043e04b9.png)
@@ -7,13 +9,7 @@ A tool to flash ironos to the pinecil and in the future other pine products
 dfu-util
 ```
 # Installing
-Go over to https://github.com/Laar3/PineFlash/releases and download the latest version for your os
-
-Make sure `dfu-util` is installed
-
-Move the binary into your path 
-
-`mv ./pineflash_linux_x86 /bin/pineflash`
+Go over to https://github.com/Laar3/PineFlash/releases, intructions can be found there.
 
 Then to run 
 `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
