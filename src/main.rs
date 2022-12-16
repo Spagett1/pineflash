@@ -250,12 +250,12 @@ fn main() {
 
     let mut options = eframe::NativeOptions::default();
     options.decorated = false;
-    options.resizable = true;
+    // options.resizable = true;
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
-    options.initial_window_size = Some(emath::Vec2{ x: 300., y: 275. });
+    // options.initial_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
-    options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
+    // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(
         "PineFlash",
         options,

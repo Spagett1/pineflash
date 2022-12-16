@@ -17,6 +17,5 @@ impl Flasher {
             .push("MesloLGS".to_owned());
     
         ctx.set_fonts(fonts);
-    
     }
 }
