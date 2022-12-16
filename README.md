@@ -7,7 +7,9 @@ A tool to flash ironos to the pinecil and in the future other pine products
 # Dependancies
 ```
 dfu-util
+polkit
 ```
+
 # Installing
 Go over to https://github.com/Laar3/PineFlash/releases, intructions can be found there.
 
@@ -16,12 +18,18 @@ Then to run
 On macos simply running `pineflash` will work fine as it doesnt need root privledges. 
 
 # Building
-Install all the dependancies in addition to rust 
+# Build Dependancies
+```
+git
+rust
+gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
+```
 
 # Linux
 On linux just run the `generic_linux_install.sh` file which will build and install Pineflash.
 
 ## Arch based distro's
+All dependancies will be handled by the PKGBUILD
 You can use the PKGBUILD which will handle everything for you.
 Just run `makepkg -si` in the main directory to build and install it.
 
