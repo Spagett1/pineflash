@@ -24,7 +24,7 @@ Install all the dependancies in addition to rust
 ```
 git
 rust
-gtk3/libgtk-3-dev (debian based distros)
+gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
 ```
 
 # Linux
