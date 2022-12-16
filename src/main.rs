@@ -82,6 +82,7 @@ impl Flasher {
 
 impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
+        ctx.set_pixels_per_point(2.00);
         let promise = self.config.promise.get_or_insert_with(|| {
                 let ctx = ctx.clone();
                 self.toasts.info("Fetching versions").set_duration(None).set_closable(false);
