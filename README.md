@@ -1,3 +1,6 @@
+![Custom badge](https://img.shields.io/endpoint?color=blue&style=plastic&url=https%3A%2F%2Fhits.dwyl.com%2Fspagett1%2Fpineflash.json)
+
+
 ## Disclaimer: This does not currently work on wayland.
 
 # PineFlash
