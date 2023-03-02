@@ -1,4 +1,5 @@
 ![Custom badge](https://img.shields.io/endpoint?color=blue&style=flat&url=https%3A%2F%2Fhits.dwyl.com%2Fspagett1%2Fpineflash.json)
+![GitHub all releases](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=blue)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash)
 
 
