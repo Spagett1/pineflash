@@ -1,7 +1,6 @@
-![HIT Count](https://img.shields.io/endpoint?color=blue&url=https%3A%2F%2Fhits.dwyl.com%2Fspagett1%2Fpineflash.json)
-![GitHub total downloads](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=blue)
-![GitHub release (latest)](https://img.shields.io/github/v/release/spagett1/pineflash)
-
+![Hit Counter](https://img.shields.io/endpoint?color=blue&style=flat-square&url=https%3A%2F%2Fhits.dwyl.com%2Fspagett1%2Fpineflash.json)
+![GitHub all downloads](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=blue&style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash)
 
 # PineFlash
 ![image](https://user-images.githubusercontent.com/77225642/192753666-1a0e2bf4-b5ec-4e35-ba31-aae9043e04b9.png)
