@@ -69,9 +69,9 @@ This is already in the .desktop file so dont worry about that if you just use it
 
 ~~Some sort of toast while stuff is downloading, flashing, etc.~~
 
-- [x] Windows support
-- [x] V2 support 
-- [x] In app instructions for getting the pinecil ready to flash
+- [ ] Windows support
+- [ ] V2 support 
+- [ ] In app instructions for getting the pinecil ready to flash
 
 ## References
 
