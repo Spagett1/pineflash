@@ -81,7 +81,7 @@ impl Flasher {
 }
 
 impl eframe::App for Flasher {
-    fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         ctx.set_pixels_per_point(2.00);
         let promise = self.config.promise.get_or_insert_with(|| {
                 let ctx = ctx.clone();
@@ -131,7 +131,7 @@ impl eframe::App for Flasher {
         }
 
 
-        Flasher::render_header(self, ctx, frame);
+        Flasher::render_header(self, ctx);
         Flasher::render_main_windows(self, ctx);
 
         if self.config.download {
@@ -250,12 +250,12 @@ impl eframe::App for Flasher {
 fn main() {
 
     let mut options = eframe::NativeOptions::default();
-    options.decorated = false;
-    // options.resizable = true;
+    options.decorated = true;
+    // options.resizable = false;
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
-    // options.initial_window_size = Some(emath::Vec2{ x: 300., y: 275. });
-    options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
+    options.initial_window_size = Some(emath::Vec2{ x: 460., y: 400. });
+    // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(
         "PineFlash",
