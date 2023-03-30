@@ -25,7 +25,7 @@ makedepends=(
 provides=("${_pkgname}=${pkgver}")
 conflicts=("${_pkgname}")
 source=(
-  "${_pkgname}::git+${url}.git#branch=main")
+  "${_pkgname}::git+${url}.git#branch=master")
 sha256sums=('SKIP')
 
 prepare() {
