@@ -11,15 +11,14 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 * Auto-fetch the newest stable release of IronOS firmware.
 * Allows manual installs of beta versions using a browse to file feature.
 * Selectable options: pick the iron type, pick the firmware version and download it (current path is /tmp).
-* This currently only supports unix-like operating systems (macos and linux), windows support is in the works.
 
 <br clear="both" />
 
 ## Supported Devices 
  | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/000000" /> Windows|
  | :-----: | :-----: | :-----: | :-----: |
- | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|   |
- | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |    |
+ | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| wip  |
+ | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
  <br>
 <br clear="both" />
 
