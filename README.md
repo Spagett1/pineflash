@@ -85,7 +85,10 @@ This is already in the .desktop file so dont worry about that if you just use it
 - [x] V2 support 
 - [ ] Windows support
 - [ ] In app instructions for getting the pinecil ready to flash
+## Feel like supporting me?
+Well you can buy me a coffee (or rather tea bags or something since i dont drink coffee ;))
 
+<a href="https://www.buymeacoffee.com/roniemartinez" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 ## References
 - [Blisp](https://github.com/pine64/blisp) - Backend for flashing Pinecil V2
 - [Dfu-util](https://dfu-util.sourceforge.net/) - Backend for flashing Pinecil V1
