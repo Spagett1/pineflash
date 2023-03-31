@@ -27,8 +27,8 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 ## Dependancies
 ```
-dfu-util - Pinecil V1 only
 polkit
+dfu-util - Pinecil V1 only
 ```
 
 ## Connect Pinecil to a PC
@@ -52,10 +52,15 @@ MacOS: simply running `pineflash` will work fine as it doesn't need root privled
 ## Build from code
 
 ### Build Dependancies
+
 ```
 git
 rust
+cmake
+polkit
+gut
 gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
+dfu-util # For pinecil v1 support. 
 ```
 
 ## Linux
