@@ -8,17 +8,19 @@ impl Flasher {
     pub fn render_main_windows(&mut self, ctx: &egui::Context) {
         CentralPanel::default().show(ctx, |ui|{
 
-            ui.label("Selecy your Soldering Iron");
+            ui.label("Select your Soldering Iron");
             menu::bar(ui, |ui|{
                 egui::ComboBox::from_label(" ")
                     .selected_text(self.config.iron.to_string())
                     .show_ui(ui, |ui| {
                         ui.selectable_value(&mut self.config.iron, "Pinecil V1".to_string(), "Pinecil V1");
-                        ui.selectable_value(&mut self.config.iron, "Pinecil V2".to_string(), "Pinecil V2 Work in Progress");
+                        ui.selectable_value(&mut self.config.iron, "Pinecil V2".to_string(), "Pinecil V2 W.I.P.");
                     }
                 );
-                if self.config.iron == "Pinecil V1" || self.config.iron == "Pinecil V2" {
+                if self.config.iron == "Pinecil V1"  {
                     self.config.int_name = "Pinecil".to_string();
+                } else if self.config.iron == "Pinecil V2" {
+                    self.config.int_name = "Pinecilv2".to_string();
                 }
             });
 

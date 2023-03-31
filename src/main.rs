@@ -220,7 +220,9 @@ impl eframe::App for Flasher {
                     file.read_to_end(&mut data).unwrap();
                     let target_dir = PathBuf::from("/tmp/metadata");
                     zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
-                    self.config.json = fs::read_to_string(PathBuf::from("/tmp/metadata/Pinecil.json")).unwrap();
+                    let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
+                    println!("{}", json_path);
+                    self.config.json = fs::read_to_string(PathBuf::from(json_path)).unwrap();
 
 
                     let value = serde_json::from_str::<YourValue>(&self.config.json.as_str()).unwrap();
