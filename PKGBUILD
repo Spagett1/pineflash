@@ -30,6 +30,7 @@ sha256sums=('SKIP')
 
 prepare() {
   cd "${srcdir}/${_pkgname}"
+  git submodule update --init --recursive
 
   CARGO_HOME="${srcdir}/cargo"
   export CARGO_HOME
@@ -61,6 +62,12 @@ build() {
   export CARGO_HOME
 
   cargo build --offline --release
+  pwd  
+  cd blisp
+
+  mkdir build && cd build
+  cmake -DBLISP_BUILD_CLI=ON ..
+  cmake --build .
 }
 
 # check() {
@@ -88,6 +95,7 @@ package() {
 
   ### Install manually:
   install -D -v -m755 "target/release/pineflash" "${pkgdir}/usr/bin/pineflash"
+  install -D -v -m755 "build/tools/blisp/blisp" "${pkgdir}/usr/bin/blisp"
 
   install -D -v -m644 "Pineflash.desktop" "${pkgdir}/usr/share/applications/Pineflash.desktop"
   install -D -v -m644 "assets/pine64logo.png" "${pkgdir}/usr/share/pixmaps/pine64logo.png"

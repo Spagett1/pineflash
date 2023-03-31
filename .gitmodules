@@ -1,0 +1,3 @@
+[submodule "blisp"]
+	path = blisp
+	url = https://github.com/pine64/blisp

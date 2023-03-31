@@ -47,8 +47,8 @@ struct Flasher {
 impl Default for FlasherConfig {
     fn default() -> Self {
         Self {
-            iron: "Pinecil V1".to_string(),
-            int_name: "Pinecil".to_string(),
+            iron: "Pinecil V2".to_string(),
+            int_name: "Pinecilv2".to_string(),
             version: "Select".to_string(),
             fancy_names: vec![],
             code_names: vec![],
@@ -223,6 +223,7 @@ impl eframe::App for Flasher {
                     let target_dir = PathBuf::from("/tmp/metadata");
                     zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
                     let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
+                    println!("{}", json_path);
                     self.config.json = fs::read_to_string(PathBuf::from(json_path)).unwrap();
 
 

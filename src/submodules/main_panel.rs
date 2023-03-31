@@ -84,7 +84,7 @@ impl Flasher {
 
             // ui.vertical_centered(|ui|{
 
-            if self.config.version != "Custom".to_string() && self.config.version != "Select".to_string() {
+            if self.config.version != "Custom".to_string() && self.config.version != "Select".to_string() && self.config.download == false {
                 self.config.ready_to_flash = true
             } else if self.config.version == "Custom".to_string() && self.config.picked_path == None {
                 self.config.ready_to_flash = false
