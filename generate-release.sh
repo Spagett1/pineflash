@@ -11,4 +11,5 @@ cd pkg/pineflash-git/
 rm .*
 zip -r pineflash_linux_x86_$ver.zip ./
 mv ./pineflash_linux_x86_$ver.zip ../../../release-out/
+cd ../../../
 rm -rf ./release-build
