@@ -1,9 +1,8 @@
-![Hit Counter](https://img.shields.io/endpoint?color=blue&style=flat-square&url=https%3A%2F%2Fhits.dwyl.com%2Fspagett1%2Fpineflash.json)
-![GitHub all downloads](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=blue&style=flat-square)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash?style=flat-square)
+<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSpagett1%2FPineFlash&count_bg=%23187BC0&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=true"/></a>
+![GitHub all downloads](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=187BC0&style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash?color=187BC0&style=flat-square)
 
 # PineFlash
-
 
 <img src="https://user-images.githubusercontent.com/77225642/192753666-1a0e2bf4-b5ec-4e35-ba31-aae9043e04b9.png" align="right" width="450" style="float:left">
 A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.  
@@ -19,8 +18,8 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 ## Supported Devices 
  | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/000000" /> Windows|
  | :-----: | :-----: | :-----: | :-----: |
- | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />|<img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />|   |
- | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />  |    |
+ | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|   |
+ | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |    |
  <br>
 <br clear="both" />
 
