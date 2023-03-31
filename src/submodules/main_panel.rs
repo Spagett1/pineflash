@@ -42,7 +42,9 @@ impl Flasher {
                 });
                 if ui.button(RichText::new("📁").size(17.)).clicked() {
                     if let Some(path) = rfd::FileDialog::new().pick_file() {
-                        if !path.display().to_string().contains("dfu") {
+                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
+                            !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
+                        {
                             self.toasts.dismiss_all_toasts();
                             self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                             self.config.logs.push_str("Incorrect filetype selected.\n");

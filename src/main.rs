@@ -32,8 +32,9 @@ struct FlasherConfig {
     promise_3: Option<Promise<ehttp::Result<Vec<String>>>>,
     download_metadata: bool,
     download: bool,
-    download_notify: bool, 
     picked_path: Option<String>,
+    download_notify: bool, 
+    download_firm_notify: bool, 
     ready_to_flash: bool,
     logs: String,
     json: String,
@@ -60,6 +61,7 @@ impl Default for FlasherConfig {
             download_metadata: false,
             download: false,
             download_notify: true,
+            download_firm_notify: true, 
             picked_path: None,
             ready_to_flash: false,
             logs: "".to_string(),
@@ -138,9 +140,9 @@ impl eframe::App for Flasher {
             let ctx = ctx.clone();
             let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name);
             let path = format!("/tmp/{}-{}.zip", self.config.version, self.config.int_name);
-            if self.config.download_notify {
+            if self.config.download_firm_notify {
                 self.toasts.info("Downloading").set_duration(None).set_closable(false);
-                self.config.download_notify = false
+                self.config.download_firm_notify = false
             }
 
             let promise = self.config.promise_2.get_or_insert_with(|| {
@@ -221,7 +223,6 @@ impl eframe::App for Flasher {
                     let target_dir = PathBuf::from("/tmp/metadata");
                     zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
                     let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
-                    println!("{}", json_path);
                     self.config.json = fs::read_to_string(PathBuf::from(json_path)).unwrap();
 
 
