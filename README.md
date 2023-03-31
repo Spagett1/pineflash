@@ -3,16 +3,28 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash?style=flat-square)
 
 # PineFlash
-![image](https://user-images.githubusercontent.com/77225642/192753666-1a0e2bf4-b5ec-4e35-ba31-aae9043e04b9.png)
 
-A tool to flash ironos to the Pinecil V1 and in the future other pine products.
 
-## Platforms
-- [x] Linux
-- [x] MacOS
+<img src="https://user-images.githubusercontent.com/77225642/192753666-1a0e2bf4-b5ec-4e35-ba31-aae9043e04b9.png" align="right" width="450" style="float:left">
+A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.  
 
-## Devices
-- [x] Pinecil V1
+## Features
+* Auto-fetch the newest stable release of IronOS firmware.
+* Allows manual installs of beta versions using a browse to file feature.
+* Selectable options: pick the iron type, pick the firmware version and download it (current path is /tmp).
+* This currently only supports unix-like operating systems (macos and linux), windows support is in the works.
+
+<br clear="both" />
+
+## Supported Devices 
+ | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/000000" /> Windows|
+ | :-----: | :-----: | :-----: | :-----: |
+ | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />|<img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />|   |
+ | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/5791ac" />  |    |
+ <br>
+<br clear="both" />
+
+
 
 ## Dependancies
 ```
@@ -20,16 +32,27 @@ dfu-util - Pinecil V1 only
 polkit
 ```
 
+## Connect Pinecil to a PC
+
+* To connect Pinecil V1 or V2 to the computer to do the firmware update, connect one end of a USB cable to the PC. 
+* Then, hold down the `[-]` button before plugging the usb-c cable to the back of Pinecil.
+* Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty.
+
+
+
 ### Disclaimer: This does not currently work on wayland.
-## Installing
+## Install
 Go over to https://github.com/Laar3/PineFlash/releases, intructions can be found there.
 
-Then to run 
-`pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
-On macos simply running `pineflash` will work fine as it doesnt need root privledges. 
+## Run 
+ Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
 
-## Building
-## Build Dependancies
+MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
+<br>
+
+## Build from code
+
+### Build Dependancies
 ```
 git
 rust
@@ -37,7 +60,7 @@ gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
 ```
 
 ## Linux
-On linux just run the `generic_linux_install.sh` file which will build and install Pineflash.
+After extracting the source code tar.gz, then run the `generic_linux_install.sh` file which will build and install Pineflash.
 
 ### Arch based distro's
 All dependancies will be handled by the PKGBUILD
@@ -71,12 +94,6 @@ Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `asse
 Note, on linux root permissions are needed for dfu-util, in order to solve this you need to run the program with the following command if running from the terminal `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.
 
 This is already in the .desktop file so dont worry about that if you just use it.
-
-
-## Current State
-* This will allow you to choose an iron and IronOs firmware version and download it (current path is /tmp) without needing to grab it separately from Ralim's IronOS.
-* This currently only supports unix-like operating systems (macos and linux), windows support is in the works.
-* To connect Pinecil V1 to the computer to do the firmware update, hold down the `[-]` button before plugging the usb-c cable to the back of Pinecil. Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty.
 
  
 
