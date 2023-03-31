@@ -2,7 +2,7 @@
 # Contributor: Kartoffel <laar@tutanota.com>
 _pkgname=pineflash
 pkgname="${_pkgname}-git"
-pkgver=0.2.2.r82.20230306.87f52b1
+pkgver=0.2.4.r91.20230331.3826c39
 pkgrel=1
 arch=(
   i686
@@ -21,6 +21,7 @@ depends=(
 makedepends=(
   'git'
   'rust'
+  'cmake'
 )
 provides=("${_pkgname}=${pkgver}")
 conflicts=("${_pkgname}")
@@ -62,10 +63,10 @@ build() {
   export CARGO_HOME
 
   cargo build --offline --release
-  pwd  
-  cd blisp
 
-  mkdir build && cd build
+  cd blisp
+  mkdir build 
+  cd build
   cmake -DBLISP_BUILD_CLI=ON ..
   cmake --build .
 }
@@ -95,7 +96,7 @@ package() {
 
   ### Install manually:
   install -D -v -m755 "target/release/pineflash" "${pkgdir}/usr/bin/pineflash"
-  install -D -v -m755 "build/tools/blisp/blisp" "${pkgdir}/usr/bin/blisp"
+  install -D -v -m755 "blisp/build/tools/blisp/blisp" "${pkgdir}/usr/bin/blisp"
 
   install -D -v -m644 "Pineflash.desktop" "${pkgdir}/usr/share/applications/Pineflash.desktop"
   install -D -v -m644 "assets/pine64logo.png" "${pkgdir}/usr/share/pixmaps/pine64logo.png"
