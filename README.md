@@ -86,6 +86,7 @@ This is already in the .desktop file so dont worry about that if you just use it
 - [x] V2 support 
 - [ ] Windows support
 - [ ] In app instructions for getting the pinecil ready to flash
+- [ ] Changing boot logo support
 ## Feel like supporting me?
 Well you can buy me a coffee (or rather tea bags or something since i dont drink coffee ;))
 
