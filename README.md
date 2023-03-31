@@ -16,7 +16,7 @@ A tool to flash ironos to the Pinecil V1 and in the future other pine products.
 
 ## Dependancies
 ```
-dfu-util
+dfu-util - Pinecil V1 only
 polkit
 ```
 
@@ -46,6 +46,20 @@ Just run `makepkg -si` in the main directory to build and install it.
 
 
 ## Manual build
+First download the git submodules 
+```
+git submodule update --init --recursive
+```
+after this build blisp which is needed for pinecil V2 support 
+```
+cd blisp
+mkdir build
+cd build
+cmake -DBLISP_BUILD_CLI=ON ..
+cmake --build .
+sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
+```
+then to build pineflash itself
 ```
 cargo build --release
 ```
@@ -67,13 +81,13 @@ This is already in the .desktop file so dont worry about that if you just use it
 
 ## Todo
 
-~~Some sort of toast while stuff is downloading, flashing, etc.~~
-
+- [x] Some sort of toast while stuff is downloading, flashing, etc.
+- [x] V2 support 
 - [ ] Windows support
-- [ ] V2 support 
 - [ ] In app instructions for getting the pinecil ready to flash
 
 ## References
-
+- [Blisp](https://github.com/pine64/blisp) - Backend for flashing Pinecil V2
+- [Dfu-util](https://dfu-util.sourceforge.net/) - Backend for flashing Pinecil V1
 - [Pinecil](https://wiki.pine64.org/wiki/Pinecil) - The Pinecil Wiki page
 - [IronOS](https://github.com/Ralim/IronOS) - The firmware running on this soldering iron
