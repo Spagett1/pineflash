@@ -59,6 +59,7 @@ cmake -DBLISP_BUILD_CLI=ON ..
 cmake --build .
 sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
 ```
+**Important: Don't forget to add blisp to your path**
 then to build pineflash itself
 ```
 cargo build --release
