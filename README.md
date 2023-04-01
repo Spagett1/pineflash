@@ -67,6 +67,7 @@ dfu-util # For pinecil v1 support.
 3. Just run `makepkg -si` in the main directory to build and install it.
 
 ## :woman_factory_worker: Manual build
+
 1. download the git submodules 
 ```
 git submodule update --init --recursive
@@ -86,13 +87,12 @@ sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
 ```
 cargo build --release
 ```
-The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
+4. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
 
-Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
+5. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
 
-Note, on linux root permissions are needed for dfu-util, in order to solve this you need to run the program with the following command if running from the terminal `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.
-
-This is already in the .desktop file so dont worry about that if you just use it.
+> **Note**  
+> on linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`. If you use the Gui app, then don't worry about it. It's already in the .desktop file and not necessary.
 
  
  ## :electric_plug: Connect Pinecil to a PC
