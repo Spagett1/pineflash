@@ -97,10 +97,10 @@ This is already in the .desktop file so dont worry about that if you just use it
  
  ## :electric_plug: Connect Pinecil to a PC
 
-* To connect Pinecil V1 or V2 to the computer to do the firmware update, connect one end of a USB cable to the PC. 
-* Then, hold down the `[-]` button before plugging the usb-c cable to the back of Pinecil.
-* Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty.
-* See [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil_Firmware) if you get stuck.
+1. To do the firmware update, connect one end of a USB cable to the PC.
+2. Then, hold down the `[-]` button **before** plugging the usb-c cable to the back of Pinecil.
+3. Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty. If not, do it again, flip the cable, or try another cable, different port, or a different PC.
+4. See [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil_Firmware) firmware details if you get stuck.
  
 ## :spiral_calendar: Todo
 
