@@ -40,7 +40,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 ```
 # needed for all versions of PineFlash
-polkit
+polkit - linux only
 dfu-util - for pinecil V1 support
 ```
  
@@ -88,8 +88,8 @@ Install these if you don't have them (not needed if using the PKGBUILD).
 git
 rust
 cmake
-polkit
-gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
+polkit - linux only
+gtk3 (arch based distros) / libgtk-3-dev (debian based distros) - linux only
 dfu-util - for pinecil V1 support
 ```
 <details>
