@@ -25,23 +25,24 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 # :desktop_computer: Install Options
 
 #### Disclaimer: does not currently work on wayland.
-1. Premade Binaries: Currently only available for Linux x86 distros.
+1. Premade Binaries: currently only available for Linux x86 distros.
 
-2. Build from Code: Recommended for development or if you are on an ARM device or MacOs.
+2. Build from Code: recommended if you are on a MacOS, an ARM device, or doing development.
 
-#### :bookmark_tabs: Dependancies
-
-```
-# needed for all versions of PineFlash
-polkit
-dfu-util - for pinecil V1 support
-```
 
 <details>
   <summary>
    
 ## :clamp: Premade Binaries 
  </summary>
+ 
+### :bookmark_tabs: Dependancies
+
+```
+# needed for all versions of PineFlash
+polkit
+dfu-util - for pinecil V1 support
+```
  
 ### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
 
@@ -82,7 +83,7 @@ This is the same PineFlash as the pre-made binaries [here](https://github.com/Sp
 ### :bookmark_tabs: Build Dependancies
 
 
-Install these if you don't have them (not needed if using the PKGBUILD).
+Install these if you don't have them (not needed if using the Arch PKGBUILD).
 ```
 git
 rust
