@@ -104,10 +104,7 @@ This is already in the .desktop file so dont worry about that if you just use it
  
 ## :spiral_calendar: Todo
 
-- [x] Some sort of toast while stuff is downloading, flashing, etc.
-- [x] V2 support 
 - [ ] Windows support
-- [ ] In app instructions/images for getting the pinecil ready to flash
 
 ## :smiling_face_with_three_hearts: Feel like supporting me?
 
