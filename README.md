@@ -109,7 +109,7 @@ Use the handy scripts will compile and install PineFlash for you.
 2. Extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
 3. Run the `generic_linux_install.sh` file which will build and install Pineflash.
 
-### <img width="17" src="https://cdn.simpleicons.org/archlinux/4E5EE4" />  Build on Arch based distro's
+### <img width="17" src="https://cdn.simpleicons.org/archlinux/4E5EE4" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
 1. All dependancies will be handled by the PKGBUILD
 2. You can use the PKGBUILD which will handle everything for you.
 3. Just run `makepkg -si` in the main directory to build and install it.
