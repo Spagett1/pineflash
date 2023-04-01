@@ -100,7 +100,7 @@ dfu-util - for pinecil V1 support
  
 Use the handy scripts will compile and install PineFlash for you.
 
-(Sorry if you are on Mac you need to build it manually, find instructions for that [here](https://github.com/Spagett1/PineFlash/edit/master/README.md#man_factory_worker-build-option-2-manual-build))
+(Sorry if you are on Mac you need to build it manually, find instructions for that [here](https://github.com/Spagett1/PineFlash#man_factory_worker-build-option-2-manual-build))
 
 ### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
