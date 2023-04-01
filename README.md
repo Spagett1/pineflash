@@ -57,7 +57,7 @@ sudo pacman -U ./pineflash-*-x86.tar.zst
 
 ### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's. 
 
-Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash#bookmark_tabs-dependancies) installed
+Install items from dependencies list above.
 
 Download the latest pineflash_linux_x86_<version>.zip file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
