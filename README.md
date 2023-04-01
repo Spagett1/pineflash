@@ -19,7 +19,6 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
  | :-----: | :-----: | :-----: | :-----: |
  | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| wip  |
  | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
- <br>
 <br clear="both" />
 
 ## :bookmark_tabs: Dependancies
@@ -33,7 +32,7 @@ dfu-util - Pinecil V1 only
 ## :desktop_computer: Install Options
 Go to https://github.com/Spagett1/PineFlash/releases/, intructions can be found there.
 
-1. Pre-made Binaries: download pineflash zip or tar releases as this is the easiest option to install
+1. Pre-made Binaries: easiest method is to download pineflash zip or tar releases and install.
 2. Build from Code, see below.
 
 ## :runner: Run 
@@ -110,7 +109,7 @@ This is already in the .desktop file so dont worry about that if you just use it
 - [ ] Windows support
 - [ ] In app instructions/images for getting the pinecil ready to flash
 
-## Feel like supporting me?
+## :smiling_face_with_three_hearts: Feel like supporting me?
 
 Well you can buy me a coffee (or rather tea bags or something since i dont drink coffee ;))
 
