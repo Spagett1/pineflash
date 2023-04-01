@@ -130,10 +130,11 @@ This is also currently the only way to install for MacOs
  
 1. Install all the [dependencies](https://github.com/Spagett1/PineFlash#bookmark_tabs-build-dependancies).
 
-2. Download the source code
+2. Download the source code.
 
 ```
 git clone https://github.com/Spagett1/PineFlash/
+cd PineFlash 
 ```
 
 3. Download the git submodules.
