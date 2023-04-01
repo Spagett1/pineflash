@@ -113,7 +113,11 @@ cd PineFlash
 
 ### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
 1. All dependancies will be handled by the PKGBUILD
-2. You can use the PKGBUILD which will handle everything for you.
+2. Download the source code with the following commands.
+```
+git clone https://github.com/Spagett1/PineFlash/
+cd PineFlash
+```
 3. Just run `makepkg -si` in the main directory to build and install it.
 </details>
 <div style="clear:both;">&nbsp;</div>
