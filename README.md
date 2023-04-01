@@ -91,8 +91,9 @@ cargo build --release
 
 5. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
 
-> **Note**  
-> on linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`. If you use the Gui app, then don't worry about it. It's already in the .desktop file and not necessary.
+6. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
+`pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.   
+If you use the Gui app, then don't worry about it. It's already in the .desktop file and not necessary.
 
  
  ## :electric_plug: Connect Pinecil to a PC
@@ -105,6 +106,7 @@ cargo build --release
 ## :spiral_calendar: Todo
 
 - [ ] Windows support
+- [ ] Improve UI (colors, design, workflow)
 
 ## :smiling_face_with_three_hearts: Feel like supporting me?
 
