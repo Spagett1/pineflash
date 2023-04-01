@@ -126,7 +126,7 @@ This is also currently the only way to install for MacOs
  
 1. Install all the dependencies.
 
-2. download the git submodules 
+2. Download the git submodules 
 ```
 git submodule update --init --recursive
 ```
