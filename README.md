@@ -56,9 +56,13 @@ polkit
 gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
 dfu-util # For pinecil v1 support. 
 ```
-## Build Option 1
-
-Use the handy scripts which will call git modules for you.
+<details>
+  <summary>
+   
+## :toolbox: Build Option 1, handy scripts
+ </summary>
+ 
+Use the handy scripts which call git modules for you.
 
 ## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
@@ -69,16 +73,25 @@ Use the handy scripts which will call git modules for you.
 1. All dependancies will be handled by the PKGBUILD
 2. You can use the PKGBUILD which will handle everything for you.
 3. Just run `makepkg -si` in the main directory to build and install it.
+</details>
+<div style="clear:both;">&nbsp;</div>
 
-## :woman_factory_worker: Build Option 2
 
-Build it manually, old school matrix style from the terminal.
+<details>
+  <summary>
+   
+## :woman_factory_worker: Build Option 2, manual build
+ </summary>
 
-1. download the git submodules 
+Old school style, git submodules manually.
+ 
+1. Install all the dependencies.
+
+2. download the git submodules 
 ```
 git submodule update --init --recursive
 ```
-2. build blisp which is needed for pinecil V2 support 
+3. build blisp which is needed for pinecil V2 support 
 ```
 cd blisp
 mkdir build
@@ -89,18 +102,20 @@ sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
 ```
 :dart: Important: Don't forget to add blisp to your path
 
-3. Then build pineflash itself
+4. Then build pineflash itself
 ```
 cargo build --release
 ```
-4. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
+5. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
 
-5. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
+6. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
 
-6. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
+7. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
 `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.   
 If you use the Gui app, then don't worry about it. It's already in the .desktop file and not necessary.
 
+</details>
+<div style="clear:both;">&nbsp;</div>
  
  ## :electric_plug: Connect Pinecil to a PC
 
