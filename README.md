@@ -132,7 +132,7 @@ Old school style, this is recommended if you have issues with the scripts or wan
  
 This is also currently the only way to install for MacOs.
  
-1. Install all the [dependencies](https://github.com/Spagett1/PineFlash#bookmark_tabs-build-dependancies).
+1. Install all the build dependancies listed above.
 
 2. Download the source code.
 
