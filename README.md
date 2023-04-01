@@ -29,54 +29,55 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 polkit
 dfu-util - Pinecil V1 only
 ```
+### Disclaimer: This does not currently work on wayland.
 
-## Connect Pinecil to a PC
+## :computer: Connect Pinecil to a PC
 
 * To connect Pinecil V1 or V2 to the computer to do the firmware update, connect one end of a USB cable to the PC. 
 * Then, hold down the `[-]` button before plugging the usb-c cable to the back of Pinecil.
 * Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty.
 
 
-
-### Disclaimer: This does not currently work on wayland.
 ## Install
 Go over to https://github.com/Laar3/PineFlash/releases, intructions can be found there.
+Options:
+Pre-made Binaries: pineflash zip or tar releases are the easiest options to install
 
-## Run 
- Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
+## :runner: Run 
+Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
 
 MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
 <br>
 
-## Build from code
+# Build from code
 
-### Build Dependancies
+## Build Dependancies
 
 ```
 git
 rust
 cmake
 polkit
-gut
 gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
 dfu-util # For pinecil v1 support. 
 ```
 
-## Linux
-After extracting the source code tar.gz, then run the `generic_linux_install.sh` file which will build and install Pineflash.
+## Build Linux dev
+1. install all dependencies
+2. extract the source code tar.gz from the newest Assets [in releases](https://github.com/Spagett1/PineFlash/releases/)
+3. run the `generic_linux_install.sh` file which will build and install Pineflash.
 
-### Arch based distro's
-All dependancies will be handled by the PKGBUILD
-You can use the PKGBUILD which will handle everything for you.
-Just run `makepkg -si` in the main directory to build and install it.
-
+## Arch based distro's
+1. All dependancies will be handled by the PKGBUILD
+2. You can use the PKGBUILD which will handle everything for you.
+3. Just run `makepkg -si` in the main directory to build and install it.
 
 ## Manual build
-First download the git submodules 
+1. download the git submodules 
 ```
 git submodule update --init --recursive
 ```
-after this build blisp which is needed for pinecil V2 support 
+2. build blisp which is needed for pinecil V2 support 
 ```
 cd blisp
 mkdir build
@@ -85,7 +86,8 @@ cmake -DBLISP_BUILD_CLI=ON ..
 cmake --build .
 sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
 ```
-**Important: Don't forget to add blisp to your path**
+ :bookmark: Important: Don't forget to add blisp to your path
+
 then to build pineflash itself
 ```
 cargo build --release
