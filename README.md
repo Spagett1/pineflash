@@ -125,7 +125,7 @@ cd PineFlash
 <details>
   <summary>
    
-### :man_factory_worker: Build Option 2, manual build
+### :weight_lifting_man: Build Option 2, manual build
  </summary>
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
