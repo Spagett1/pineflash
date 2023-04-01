@@ -190,4 +190,4 @@ Well you can buy me a coffee, or rather tea bags or something since i dont drink
 - [Pinecil](https://wiki.pine64.org/wiki/Pinecil) - The Pinecil Wiki page
 - [IronOS](https://github.com/Ralim/IronOS) - The firmware running on this soldering iron
 - [PineSAM](https://github.com/builder555/PineSAM) - A cool Bluetooth app to control Pinecil V2 from any browser
-- [egui](https://github.com/emilk/egui) - The awesome GUI toolkit used to make this program
+- [Egui](https://github.com/emilk/egui) - The awesome GUI toolkit used to make this program
