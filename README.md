@@ -35,7 +35,7 @@ dfu-util - for pinecil V1 support
 
 ## :desktop_computer: Install Options
 
-1. Pre-made Binaries: Currently only available for x86 Linux distros.
+1. Pre-made Binaries: Currently only available for Linux x86 distros.
 
 2. Build from Code: Recommended for development or if you are on an ARM device or MacOs.
 
@@ -57,7 +57,7 @@ Then simply run.
 sudo pacman -U ./pineflash-*-x86.tar.zst 
 ```
 
-### <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Other x86 Linux distro's. 
+### <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Other Linux x86 distro's. 
 
 Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash/releases) installed
 
