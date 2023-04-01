@@ -10,7 +10,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 ## Features
 * Auto-fetch the newest stable release of IronOS firmware.
 * Allows manual installs of beta versions using a browse to file feature.
-* Selectable options: pick the iron type, pick the firmware version and download it (current path is /tmp).
+* Selectable options: pick the iron type, pick the firmware version and download it.
 
 <br clear="both" />
 
@@ -25,10 +25,10 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 # :desktop_computer: Install Options
 
 #### Disclaimer: does not currently work on wayland.
+
 1. Premade Binaries: currently only available for Linux x86 distros.
 
-2. Build from Code: recommended if you are on a MacOS, an ARM device, or doing development.
-
+2. Build from Code: recommended if you are on MacOS, an ARM device, or doing development.
 
 <details>
   <summary>
@@ -190,7 +190,7 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 
 ## :tea: Feel like supporting me?
 
-Well you can buy me a coffee, or rather tea bags or something since i dont drink coffee ;)
+Well you can buy me a coffee, or rather tea bags since i dont drink coffee ;)
 
 <a href="https://www.buymeacoffee.com/spagett" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
@@ -202,3 +202,8 @@ Well you can buy me a coffee, or rather tea bags or something since i dont drink
 - [IronOS](https://github.com/Ralim/IronOS) - The firmware running on this soldering iron
 - [PineSAM](https://github.com/builder555/PineSAM) - A cool Bluetooth app to control Pinecil V2 from any browser
 - [Egui](https://github.com/emilk/egui) - The awesome GUI toolkit used to make this program
+ 
+ ## :dash: Stay fluxy my friends.
+ <img src="https://user-images.githubusercontent.com/77225642/229288128-e6993505-47a2-4437-92cf-7b2a5de10677.png" width="425">
+ 
+[Source](https://www.reddit.com/r/PINE64official/comments/xk9vxu/most_interesting_man_in_the_world_i_dont_always/)
