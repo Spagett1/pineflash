@@ -165,9 +165,9 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 
 ## :runner: Run 
 
-Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
+<img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
 
-MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
+<img width="17" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
 <br><br>
 
  
