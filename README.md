@@ -44,6 +44,7 @@ MacOS: simply running `pineflash` will work fine as it doesn't need root privled
 
 
 # :building_construction: Build from code
+This is the same PineFlash as the pre-made binaries [here](https://github.com/Spagett1/PineFlash/releases/). Install this if the binaries do not support your architecture or you have dev purposes.
 
 ## :bookmark_tabs: Build Dependancies
 
