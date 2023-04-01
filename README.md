@@ -28,7 +28,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 1. Premade Binaries: currently only available for Linux x86 distros.
 
-2. Build from Code: recommended if you are on [MacOS](https://github.com/Spagett1/PineFlash/blob/master/README.md#man_factory_worker-build-option-2-manual-build), an ARM device, or doing development.
+2. Build from Code: recommended if you are on [MacOS](https://github.com/Spagett1/PineFlash#man_factory_worker-build-option-2-manual-build), an ARM device, or doing development.
 
 <details>
   <summary>
