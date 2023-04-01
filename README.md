@@ -128,11 +128,13 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 ## :spiral_calendar: Todo
 
 - [ ] Windows support
+- [ ] In app instructions for getting the pinecil ready to flash
+- [ ] Changing boot logo support
 - [ ] Improve UI (colors, design, workflow)
 
-## :smiling_face_with_three_hearts: Feel like supporting me?
+## :tea: Feel like supporting me?
 
-Well you can buy me a coffee (or rather tea bags or something since i dont drink coffee ;))
+Well you can buy me a coffee, or rather tea bags or something since i dont drink coffee ;)
 
 <a href="https://www.buymeacoffee.com/spagett" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
