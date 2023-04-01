@@ -22,9 +22,13 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 <br clear="both" />
 
 ## :bookmark_tabs: Dependancies
+
+
 ```
+# needed for all versions of PineFlash
+
 polkit
-dfu-util - Pinecil V1 only
+dfu-util - for pinecil V1 support
 ```
 ### Disclaimer: does not currently work on wayland.
 
@@ -80,14 +84,15 @@ This is the same PineFlash as the pre-made binaries [here](https://github.com/Sp
 
 ## :bookmark_tabs: Build Dependancies
 
-Install all of this if you don't have it (not needed if using the PKGBUILD).
+
+Install these if you don't have them (not needed if using the PKGBUILD).
 ```
 git
 rust
 cmake
 polkit
 gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
-dfu-util # For pinecil v1 support. 
+dfu-util - for pinecil V1 support
 ```
 <details>
   <summary>
