@@ -97,6 +97,8 @@ dfu-util # For pinecil v1 support.
  
 Use the handy scripts will compile and install PineFlash for you.
 
+(Sorry if you are on Mac you need to build it manually, find instructions for that [here](https://github.com/Spagett1/PineFlash/edit/master/README.md#man_factory_worker-build-option-2-manual-build))
+
 ## <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
 2. Extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
@@ -117,6 +119,8 @@ Use the handy scripts will compile and install PineFlash for you.
  </summary>
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
+ 
+This is also currently the only way to install for MacOs
  
 1. Install all the dependencies.
 
@@ -141,7 +145,7 @@ cargo build --release
 ```
 5. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
 
-6. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
+6. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers. (This does not apply to MacOs, you will have to run pineflash from the terminal for now, sorry.)
 
 7. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
 `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.   
