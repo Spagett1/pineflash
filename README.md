@@ -47,6 +47,7 @@ MacOS: simply running `pineflash` will work fine as it doesn't need root privled
 
 ## :bookmark_tabs: Build Dependancies
 
+Install all of this if you don't have it.
 ```
 git
 rust
@@ -55,8 +56,11 @@ polkit
 gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
 dfu-util # For pinecil v1 support. 
 ```
+## Build Option 1
 
-## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Build on Linux
+Use the handy scripts which will call git modules for you.
+
+## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
 2. extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
 3. run the `generic_linux_install.sh` file which will build and install Pineflash.
@@ -66,7 +70,9 @@ dfu-util # For pinecil v1 support.
 2. You can use the PKGBUILD which will handle everything for you.
 3. Just run `makepkg -si` in the main directory to build and install it.
 
-## :woman_factory_worker: Manual build
+## :woman_factory_worker: Build Option 2
+
+Build it manually, old school matrix style from the terminal.
 
 1. download the git submodules 
 ```
