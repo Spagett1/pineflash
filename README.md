@@ -43,7 +43,7 @@ dfu-util - for pinecil V1 support
 <details>
   <summary>
    
-## :computer: Premade Binaries 
+## :clamp: Premade Binaries 
  </summary>
  
 ### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
