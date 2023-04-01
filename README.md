@@ -21,30 +21,28 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
  | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
 <br clear="both" />
 
-## :bookmark_tabs: Dependancies
 
+# :desktop_computer: Install Options
 
-```
-# needed for all versions of PineFlash
+#### Disclaimer: does not currently work on wayland.
 
-polkit
-dfu-util - for pinecil V1 support
-```
-### Disclaimer: does not currently work on wayland.
+1. Premade Binaries: currently only available for Linux x86 distros.
 
-
-## :desktop_computer: Install Options
-
-1. Pre-made Binaries: Currently only available for Linux x86 distros.
-
-2. Build from Code: Recommended for development or if you are on an ARM device or MacOs.
-
+2. Build from Code: recommended if you are on MacOS, an ARM device, or doing development.
 
 <details>
   <summary>
    
 ## :clamp: Premade Binaries 
  </summary>
+ 
+### :bookmark_tabs: Dependancies
+
+```
+# needed for all versions of PineFlash
+polkit
+dfu-util - for pinecil V1 support
+```
  
 ### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
 
@@ -116,7 +114,6 @@ Use the handy scripts will compile and install PineFlash for you.
 </details>
 <div style="clear:both;">&nbsp;</div>
 
-
 <details>
   <summary>
    
@@ -168,16 +165,21 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
 
 <img width="17" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
-<br><br>
+<br>
 
+<details>
+  <summary>
  
  ## :electric_plug: Connect Pinecil to a PC
+ </summary>
 
 1. To do the firmware update, connect one end of a USB cable to the PC.
 2. Then, hold down the `[-]` button **before** plugging the usb-c cable to the back of Pinecil.
 3. Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty. If not, do it again, flip the cable, or try another cable, different port, or a different PC.
 4. See [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil_Firmware) firmware details if you get stuck.
- 
+</details>
+<div style="clear:both;">&nbsp;</div>
+
 ## :spiral_calendar: Todo
 
 - [ ] Windows support.
