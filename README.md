@@ -200,3 +200,8 @@ Well you can buy me a coffee, or rather tea bags or something since i dont drink
 - [IronOS](https://github.com/Ralim/IronOS) - The firmware running on this soldering iron
 - [PineSAM](https://github.com/builder555/PineSAM) - A cool Bluetooth app to control Pinecil V2 from any browser
 - [Egui](https://github.com/emilk/egui) - The awesome GUI toolkit used to make this program
+ 
+ ## :dash: Stay fluxy my friends.
+ <img src="https://user-images.githubusercontent.com/77225642/229288128-e6993505-47a2-4437-92cf-7b2a5de10677.png" width="425">
+ 
+[Source](https://www.reddit.com/r/PINE64official/comments/xk9vxu/most_interesting_man_in_the_world_i_dont_always/)
