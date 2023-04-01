@@ -104,7 +104,11 @@ Use the handy scripts will compile and install PineFlash for you.
 
 ### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
-2. Extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
+2. Download the source code with the following commands.
+```
+git clone https://github.com/Spagett1/PineFlash/
+cd PineFlash
+```
 3. Run the `generic_linux_install.sh` file which will build and install Pineflash.
 
 ### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
@@ -126,11 +130,18 @@ This is also currently the only way to install for MacOs
  
 1. Install all the [dependencies](https://github.com/Spagett1/PineFlash#bookmark_tabs-build-dependancies).
 
-2. Download the git submodules 
+2. Download the source code.
+
+```
+git clone https://github.com/Spagett1/PineFlash/
+cd PineFlash 
+```
+
+3. Download the git submodules.
 ```
 git submodule update --init --recursive
 ```
-3. build blisp which is needed for pinecil V2 support 
+4. build blisp which is needed for pinecil V2 support 
 ```
 cd blisp
 mkdir build
@@ -141,15 +152,15 @@ sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
 ```
 :dart: Important: Don't forget to add blisp to your path
 
-4. Then build pineflash itself
+5. Then build pineflash itself
 ```
 cargo build --release
 ```
-5. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
+6. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
 
-6. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers. (This does not apply to MacOs, you will have to run pineflash from the terminal for now, sorry.)
+7. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers. (This does not apply to MacOs, you will have to run pineflash from the terminal for now, sorry.)
 
-7. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
+8. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
 `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.   
 If you use the Gui app, then don't worry about it. It's already in the .desktop file and not necessary.
 
