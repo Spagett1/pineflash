@@ -30,20 +30,21 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 polkit
 dfu-util - for pinecil V1 support
 ```
-### Disclaimer: does not currently work on wayland.
 
 
-## :desktop_computer: Install Options
 
-1. Pre-made Binaries: Currently only available for x86 Linux distros.
+# Install Options
 
-2. Build from Code: Recommended for development or if you are on an ARM device or MacOs.
+#### Disclaimer: does not currently work on wayland.
+1. Premade Binaries: currently only available for Linux x86 distros.
+
+2. Build from Code: recommended for development or if you have MacOs or ARM device.
 
 
 <details>
   <summary>
    
-# :computer: Premade Binaries 
+## :desktop_computer: Premade Binaries 
  </summary>
  
 ## <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
@@ -76,7 +77,7 @@ sudo cp -r usr/* /usr/
 <details>
   <summary>
    
-# :building_construction: Build from code 
+## :building_construction: Build from code 
  </summary>
 
 
@@ -97,7 +98,7 @@ dfu-util - for pinecil V1 support
 <details>
   <summary>
    
-## :toolbox: Build Option 1, handy scripts
+## :toolbox: Build option 1, handy scripts
  </summary>
  
 Use the handy scripts will compile and install PineFlash for you.
@@ -120,12 +121,12 @@ Use the handy scripts will compile and install PineFlash for you.
 <details>
   <summary>
    
-## :man_factory_worker: Build Option 2, manual build
+## :man_factory_worker: Build option 2, manual build
  </summary>
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
  
-This is also currently the only way to install for MacOs
+This is currently the only way to install on MacOs.
  
 1. Install all the dependencies.
 
@@ -159,18 +160,17 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 </details>
 <div style="clear:both;">&nbsp;</div>
  
- 
 </details>
 <div style="clear:both;">&nbsp;</div>
 
 ## :runner: Run 
 
-<img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
+<img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux: Pineflash should just appear in your app launcher.  
+Alternatively, from the command line, run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
 
-<img width="17" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
+<img width="17" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
 <br><br>
 
- 
  ## :electric_plug: Connect Pinecil to a PC
 
 1. To do the firmware update, connect one end of a USB cable to the PC.
