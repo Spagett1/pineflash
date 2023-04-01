@@ -41,9 +41,9 @@ Go to https://github.com/Spagett1/PineFlash/releases/, intructions can be found 
 
 ## :runner: Run 
 
-<img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
+Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
 
-<img width="15" src="https://cdn.simpleicons.org/Apple" /> MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
+MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
 <br><br>
 
 
