@@ -15,7 +15,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 <br clear="both" />
 
 ## Supported Devices 
- | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/000000" /> Windows|
+ | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/4E5EE4" /> Windows|
  | :-----: | :-----: | :-----: | :-----: |
  | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| wip  |
  | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
@@ -42,7 +42,7 @@ dfu-util - Pinecil V1 only
 # :computer: Premade Binaries 
  </summary>
  
-## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
+## <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
 
 Head over to [releases](https://github.com/Spagett1/PineFlash/releases).
 
@@ -53,7 +53,7 @@ Then simply run.
 sudo pacman -U ./pineflash-*-x86.tar.zst 
 ```
 
-## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Other x86 Linux distro's. 
+## <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Other x86 Linux distro's. 
 
 Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash/releases) installed
 
@@ -97,12 +97,12 @@ dfu-util # For pinecil v1 support.
  
 Use the handy scripts will compile and install PineFlash for you.
 
-## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Build Linux from script.
+## <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
 2. Extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
 3. Run the `generic_linux_install.sh` file which will build and install Pineflash.
 
-## <img width="17" src="https://cdn.simpleicons.org/archlinux/000000" />  Build on Arch based distro's
+## <img width="17" src="https://cdn.simpleicons.org/archlinux/4E5EE4" />  Build on Arch based distro's
 1. All dependancies will be handled by the PKGBUILD
 2. You can use the PKGBUILD which will handle everything for you.
 3. Just run `makepkg -si` in the main directory to build and install it.
