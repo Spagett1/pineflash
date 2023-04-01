@@ -15,7 +15,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 <br clear="both" />
 
 ## Supported Devices 
- | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/4E5EE4" /> Windows|
+ | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple/187BC0" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/187BC0" /> Windows|
  | :-----: | :-----: | :-----: | :-----: |
  | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| wip  |
  | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
@@ -44,7 +44,7 @@ polkit
 dfu-util - for pinecil V1 support
 ```
  
-### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
+### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
 
 Head over to [releases](https://github.com/Spagett1/PineFlash/releases).
 
@@ -55,7 +55,7 @@ Then simply run.
 sudo pacman -U ./pineflash-*-x86.tar.zst 
 ```
 
-### <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Other Linux x86 distro's. 
+### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's. 
 
 Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash/releases) installed
 
@@ -102,12 +102,12 @@ Use the handy scripts will compile and install PineFlash for you.
 
 (Sorry if you are on Mac you need to build it manually, find instructions for that [here](https://github.com/Spagett1/PineFlash/edit/master/README.md#man_factory_worker-build-option-2-manual-build))
 
-### <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Build Linux from script.
+### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
 2. Extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
 3. Run the `generic_linux_install.sh` file which will build and install Pineflash.
 
-### <img width="17" src="https://cdn.simpleicons.org/archlinux/4E5EE4" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
+### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
 1. All dependancies will be handled by the PKGBUILD
 2. You can use the PKGBUILD which will handle everything for you.
 3. Just run `makepkg -si` in the main directory to build and install it.
@@ -162,9 +162,9 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 
 ## :runner: Run 
 
-<img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
+<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
 
-<img width="17" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
+<img width="17" src="https://cdn.simpleicons.org/Apple/187BC0" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
 <br>
 
 <details>
