@@ -30,25 +30,57 @@ dfu-util - Pinecil V1 only
 
 
 ## :desktop_computer: Install Options
-Go to https://github.com/Spagett1/PineFlash/releases/, intructions can be found there.
 
-1. Pre-made Binaries: easiest method is to download pineflash zip or tar releases and install.
-2. Build from Code, see below.
+1. Pre-made Binaries: Currently only available for x86 Linux distros.
 
-## :runner: Run 
-
-Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
-
-MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
-<br><br>
+2. Build from Code: Recommended for development or if you are on an ARM device or MacOs.
 
 
-# :building_construction: Build from code
+<details>
+  <summary>
+   
+# :computer: Premade Binaries 
+ </summary>
+ 
+## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
+
+Head over to [releases](https://github.com/Spagett1/PineFlash/releases).
+
+Download the latest .tar.zst file.
+
+Then simply run.
+```
+sudo pacman -U ./pineflash-*-x86.tar.zst 
+```
+
+## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Other x86 Linux distro's. 
+
+Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash/releases) installed
+
+Download the latest pineflash_linux_x86_<version>.zip file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
+
+Then extract and install it.
+```
+unzip ./pineflash_linux_x86_*.zip
+sudo cp -r usr/* /usr/
+```
+
+</details>
+<div style="clear:both;">&nbsp;</div>
+
+ 
+<details>
+  <summary>
+   
+# :building_construction: Build from code 
+ </summary>
+
+
 This is the same PineFlash as the pre-made binaries [here](https://github.com/Spagett1/PineFlash/releases/). Install this if the binaries do not support your architecture or you have dev purposes.
 
 ## :bookmark_tabs: Build Dependancies
 
-Install all of this if you don't have it.
+Install all of this if you don't have it (not needed if using the PKGBUILD).
 ```
 git
 rust
@@ -63,12 +95,12 @@ dfu-util # For pinecil v1 support.
 ## :toolbox: Build Option 1, handy scripts
  </summary>
  
-Use the handy scripts which call git modules for you.
+Use the handy scripts will compile and install PineFlash for you.
 
 ## <img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
-2. extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
-3. run the `generic_linux_install.sh` file which will build and install Pineflash.
+2. Extract the source code tar.gz from the newest Assets in [releases here](https://github.com/Spagett1/PineFlash/releases/)
+3. Run the `generic_linux_install.sh` file which will build and install Pineflash.
 
 ## <img width="17" src="https://cdn.simpleicons.org/archlinux/000000" />  Build on Arch based distro's
 1. All dependancies will be handled by the PKGBUILD
@@ -81,10 +113,10 @@ Use the handy scripts which call git modules for you.
 <details>
   <summary>
    
-## :woman_factory_worker: Build Option 2, manual build
+## :man_factory_worker: Build Option 2, manual build
  </summary>
 
-Old school style, git submodules manually.
+Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
  
 1. Install all the dependencies.
 
@@ -118,6 +150,18 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 </details>
 <div style="clear:both;">&nbsp;</div>
  
+ 
+</details>
+<div style="clear:both;">&nbsp;</div>
+
+## :runner: Run 
+
+Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
+
+MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
+<br><br>
+
+ 
  ## :electric_plug: Connect Pinecil to a PC
 
 1. To do the firmware update, connect one end of a USB cable to the PC.
@@ -127,10 +171,11 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
  
 ## :spiral_calendar: Todo
 
-- [ ] Windows support
-- [ ] In app instructions for getting the pinecil ready to flash
-- [ ] Changing boot logo support
-- [ ] Improve UI (colors, design, workflow)
+- [ ] Windows support.
+- [ ] In app instructions for getting the pinecil ready to flash.
+- [ ] Changing boot logo support.
+- [ ] Improve UI (colors, design, workflow).
+- [ ] Launcher icon for macos and an easier way to install it there.
 
 ## :tea: Feel like supporting me?
 
