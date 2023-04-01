@@ -21,29 +21,26 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
  | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
 <br clear="both" />
 
-## :bookmark_tabs: Dependancies
 
+# :desktop_computer: Install Options
 
-```
-# needed for all versions of PineFlash
-
-polkit
-dfu-util - for pinecil V1 support
-```
-### Disclaimer: does not currently work on wayland.
-
-
-## :desktop_computer: Install Options
-
-1. Pre-made Binaries: Currently only available for x86 Linux distros.
+#### Disclaimer: does not currently work on wayland.
+1. Premade Binaries: Currently only available for Linux x86 distros.
 
 2. Build from Code: Recommended for development or if you are on an ARM device or MacOs.
 
+#### :bookmark_tabs: Dependancies
+
+```
+# needed for all versions of PineFlash
+polkit
+dfu-util - for pinecil V1 support
+```
 
 <details>
   <summary>
    
-## :computer: Premade Binaries 
+## :clamp: Premade Binaries 
  </summary>
  
 ### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/4E5EE4" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
@@ -57,7 +54,7 @@ Then simply run.
 sudo pacman -U ./pineflash-*-x86.tar.zst 
 ```
 
-### <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Other x86 Linux distro's. 
+### <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Other Linux x86 distro's. 
 
 Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash/releases) installed
 
@@ -116,7 +113,6 @@ Use the handy scripts will compile and install PineFlash for you.
 </details>
 <div style="clear:both;">&nbsp;</div>
 
-
 <details>
   <summary>
    
@@ -168,16 +164,21 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 <img width="17" src="https://cdn.simpleicons.org/Linux/4E5EE4" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
 
 <img width="17" src="https://cdn.simpleicons.org/Apple/4E5EE4" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
-<br><br>
+<br>
 
+<details>
+  <summary>
  
  ## :electric_plug: Connect Pinecil to a PC
+ </summary>
 
 1. To do the firmware update, connect one end of a USB cable to the PC.
 2. Then, hold down the `[-]` button **before** plugging the usb-c cable to the back of Pinecil.
 3. Keep holding the `[-]` for ~10 seconds more before releasing the button. If you correctly entered flashing mode, the screen will be black/empty. If not, do it again, flip the cable, or try another cable, different port, or a different PC.
 4. See [Pinecil Wiki](https://wiki.pine64.org/wiki/Pinecil_Firmware) firmware details if you get stuck.
- 
+</details>
+<div style="clear:both;">&nbsp;</div>
+
 ## :spiral_calendar: Todo
 
 - [ ] Windows support.
