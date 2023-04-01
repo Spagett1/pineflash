@@ -188,7 +188,7 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 
 ## :tea: Feel like supporting me?
 
-Well you can buy me a coffee, or rather tea bags or something since i dont drink coffee ;)
+Well you can buy me a coffee, or rather tea bags since i dont drink coffee ;)
 
 <a href="https://www.buymeacoffee.com/spagett" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
