@@ -83,7 +83,7 @@ This is the same PineFlash as the pre-made binaries [here](https://github.com/Sp
 ### :bookmark_tabs: Build Dependancies
 
 
-Install these if you don't have them (not needed if using the Arch PKGBUILD).
+Install these if you don't have them (not needed if using the PKGBUILD).
 ```
 git
 rust
