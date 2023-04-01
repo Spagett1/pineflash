@@ -22,9 +22,13 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 <br clear="both" />
 
 ## :bookmark_tabs: Dependancies
+
+
 ```
+# needed for all versions of PineFlash
+
 polkit
-dfu-util - Pinecil V1 only
+dfu-util - for pinecil V1 support
 ```
 ### Disclaimer: does not currently work on wayland.
 
@@ -37,9 +41,9 @@ Go to https://github.com/Spagett1/PineFlash/releases/, intructions can be found 
 
 ## :runner: Run 
 
-Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
+<img width="17" src="https://cdn.simpleicons.org/Linux/000000" /> Linux: `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
 
-MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
+<img width="15" src="https://cdn.simpleicons.org/Apple" /> MacOS: simply running `pineflash` will work fine as it doesn't need root privledges. 
 <br><br>
 
 
@@ -48,14 +52,14 @@ This is the same PineFlash as the pre-made binaries [here](https://github.com/Sp
 
 ## :bookmark_tabs: Build Dependancies
 
-Install all of this if you don't have it.
+Install these if you don't have it.
 ```
 git
 rust
 cmake
 polkit
 gtk3 (arch based distros) / libgtk-3-dev (debian based distros)
-dfu-util # For pinecil v1 support. 
+dfu-util - for pinecil V1 support
 ```
 <details>
   <summary>
