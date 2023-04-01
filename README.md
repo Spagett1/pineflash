@@ -28,7 +28,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 1. Premade Binaries: currently only available for Linux x86 distros.
 
-2. Build from Code: recommended if you are on [MacOS](https://github.com/Spagett1/PineFlash#man_factory_worker-build-option-2-manual-build), an ARM device, or doing development.
+2. Build from Code: recommended if you are on MacOS, an ARM device, or doing development.
 
 <details>
   <summary>
@@ -100,7 +100,7 @@ dfu-util - for pinecil V1 support
  
 Use the handy scripts will compile and install PineFlash for you.
 
-(Sorry if you are on Mac you need to build it manually, find instructions for that [here](https://github.com/Spagett1/PineFlash#man_factory_worker-build-option-2-manual-build))
+(Sorry if you are on Mac you need to build it manually, please go to the manual build section.)
 
 ### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
