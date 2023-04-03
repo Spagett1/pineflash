@@ -44,20 +44,18 @@ polkit - linux only
 dfu-util - for pinecil V1 support
 ```
  
-### <img width="17" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
+### <img width="18" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros. (Arch, Artix, Manjaro, Endeavor)
 
-Head over to [releases](https://github.com/Spagett1/PineFlash/releases).
-
-Download the latest .tar.zst file.
+Download the latest pineflash .tar.zst file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
 Then simply run.
 ```
 sudo pacman -U ./pineflash-*-x86.tar.zst 
 ```
 
-### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's. 
+### <img width="18" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's.
 
-Make sure you have the needed [dependancies](https://github.com/Spagett1/PineFlash#bookmark_tabs-dependancies) installed
+Install items from dependencies list above.
 
 Download the latest pineflash_linux_x86_<version>.zip file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
@@ -78,7 +76,7 @@ sudo cp -r usr/* /usr/
  </summary>
 
 
-This is the same PineFlash as the pre-made binaries [here](https://github.com/Spagett1/PineFlash/releases/). Install this if the binaries do not support your architecture or you have dev purposes.
+Use this build method if the premade binaries do not support your architecture or you have dev purposes.
 
 ### :bookmark_tabs: Build Dependancies
 
@@ -95,12 +93,12 @@ dfu-util - for pinecil V1 support
 <details>
   <summary>
    
-### :toolbox: Build Option 1, handy scripts
+### :toolbox: Build option 1, handy scripts
  </summary>
  
-Use the handy scripts will compile and install PineFlash for you.
+Handy scripts will compile and install PineFlash for you.
 
-**(Sorry if you are on Mac you need to build it manually, please go to the manual build section.)**
+**(Sorry if you are on Mac, you need to build it manually, please go to the manual build section.)**
 
 ### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Linux from script.
 1. To build from source code, first install build dependencies.
