@@ -82,9 +82,32 @@ Use this build method if the premade binaries do not support your architecture o
 
 Install these if you don't have them (not needed if using the PKGBUILD).
 
+
 <details>
   <summary>
-<img width="17" src="https://cdn.simpleicons.org/debian/A81D33" /> Dependancies for Debian
+<img width="17" src="https://cdn.simpleicons.org/windowsterminal" /> General dependancy list
+</summary>
+
+This is the general depednancy list. 
+
+If your operating system or distro has its own section then please go there as it has more specific names.
+
+You may need more or less depending on distro or OS, if you find more dependancies are needed please open an issue containing what operating system you are running and what packages where needed. 
+
+```
+cmake
+rust 
+git
+dfu-util - for pinecil V1 support
+polkit - Linux only
+gcc         
+```
+</details>
+<div style="clear:both;">&nbsp;</div>
+
+<details>
+  <summary>
+<img width="17" src="https://cdn.simpleicons.org/debian/A81D33" /> Dependencies for Debian
 </summary>
 
 ```
@@ -113,7 +136,7 @@ sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2
 <div style="clear:both;">&nbsp;</div>
 <details>
   <summary>
-<img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" /> Dependancies for Arch
+<img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" /> Dependencies for Arch
  </summary>
 
 ```
