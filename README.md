@@ -44,7 +44,7 @@ polkit - linux only
 dfu-util - for pinecil V1 support
 ```
  
-### <img width="18" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros. (Arch, Artix, Manjaro, Endeavor)
+### <img width="18" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
 
 Download the latest pineflash .tar.zst file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
@@ -53,7 +53,7 @@ Then simply run.
 sudo pacman -U ./pineflash-*-x86.tar.zst 
 ```
 
-### <img width="18" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's.
+### <img width="18" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's
 
 Install items from dependencies list above.
 
