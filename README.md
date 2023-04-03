@@ -104,6 +104,10 @@ libatk1.0-0
 libatk1.0-dev       
 libgtk-3-dev             
 ```
+This line will install everything:
+```
+sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2.0-dev build-essential libfontconfig-dev fontconfig-config libgdk3.0-cli-dev libatk1.0-0 libatk1.0-dev libgtk-3-dev             
+```
 
 </details>
 <div style="clear:both;">&nbsp;</div>
@@ -117,7 +121,7 @@ cmake
 rust (If doing development i recommend the `rustup` package)
 git
 dfu-util - for pinecil V1 support
-polki
+polkit
 gcc
 pkgconf
 glibc 
@@ -125,6 +129,10 @@ base-devel
 fontconfig
 atmm
 gtk3         
+```
+This line will install everything:
+```
+sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-devel fontconfig atmm gtk3
 ```
 
 </details>
