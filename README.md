@@ -80,20 +80,60 @@ Use this build method if the premade binaries do not support your architecture o
 
 ### :bookmark_tabs: Build Dependancies
 
-
 Install these if you don't have them (not needed if using the PKGBUILD).
-```
-git
-rust
-cmake
-polkit - linux only
-gtk3 (arch based distros) / libgtk-3-dev (debian based distros) - linux only
-dfu-util - for pinecil V1 support
-```
+
 <details>
   <summary>
-   
+<img width="17" src="https://cdn.simpleicons.org/debian/A81D33" /> Dependancies for Debian
+</summary>
+
+```
+cmake
+rust-all (alternatively go to https://rustup.rs/)
+git
+dfu-util - for pinecil V1 support
+policykit-1
+g++
+pkg-config 
+libglib2.0-dev
+build-essential    
+libfontconfig-dev 
+fontconfig-config  
+libgdk3.0-cli-dev
+libatk1.0-0   
+libatk1.0-dev       
+libgtk-3-dev             
+```
+
+</details>
+<div style="clear:both;">&nbsp;</div>
+<details>
+  <summary>
+<img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" /> Dependancies for Arch
+ </summary>
+
+```
+cmake
+rust (If doing development i recommend the `rustup` package)
+git
+dfu-util - for pinecil V1 support
+polki
+gcc
+pkgconf
+glibc 
+base-devel 
+fontconfig
+atmm
+gtk3         
+```
+
+</details>
+<div style="clear:both;">&nbsp;</div>
+<details>
+  <summary>
+  
 ### :toolbox: Build option 1, handy scripts
+
  </summary>
  
 Handy scripts will compile and install PineFlash for you.
