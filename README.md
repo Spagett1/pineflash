@@ -1,6 +1,8 @@
-<a href="https://github.com/River-Mochi/PineFlash#pineflash"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSpagett1%2FPineFlash&count_bg=%23187BC0&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=true"/></a>
-[![GitHub all downloads](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=187BC0&style=flat-square)](https://github.com/Spagett1/PineFlash/releases/tag/0.3.1)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash?color=187BC0&style=flat-square)](https://github.com/Spagett1/PineFlash/releases/tag/0.3.0)
+
+<a href="https://github.com/Spagett1/PineFlash#pineflash"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSpagett1%2FPineFlash&count_bg=%23187BC0&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=true"/></a>
+[![GitHub all downloads](https://img.shields.io/github/downloads/spagett1/pineflash/total?color=187BC0&style=flat-square)](https://github.com/Spagett1/PineFlash/releases/)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/spagett1/pineflash?color=187BC0&style=flat-square)](https://github.com/Spagett1/PineFlash/releases/)
+
 
 # PineFlash
 
@@ -85,7 +87,7 @@ Install these if you don't have them (not needed if using the PKGBUILD).
 
 <details>
   <summary>
-<img width="17" src="https://cdn.simpleicons.org/windowsterminal" /> General dependancy list
+<img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependancy list
 </summary>
 
 This is the general depednancy list. 
@@ -246,7 +248,9 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 
 ## :runner: Run 
 
-<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux: Pineflash should just appear in your app launcher. Alternatively you can run `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash` from the command line.
+<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux: Pineflash should appear in app launcher options. Alternatively, you can run the command:  
+
+     `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
 
 <img width="17" src="https://cdn.simpleicons.org/Apple/187BC0" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
 <br>
