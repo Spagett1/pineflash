@@ -85,7 +85,7 @@ Install these if you don't have them (not needed if using the PKGBUILD).
 
 <details>
   <summary>
-<img width="17" src="https://cdn.simpleicons.org/windowsterminal/187BC0" /> General dependancy list
+<img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependancy list
 </summary>
 
 This is the general depednancy list. 
