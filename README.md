@@ -90,7 +90,7 @@ Install these if you don't have them (not needed if using the PKGBUILD).
 <img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependancy list
 </summary>
 
-This is the general depednancy list. 
+This list covers linux distros that are not named specifically below.
 
 If your operating system or distro has its own section then please go there as it has more specific names.
 
@@ -196,7 +196,7 @@ cd PineFlash
 <details>
   <summary>
    
-### :weight_lifting_man: Build Option 2, manual build
+### :weight_lifting_man: Build option 2: manual build
  </summary>
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
