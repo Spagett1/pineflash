@@ -1,3 +1,5 @@
+// Stops terminal from running
+#![windows_subsystem = "windows"]
 use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap};
 
 use eframe::{egui::{self}, CreationContext, emath, Theme};
@@ -269,7 +271,6 @@ if self.config.download { let ctx = ctx.clone(); let url = format!("https://gith
 }
 
 fn main() {
-
     let mut options = eframe::NativeOptions::default();
     options.decorated = true;
     options.resizable = false;

@@ -43,9 +43,11 @@ impl Flasher {
                     firmware_path = format!("{}/{}_{}.dfu", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
                 } else if cfg!(unix) && self.config.int_name == "Pinecilv2" {
                     firmware_path = format!("{}/{}_{}.bin", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
-                } else {
+                } else if cfg!(windows) && self.config.int_name == "Pinecil" {
                     // Do windows functionality here.
                     firmware_path = format!("{}\\{}_{}.dfu", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
+                } else if cfg!(windows) && self.config.int_name == "Pinecilv2" {
+                    firmware_path = format!("{}\\{}_{}.bin", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
                 }
 
             } else if self.config.picked_path != None {

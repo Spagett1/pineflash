@@ -1,0 +1,26 @@
+#pragma code_page(65001)
+1 VERSIONINFO
+FILESUBTYPE 0x0
+FILEOS 0x40004
+PRODUCTVERSION 0, 4, 0, 0
+FILETYPE 0x1
+FILEFLAGSMASK 0x3f
+FILEFLAGS 0x0
+FILEVERSION 0, 4, 0, 0
+{
+BLOCK "StringFileInfo"
+{
+BLOCK "000004b0"
+{
+VALUE "FileVersion", "0.4.0"
+VALUE "ProductName", "pineflash"
+VALUE "FileDescription", "pineflash"
+VALUE "ProductVersion", "0.4.0"
+}
+}
+BLOCK "VarFileInfo" {
+VALUE "Translation", 0x0, 0x04b0
+}
+}
+1 ICON "assets/pine64logo.ico"
+
