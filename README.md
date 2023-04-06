@@ -28,7 +28,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 #### Disclaimer: does not currently work on wayland.
 
-1. Premade Binaries: currently only available for Linux x86 distros.
+1. Easy install: use premade binaries, currently only available for Linux x86 distros.
 
 2. Build from Code: recommended if you are on MacOS, an ARM device, or doing development.
 
@@ -92,9 +92,9 @@ Install these if you don't have them (not needed if using the PKGBUILD).
 
 This list covers linux distros that are not named specifically below.
 
-If your operating system or distro has its own section then please go there as it has more specific names.
+If your operating system has its own section, then please go there; it has package names tailored to your distro.
 
-You may need more or less depending on distro or OS, if you find more dependancies are needed please open an issue containing what operating system you are running and what packages where needed. 
+If you had to install more dependencies to get it to work, please open an issue to let us know the specific OS and packages you used.
 
 ```
 cmake
@@ -271,10 +271,11 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 ## :spiral_calendar: Todo
 
 - [ ] Windows support.
-- [ ] In app instructions for getting the pinecil ready to flash.
-- [ ] Changing boot logo support.
+- [ ] MacOS premade binary
+- [ ] Launcher icon for macos, easier method to install
 - [ ] Improve UI (colors, design, workflow).
-- [ ] Launcher icon for macos and an easier way to install it there.
+- [ ] In app instructions for connecting pinecil to pc.
+- [ ] Changing boot logo support.
 
 ## :tea: Feel like supporting me?
 
