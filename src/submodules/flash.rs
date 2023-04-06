@@ -117,7 +117,6 @@ impl Flasher {
                 self.config.download_firm_notify = true;
                 self.config.picked_path = None;
                 self.config.ready_to_flash = false;
-                self.config.json = "".to_string();
 
 
             }
