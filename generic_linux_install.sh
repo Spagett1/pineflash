@@ -10,7 +10,7 @@ fi
 if [ "$(uname)" == "Darwin" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-macos64-v0.0.3.zip" -o "blisp-macos64-v0.0.3.zip"
   unzip "blisp-macos64-v0.0.3.zip"
-  $root cp ./blisp /usr/bin/blisp
+  $root cp ./blisp /usr/local/bin/blisp
 else if [ "$(uname -m)" == "x86_64" ]
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-linux64-v0.0.3.zip" -o "blisp-linux64-v0.0.3.zip"
   unzip "blisp-linux64-v0.0.3.zip"
@@ -30,6 +30,5 @@ else
   $root cp ./assets/pine64logo.png /usr/share/pixmaps/pine64logo.png
 
 fi
-
 
 $root cp ./target/release/pineflash /usr/bin/pineflash
