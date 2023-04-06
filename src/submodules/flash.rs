@@ -2,7 +2,7 @@ use std::fs::File;
 use std::time::Duration;
 use std::{process::Command};
 use std::io::{Read, Cursor};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 #[cfg(target_family = "unix")]
 static DFU_COMMAND: &str = "dfu-util";
 #[cfg(target_family = "unix")]
@@ -105,7 +105,6 @@ impl Flasher {
                 self.config.download_firm_notify = true;
                 self.config.picked_path = None;
                 self.config.ready_to_flash = false;
-
 
             }
             
