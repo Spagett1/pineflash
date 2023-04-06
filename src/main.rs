@@ -133,11 +133,11 @@ impl eframe::App for Flasher {
 
         Flasher::render_header(self, ctx);
         Flasher::render_main_windows(self, ctx);
-
-        if self.config.download {
-            let ctx = ctx.clone();
-            let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name);
-            let path = format!("/tmp/{}-{}.zip", self.config.version, self.config.int_name);
+if self.config.download { let ctx = ctx.clone(); let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name); 
+            #[cfg(target_family = "windows")]
+            let path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", format!("{}-{}.zip", self.config.version, self.config.int_name).as_str()].iter().collect();
+            #[cfg(target_family = "unix")]
+            let path: PathBuf = ["/tmp", format!("{}-{}.zip", self.config.version, self.config.int_name).as_str()].iter().collect();
             if self.config.download_firm_notify {
                 self.toasts.info("Downloading").set_duration(None).set_closable(false);
                 self.config.download_firm_notify = false
@@ -190,7 +190,7 @@ impl eframe::App for Flasher {
                 #[cfg(target_family = "windows")]
                 let path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", "metadata.zip"].iter().collect();
                 #[cfg(target_family = "unix")]
-                let path: PathBuf = ["/tmp", "/metadata.zip"].iter().collect();
+                let path: PathBuf = ["/tmp", "metadata.zip"].iter().collect();
 
                 if self.config.download_notify {
                     self.toasts.info("Downloading Language information.").set_duration(None).set_closable(false);
