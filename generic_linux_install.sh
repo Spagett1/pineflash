@@ -11,7 +11,7 @@ if [ "$(uname)" == "Darwin" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-macos64-v0.0.3.zip" -o "blisp-macos64-v0.0.3.zip"
   unzip "blisp-macos64-v0.0.3.zip"
   $root cp ./blisp /usr/local/bin/blisp
-else if [ "$(uname -m)" == "x86_64" ]; then
+elif [ "$(uname -m)" == "x86_64" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-linux64-v0.0.3.zip" -o "blisp-linux64-v0.0.3.zip"
   unzip "blisp-linux64-v0.0.3.zip"
   $root cp ./blisp /usr/bin/blisp
