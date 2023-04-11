@@ -90,7 +90,7 @@ Install these if you don't have them (not needed if using the PKGBUILD).
 <img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependancy list
 </summary>
 
-This list covers linux distros that are not named specifically below.
+This list covers linux distros which are not named below and macos.
 
 If your operating system has its own section, then please go there; it has package names tailored to your distro.
 
