@@ -171,16 +171,14 @@ sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-de
  
 Handy scripts will compile and install PineFlash for you.
 
-**(Sorry if you are on Mac, you need to build it manually, please go to the manual build section.)**
-
-### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Linux from script.
+### <img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Build Unix from script. (Macos and Linux)
 1. To build from source code, first install build dependencies.
 2. Download the source code with the following commands.
 ```
 git clone https://github.com/Spagett1/PineFlash/
 cd PineFlash
 ```
-3. Run the `generic_linux_install.sh` file which will build and install Pineflash.
+3. Run the `generic_unix_install.sh` file which will build and install Pineflash.
 
 ### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
 1. All dependancies will be handled by the PKGBUILD
