@@ -1,5 +1,3 @@
-// Stops terminal from running
-#![windows_subsystem = "windows"]
 use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap};
 
 use eframe::{egui::{self}, CreationContext, emath, Theme};
@@ -39,6 +37,7 @@ struct FlasherConfig {
     download_firm_notify: bool, 
     ready_to_flash: bool,
     logs: String,
+    json: String,
 }
 struct Flasher {
     config: FlasherConfig,
@@ -66,6 +65,7 @@ impl Default for FlasherConfig {
             picked_path: None,
             ready_to_flash: false,
             logs: "".to_string(),
+            json: "".to_string()
         }
         
     }
@@ -135,11 +135,11 @@ impl eframe::App for Flasher {
 
         Flasher::render_header(self, ctx);
         Flasher::render_main_windows(self, ctx);
-if self.config.download { let ctx = ctx.clone(); let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name); 
-            #[cfg(target_family = "windows")]
-            let path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", format!("{}-{}.zip", self.config.version, self.config.int_name).as_str()].iter().collect();
-            #[cfg(target_family = "unix")]
-            let path: PathBuf = ["/tmp", format!("{}-{}.zip", self.config.version, self.config.int_name).as_str()].iter().collect();
+
+        if self.config.download {
+            let ctx = ctx.clone();
+            let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name);
+            let path = format!("/tmp/{}-{}.zip", self.config.version, self.config.int_name);
             if self.config.download_firm_notify {
                 self.toasts.info("Downloading").set_duration(None).set_closable(false);
                 self.config.download_firm_notify = false
@@ -188,12 +188,7 @@ if self.config.download { let ctx = ctx.clone(); let url = format!("https://gith
             if self.config.version != "Select".to_string() && self.config.version != "Custom".to_string() && self.config.download_metadata {
                 let ctx = ctx.clone();
                 let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
-
-                #[cfg(target_family = "windows")]
-                let path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", "metadata.zip"].iter().collect();
-                #[cfg(target_family = "unix")]
-                let path: PathBuf = ["/tmp", "metadata.zip"].iter().collect();
-
+                let path = format!("/tmp/metadata.zip");
                 if self.config.download_notify {
                     self.toasts.info("Downloading Language information.").set_duration(None).set_closable(false);
                     self.config.download_notify = false
@@ -221,32 +216,19 @@ if self.config.download { let ctx = ctx.clone(); let url = format!("https://gith
                     self.toasts.dismiss_all_toasts();
                     self.config.logs.push_str("Download of Language Info Complete.\n");
                     self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
-
-                    #[cfg(target_family = "windows")]
-                    let path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", "metadata.zip"].iter().collect();
-                    #[cfg(target_family = "unix")]
-                    let path: PathBuf = ["/tmp", "metadata.zip"].iter().collect();
-
+                    let path = PathBuf::from("/tmp/metadata.zip");
                     let mut file = File::open(path).unwrap();
                     let mut data = Vec::new();
                     file.read_to_end(&mut data).unwrap();
-
-                    #[cfg(target_family = "windows")]
-                    let target_dir: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", "metadata"].iter().collect();
-                    #[cfg(target_family = "unix")]
-                    let target: PathBuf = ["/tmp", "metadata"].iter().collect();
+                    let target_dir = PathBuf::from("/tmp/metadata");
 
                     zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
 
-                    #[cfg(target_family = "windows")]
-                    let json_path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", "metadata", format!("{}.json", self.config.int_name).as_str()].iter().collect();
-                    #[cfg(target_family = "unix")]
-                    let json_path: PathBuf = ["/tmp", "metadata", format!("{}.json", self.config.int_name).as_str()].iter().collect();
-
-                    let json = fs::read_to_string(json_path).unwrap();
+                    let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
+                    self.config.json = fs::read_to_string(PathBuf::from(json_path)).unwrap();
 
 
-                    let value = serde_json::from_str::<YourValue>(json.as_str()).unwrap();
+                    let value = serde_json::from_str::<YourValue>(&self.config.json.as_str()).unwrap();
                     self.config.logs.push_str("Extraction of Language Info Successful.\n");
                     self.config.download_metadata = false;
                     for i in value.contents {
@@ -271,12 +253,13 @@ if self.config.download { let ctx = ctx.clone(); let url = format!("https://gith
 }
 
 fn main() {
+
     let mut options = eframe::NativeOptions::default();
     options.decorated = true;
-    options.resizable = false;
+    // options.resizable = false;
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
-    options.initial_window_size = Some(emath::Vec2{ x: 500., y: 420. });
+    options.initial_window_size = Some(emath::Vec2{ x: 460., y: 400. });
     // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(
