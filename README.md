@@ -212,20 +212,15 @@ git clone https://github.com/Spagett1/PineFlash/
 cd PineFlash 
 ```
 
-3. Download the git submodules.
+4. Download blisp which is needed for pinecil V2 support, alternatively compile it if you are not on a 64 bit computer. [Instructions]("https://github.com/pine64/blisp")
+
+In the following instructions replace `platform` with your operating system (`linux` or `macos`)
 ```
-git submodule update --init --recursive
+curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-platform64-v0.0.3.zip" -o "blisp-platform64-v0.0.3.zip"
+unzip "blisp-platform-v0.0.3.zip"
+sudo mv ./blisp /usr/local/bin/blisp
 ```
-4. build blisp which is needed for pinecil V2 support 
-```
-cd blisp
-mkdir build
-cd build
-cmake -DBLISP_BUILD_CLI=ON ..
-cmake --build .
-sudo mv ./tools/blisp/blisp /usr/bin/ #Or some other global path.
-```
-:dart: Important: Don't forget to add blisp to your path
+:dart: Important: Don't forget to add blisp to your path 
 
 5. Then build pineflash itself
 ```
