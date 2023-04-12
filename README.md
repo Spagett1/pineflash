@@ -199,8 +199,6 @@ cd PineFlash
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
  
-This is also currently the only way to install for MacOs.
- 
 1. Install all the build dependancies listed above.
 
 2. Download the source code.
