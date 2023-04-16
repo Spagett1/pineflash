@@ -12,6 +12,7 @@ static DFU_COMMAND: &str = "dfu-util.exe";
 #[cfg(target_os = "windows")]
 static BLISP_COMMAND: &str = "blisp.exe";
 
+
 use crate::Flasher;
 
 impl Flasher {
@@ -58,11 +59,22 @@ impl Flasher {
 
             self.config.logs.push_str(format!("Attempting to flash {} with the firmware {}\n", self.config.int_name, firmware_path).as_str());
             if self.config.int_name == "Pinecil" {
+
+                #[cfg(target_os = "linux")]
+                let command = Command::new("pkexec")
+                    .arg(DFU_COMMAND)
+                    .arg("-D")
+                    .arg(firmware_path)
+                    .output()
+                    .expect("Could not flash soldering iron");
+
+                #[cfg(not(target_os = "linux"))]
                 let command = Command::new(DFU_COMMAND)
                     .arg("-D")
                     .arg(firmware_path)
                     .output()
                     .expect("Could not flash soldering iron");
+
                 let output: String = String::from_utf8(command.stdout).unwrap();
                 let output_err: String = String::from_utf8(command.stderr).unwrap();
                 self.toasts.dismiss_all_toasts();
@@ -73,7 +85,23 @@ impl Flasher {
                 }
                 self.config.logs.push_str(format!("{}{}\n", output, output_err).as_str());
             } else if self.config.int_name == "Pinecilv2" {
-                let command = Command::new(BLISP_COMMAND)
+                #[cfg(target_os = "linux")]
+                let command = Command::new("pkexec")
+                    .arg(BLISP_COMMAND)
+                    .arg("write")
+                    .arg("-c")
+                    .arg("bl70x")
+                    .arg("--reset")
+                    .arg(firmware_path)
+                    .output()
+                    .expect("Could not flash soldering iron");
+
+                #[cfg(target_family = "windows")]
+                let command: PathBuf = [ std::env::current_dir().unwrap(), "tools".into(), BLISP_COMMAND.into() ].iter().collect();
+// #[cfg(target_family = "windows")]
+// println!("{:?}", path);
+                #[cfg(not(target_os = "linux"))]
+                let command = Command::new(command)
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")

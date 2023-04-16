@@ -1,3 +1,5 @@
+#! [windows_subsystem = "windows"]
+
 use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap};
 
 use eframe::{egui::{self}, CreationContext, emath, Theme};
@@ -84,6 +86,12 @@ impl Flasher {
 
 impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+
+        #[cfg(target_family = "windows")]
+        let path: PathBuf = [ std::env::current_dir().unwrap(), "tools".into() ].iter().collect();
+        #[cfg(target_family = "windows")]
+        println!("{:?}", path);
+
         ctx.set_pixels_per_point(2.00);
         let promise = self.config.promise.get_or_insert_with(|| {
                 let ctx = ctx.clone();
