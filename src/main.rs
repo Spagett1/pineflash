@@ -9,6 +9,8 @@ use serde::{Serialize, Deserialize};
 use tinyjson::JsonValue;
 use poll_promise::Promise;
 
+const ICON: &[u8] = include_bytes!("../assets/pine64logo.ico");
+
 #[derive(Serialize, Deserialize)]
 struct Language {
     language_code: String,
@@ -87,10 +89,6 @@ impl Flasher {
 impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
 
-        #[cfg(target_family = "windows")]
-        let path: PathBuf = [ std::env::current_dir().unwrap(), "tools".into() ].iter().collect();
-        #[cfg(target_family = "windows")]
-        println!("{:?}", path);
 
         ctx.set_pixels_per_point(2.00);
         let promise = self.config.promise.get_or_insert_with(|| {
@@ -147,7 +145,7 @@ impl eframe::App for Flasher {
         if self.config.download {
             let ctx = ctx.clone();
             let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/{}.zip", self.config.version, self.config.int_name);
-            let path = format!("/tmp/{}-{}.zip", self.config.version, self.config.int_name);
+            let path: PathBuf = [ std::env::temp_dir(), format!("{}-{}.zip", self.config.version, self.config.int_name).into() ].iter().collect();
             if self.config.download_firm_notify {
                 self.toasts.info("Downloading").set_duration(None).set_closable(false);
                 self.config.download_firm_notify = false
@@ -160,8 +158,6 @@ impl eframe::App for Flasher {
                     let data = result.unwrap().bytes;
                     let mut file = File::create(path).unwrap();
 
-                    // println!("{:?}", string);
-                    // let json: JsonValue = json_string.parse().unwrap();
                     if file.write_all(data.as_slice()).is_err() {
                         println!("Could not write bytes to zip file");
                     }
@@ -196,7 +192,7 @@ impl eframe::App for Flasher {
             if self.config.version != "Select".to_string() && self.config.version != "Custom".to_string() && self.config.download_metadata {
                 let ctx = ctx.clone();
                 let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
-                let path = format!("/tmp/metadata.zip");
+                let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
                 if self.config.download_notify {
                     self.toasts.info("Downloading Language information.").set_duration(None).set_closable(false);
                     self.config.download_notify = false
@@ -224,15 +220,16 @@ impl eframe::App for Flasher {
                     self.toasts.dismiss_all_toasts();
                     self.config.logs.push_str("Download of Language Info Complete.\n");
                     self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
-                    let path = PathBuf::from("/tmp/metadata.zip");
+                    let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
                     let mut file = File::open(path).unwrap();
                     let mut data = Vec::new();
                     file.read_to_end(&mut data).unwrap();
-                    let target_dir = PathBuf::from("/tmp/metadata");
+                    let target_dir: PathBuf = [ std::env::temp_dir(), "metadata".into() ].iter().collect();
 
                     zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
 
-                    let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
+                    // let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
+                    let json_path: PathBuf = [ std::env::temp_dir(), "metadata".into(), format!("{}.json", self.config.int_name ).into() ].iter().collect();
                     self.config.json = fs::read_to_string(PathBuf::from(json_path)).unwrap();
 
 
@@ -268,6 +265,7 @@ fn main() {
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
     options.initial_window_size = Some(emath::Vec2{ x: 460., y: 400. });
+    options.icon_data = Some(eframe::IconData { rgba: (ICON.to_vec()), width: (32), height: (32) });
     // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(

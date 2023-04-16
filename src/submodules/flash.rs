@@ -21,16 +21,9 @@ impl Flasher {
             if self.config.version != "Custom".to_string() {
 
 
-                #[cfg(target_family = "windows")]
-                let path: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", format!("{}-{}.zip", self.config.version, self.config.int_name).as_str()].iter().collect();
-                #[cfg(target_family = "unix")]
-                let path: PathBuf = ["/tmp", format!("{}-{}.zip", self.config.version, self.config.int_name).as_str()].iter().collect();
+                let path: PathBuf = [ std::env::temp_dir(), format!("{}-{}.zip", self.config.version, self.config.int_name).as_str().into() ].iter().collect();
 
-
-                #[cfg(target_family = "windows")]
-                let target: PathBuf = ["c:\\", "Users", whoami::username().as_str(), "AppData", "Local", "Temp", format!("{}-{}", self.config.version, self.config.int_name).as_str()].iter().collect();
-                #[cfg(target_family = "unix")]
-                let target: PathBuf = ["/tmp", format!("{}-{}", self.config.version, self.config.int_name).as_str()].iter().collect();
+                let target: PathBuf = [ std::env::temp_dir(), format!("{}-{}", self.config.version, self.config.int_name).as_str().into() ].iter().collect();
 
                 let mut file = File::open(path).unwrap();
                 let mut data = Vec::new();

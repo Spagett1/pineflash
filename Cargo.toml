@@ -1,7 +1,8 @@
 [package]
 name = "pineflash"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2021"
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -19,3 +20,7 @@ regex = "1.6.0"
 whoami = "1.2.3"
 serde = { version = "^1.0.145", features = ["derive"] }
 serde_json = { version="1.0.89" }
+
+
+[build-dependencies]
+winresource = "0.1.15"
