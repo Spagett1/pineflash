@@ -90,7 +90,7 @@ impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
 
 
-        ctx.set_pixels_per_point(2.00);
+        ctx.set_pixels_per_point(1.80);
         let promise = self.config.promise.get_or_insert_with(|| {
                 let ctx = ctx.clone();
                 self.toasts.info("Fetching versions").set_duration(None).set_closable(false);
@@ -261,11 +261,11 @@ fn main() {
 
     let mut options = eframe::NativeOptions::default();
     options.decorated = true;
-    // options.resizable = false;
+    options.resizable = false;
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
-    options.initial_window_size = Some(emath::Vec2{ x: 460., y: 400. });
     options.icon_data = Some(eframe::IconData { rgba: (ICON.to_vec()), width: (32), height: (32) });
+    options.initial_window_size = Some(emath::Vec2{ x: 560., y: 500. });
     // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(
