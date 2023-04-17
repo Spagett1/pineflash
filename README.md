@@ -26,7 +26,6 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 # :desktop_computer: Install Options
 
-#### Disclaimer: does not currently work on wayland.
 
 1. Easy install: use premade binaries, currently only available for Linux x86 distros and Windows x86.
 
@@ -43,6 +42,14 @@ Download the latest pineflash exe file from the [releases page](https://github.c
 
 Then just double click it.
 
+### <img width="18" src="https://cdn.simpleicons.org/RedHat/" /> RedHat distros (Fedora, Centos, Nobara, Rocky, etc.)
+Download the latest pineflash .rpm file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
+
+ Then just run.
+ ```
+ sudo dnf install ./pineflash-*.x86_64.rpm
+ ```
+ 
 ### <img width="18" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros (Arch, Artix, Manjaro, Endeavor, etc.)
 
 Download the latest pineflash pkg.tar.zst file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
