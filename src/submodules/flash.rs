@@ -30,7 +30,7 @@ impl Flasher {
                 file.read_to_end(&mut data).unwrap();
 
                 zip_extract::extract(Cursor::new(data), &target, true).unwrap();
-                self.config.logs.push_str("File extracted successfully\n");
+                self.config.logs.push_str("PineFlash: File extracted successfully\n");
 
 
                 if cfg!(unix) && self.config.int_name == "Pinecil" {
@@ -50,7 +50,7 @@ impl Flasher {
                 self.toasts.error("Please select a file or firmware version");
             }
 
-            self.config.logs.push_str(format!("Attempting to flash {} with the firmware {}\n", self.config.int_name, firmware_path).as_str());
+            self.config.logs.push_str(format!("PineFlash: Attempting to flash {} with the firmware {}\n", self.config.int_name, firmware_path).as_str());
             if self.config.int_name == "Pinecil" {
 
                 #[cfg(target_os = "linux")]
@@ -76,7 +76,7 @@ impl Flasher {
                 } else {
                     self.toasts.error("Flashing failed, is your pinecil plugged in?").set_duration(Some(Duration::from_secs(5))).set_closable(false);
                 }
-                self.config.logs.push_str(format!("{}{}\n", output, output_err).as_str());
+                self.config.logs.push_str(format!("Dfu-Util: {}{}\n", output, output_err).as_str());
             } else if self.config.int_name == "Pinecilv2" {
                 #[cfg(target_os = "linux")]
                 let command = Command::new("pkexec")
@@ -107,11 +107,11 @@ impl Flasher {
                 let output_err: String = String::from_utf8(command.stderr).unwrap();
                 self.toasts.dismiss_all_toasts();
                 if !output_err.as_str().contains("Device not found") && !output_err.as_str().contains("Failed") {
-                    self.toasts.info("Flashing completed").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+                    self.toasts.info("Flashing completed").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                 } else {
-                    self.toasts.error("Flashing failed, is your pinecil plugged in?").set_duration(Some(Duration::from_secs(5))).set_closable(false);
+                    self.toasts.error("Flashing failed, is your pinecil plugged in?").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                 }
-                self.config.logs.push_str(format!("{}{}\n", output, output_err).as_str());
+                self.config.logs.push_str(format!("Blisp: {}{}\n", output, output_err).as_str());
                 
                 // Very ugly way of reseting the program
                 self.config.version = "Select".to_string();

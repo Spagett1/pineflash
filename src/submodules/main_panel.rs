@@ -101,16 +101,18 @@ impl Flasher {
                     }
                 };
             }
-            ui.collapsing("Logs", |ui|{
-                if ui.button("Copy Log").clicked() {
-                    ui.output().copied_text = self.config.logs.clone();
+            egui::CollapsingHeader::new("Logs")
+                .default_open(true)
+                .show(ui, |ui| {
+                    if ui.button("Copy Log").clicked() {
+                        ui.output().copied_text = self.config.logs.clone();
 
-                }
-                ScrollArea::vertical().show(ui, |ui|{
-                    ui.monospace(self.config.logs.clone());
+                    }
+                    ScrollArea::vertical().show(ui, |ui|{
+                        ui.monospace(self.config.logs.clone());
+                    });
                 });
 
-            });
         self.toasts.show(ctx);
             // })
         });

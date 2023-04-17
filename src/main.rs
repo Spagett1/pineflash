@@ -68,7 +68,7 @@ impl Default for FlasherConfig {
             download_firm_notify: true, 
             picked_path: None,
             ready_to_flash: false,
-            logs: "".to_string(),
+            logs: format!("Pineflash v{}\n", env!("CARGO_PKG_VERSION")).to_string(),
             json: "".to_string()
         }
         
@@ -80,7 +80,7 @@ impl Flasher {
         let config: FlasherConfig = FlasherConfig::default();
         // Flasher::configure_fonts(&cc.egui_ctx);
 
-        let toasts = Toasts::default().with_anchor(Anchor::BottomRight);
+        let toasts = Toasts::default().with_anchor(Anchor::TopRight).with_margin(emath::vec2(0.0, 40.0));
 
         Flasher { config, toasts }
     }
@@ -102,7 +102,7 @@ impl eframe::App for Flasher {
                         Ok(_) => {
                             let json_string = String::from_utf8(result.unwrap().bytes).unwrap();
                             let json: JsonValue = json_string.parse().unwrap();
-                            for i in 0..5 {
+                            for i in 0..3 {
                                 let version = json[i]["tag_name"].stringify().unwrap();
                                 let version = &version[1..version.len()-1];
                                 results.push(version.to_string());
@@ -124,14 +124,14 @@ impl eframe::App for Flasher {
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Versions Found").set_duration(Some(Duration::from_secs(5))).set_closable(false);
                     self.config.vers = vers.clone();
-                    self.config.logs.push_str("Versions successfully fetched.\n");
+                    self.config.logs.push_str("PineFlash: Versions successfully fetched.\n");
                     self.config.versions_checked = true;
                     self.config.download_metadata = true;
                 },
                 Some(Err(_)) => {
                     self.toasts.dismiss_latest_toast();
                     self.toasts.info("Could not find versions online,\ncheck your internet and try again").set_duration(Some(Duration::from_secs(5))).set_closable(false);
-                    self.config.logs.push_str("Error fetching versions.\n");
+                    self.config.logs.push_str("PineFlash: Error fetching versions.\n");
                     self.config.versions_checked = true;
                 },
                 None => (),
@@ -174,7 +174,7 @@ impl eframe::App for Flasher {
                 Some(Ok(_)) => {                               
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
-                    self.config.logs.push_str("Download Complete.\n");
+                    self.config.logs.push_str("PineFlash: Download Complete.\n");
                     self.toasts.info("Flashing.").set_duration(None).set_closable(false);
                     self.config.download = false;
                     Flasher::flash(self)
@@ -182,7 +182,7 @@ impl eframe::App for Flasher {
                 Some(Err(_)) => {
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Something went wrong with the download, check your internet and try again.").set_duration(Some(Duration::from_secs(5))).set_closable(false);
-                    self.config.logs.push_str("Error downloading firmware.\n");
+                    self.config.logs.push_str("PineFlash: Error downloading firmware.\n");
                     self.config.download = false;
                 },
                 None => {
@@ -218,7 +218,7 @@ impl eframe::App for Flasher {
             match promise.ready() {                        
                 Some(Ok(_)) => {                               
                     self.toasts.dismiss_all_toasts();
-                    self.config.logs.push_str("Download of Language Info Complete.\n");
+                    self.config.logs.push_str("PineFlash: Download of Language Info Complete.\n");
                     self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
                     let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
                     let mut file = File::open(path).unwrap();
@@ -234,7 +234,7 @@ impl eframe::App for Flasher {
 
 
                     let value = serde_json::from_str::<YourValue>(&self.config.json.as_str()).unwrap();
-                    self.config.logs.push_str("Extraction of Language Info Successful.\n");
+                    self.config.logs.push_str("PineFlash: Extraction of Language Info Successful.\n");
                     self.config.download_metadata = false;
                     for i in value.contents {
                         if !i.0.contains(".hex") {
@@ -247,7 +247,7 @@ impl eframe::App for Flasher {
                 Some(Err(_)) => {
                     self.toasts.dismiss_all_toasts();
                     self.toasts.info("Something went wrong with the download, check your internet and try again.").set_duration(Some(Duration::from_secs(5))).set_closable(false);
-                    self.config.logs.push_str("Error downloading metadata.\n");
+                    self.config.logs.push_str("PineFlash: Error downloading metadata.\n");
                     self.config.download_metadata = false
                 },
                 None => {
@@ -265,7 +265,7 @@ fn main() {
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
     options.icon_data = Some(eframe::IconData { rgba: (ICON.to_vec()), width: (32), height: (32) });
-    options.initial_window_size = Some(emath::Vec2{ x: 560., y: 500. });
+    options.initial_window_size = Some(emath::Vec2{ x: 590., y: 500. });
     // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
     eframe::run_native(
