@@ -6,7 +6,8 @@
 
 # PineFlash
 
-<img src="https://user-images.githubusercontent.com/77225642/229287961-066faac2-5470-4dce-823e-9137dd331fee.png" align="right" width="425" style="float:left">
+<img src="https://user-images.githubusercontent.com/77225642/232458988-d854294b-96e4-45c7-a280-d26e989db845.png" align="right" width="425" style="float:left">
+
 A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.  
 
 ## Features
