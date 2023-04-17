@@ -261,13 +261,13 @@ fn main() {
 
     let mut options = eframe::NativeOptions::default();
     options.decorated = true;
-    options.resizable = false;
     options.follow_system_theme = false;
     options.default_theme = Theme::Dark;
     options.icon_data = Some(eframe::IconData { rgba: (ICON.to_vec()), width: (32), height: (32) });
+    options.resizable = true;
     options.initial_window_size = Some(emath::Vec2{ x: 590., y: 500. });
     // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
-    // options.min_window_size = Some(emath::Vec2{ x: 300., y: 275. });
+    options.min_window_size = Some(emath::Vec2{ x: 590., y: 500. });
     eframe::run_native(
         "PineFlash",
         options,
