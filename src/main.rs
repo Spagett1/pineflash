@@ -1,6 +1,6 @@
 #! [windows_subsystem = "windows"]
 
-use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap};
+use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap, env};
 
 use eframe::{egui::{self}, CreationContext, emath, Theme};
 mod submodules;
@@ -72,7 +72,7 @@ impl Default for FlasherConfig {
             json: "".to_string()
         }
         
-    }
+     }
 }
 
 impl Flasher {

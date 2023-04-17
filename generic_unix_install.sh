@@ -17,7 +17,7 @@ elif [ "$(uname -m)" == "x86_64" ]; then
   unzip "blisp-linux64-v0.0.3.zip"
   $root cp ./blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
-  $root cp ./Pineflash.desktop /usr/share/applications/Pineflash.desktop
+  $root cp ./assets/Pineflash.desktop /usr/share/applications/Pineflash.desktop
   $root cp ./assets/pine64logo.png /usr/share/pixmaps/pine64logo.png
 else 
   git clone --recursive "https://github.com/pine64/blisp.git"
@@ -29,7 +29,7 @@ else
   $root cp ./blisp/build/tools/blisp/blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
   cd ../..
-  $root cp ./Pineflash.desktop /usr/share/applications/Pineflash.desktop
+  $root cp ./assets/Pineflash.desktop /usr/share/applications/Pineflash.desktop
   $root cp ./assets/pine64logo.png /usr/share/pixmaps/pine64logo.png
 
 fi

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=PineFlash
+GenericName=PineFlash
+Comment=Tool to flash pine64 devices
+Exec=pineflash
+Icon=pine64logo
+Terminal=false
+Type=Application
+Categories=System
+X-Desktop-File-Install-Version=0.26

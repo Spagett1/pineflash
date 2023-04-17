@@ -26,8 +26,14 @@ makedepends=(
 provides=("${_pkgname}=${pkgver}")
 conflicts=("${_pkgname}")
 source=(
-  "${_pkgname}::git+${url}.git#branch=master")
-sha256sums=('SKIP')
+  "${_pkgname}::git+${url}.git#branch=master"
+  "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-linux64-v0.0.3.zip"
+)
+sha256sums=(
+  'SKIP'
+  'c2230d68f24fbe4fa04969811de5e42c02e4b4c61e99063522442c383066ed4f'
+)
+
 
 prepare() {
   cd "${srcdir}/${_pkgname}"
