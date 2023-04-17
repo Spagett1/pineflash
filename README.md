@@ -309,6 +309,8 @@ Well you can buy me a coffee, or rather tea bags since i dont drink coffee ;)
 - [IronOS](https://github.com/Ralim/IronOS) - The firmware running on this soldering iron
 - [PineSAM](https://github.com/builder555/PineSAM) - A cool Bluetooth app to control Pinecil V2 from any browser
 - [Egui](https://github.com/emilk/egui) - The awesome GUI toolkit used to make this program
+- [InnoSetup](https://github.com/jrsoftware/issrc) - The software i use to generate windows releases
+- [FPM](https://github.com/jordansissel/fpm) - The tool i use to generate linux releases for all sorts of distros
  
  ## :dash: Stay fluxy my friends.
  <img src="https://user-images.githubusercontent.com/77225642/229288128-e6993505-47a2-4437-92cf-7b2a5de10677.png" width="425">
