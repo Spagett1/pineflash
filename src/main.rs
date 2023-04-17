@@ -2,7 +2,8 @@
 
 use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap, env};
 
-use eframe::{egui::{self}, CreationContext, emath, Theme};
+use eframe::{CreationContext, emath, Theme};
+use eframe::egui;
 mod submodules;
 use egui_notify::{Toasts, Anchor};
 use serde::{Serialize, Deserialize};
@@ -88,8 +89,7 @@ impl Flasher {
 
 impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-
-
+        
         ctx.set_pixels_per_point(1.80);
         let promise = self.config.promise.get_or_insert_with(|| {
                 let ctx = ctx.clone();

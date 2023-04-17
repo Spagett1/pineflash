@@ -14,7 +14,7 @@ impl Flasher {
                     .selected_text(self.config.iron.to_string())
                     .show_ui(ui, |ui| {
                         ui.selectable_value(&mut self.config.iron, "Pinecil V1".to_string(), "Pinecil V1");
-                        ui.selectable_value(&mut self.config.iron, "Pinecil V2".to_string(), "Pinecil V2 W.I.P.");
+                        ui.selectable_value(&mut self.config.iron, "Pinecil V2".to_string(), "Pinecil V2");
                     }
                 );
                 if self.config.iron == "Pinecil V1"  {
@@ -47,13 +47,13 @@ impl Flasher {
                         {
                             self.toasts.dismiss_all_toasts();
                             self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
-                            self.config.logs.push_str("Incorrect filetype selected.\n");
+                            self.config.logs.push_str("PineFlash: PineFlash: Incorrect filetype selected.\n");
                         } else {
                             self.config.picked_path = Some(path.display().to_string());
                             self.config.version = "Custom".to_string();
                             self.toasts.dismiss_all_toasts();
                             self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
-                            self.config.logs.push_str("Custom file selected.\n");
+                            self.config.logs.push_str("PineFlash: Custom file selected.\n");
                             self.config.ready_to_flash = true;
                         }
                     }
