@@ -19,8 +19,8 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 ## Supported Devices 
  | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple/187BC0" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/187BC0" /> Windows|
  | :-----: | :-----: | :-----: | :-----: |
- | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| wip  |
- | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  wip  |
+ | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
+ | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
 <br clear="both" />
 
 
@@ -28,7 +28,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 
 #### Disclaimer: does not currently work on wayland.
 
-1. Easy install: use premade binaries, currently only available for Linux x86 distros.
+1. Easy install: use premade binaries, currently only available for Linux x86 distros and Windows x86.
 
 2. Build from Code: recommended if you are on MacOS, an ARM device, or doing development.
 
@@ -37,35 +37,47 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
    
 ## :clamp: Premade Binaries 
  </summary>
- 
-### :bookmark_tabs: Dependancies
 
-```
-# needed for all versions of PineFlash
-polkit - linux only
-dfu-util - for pinecil V1 support
-```
- 
-### <img width="18" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros (Arch, Artix, Manjaro, Endeavor)
+## <img width="18" src="https://cdn.simpleicons.org/Windows11/187BC0" /> Windows
+Download the latest pineflash exe file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
-Download the latest pineflash .tar.zst file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
+Then just double click it.
+
+### <img width="18" src="https://cdn.simpleicons.org/ArchLinux/187BC0" /> Arch based distros (Arch, Artix, Manjaro, Endeavor, etc.)
+
+Download the latest pineflash pkg.tar.zst file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
 Then simply run.
 ```
-sudo pacman -U ./pineflash-*-x86.tar.zst 
+sudo pacman -U pineflash-*-x86_64.pkg.tar.zst
 ```
 
-### <img width="18" src="https://cdn.simpleicons.org/Linux/187BC0" /> Other Linux x86 distro's
+### <img width="18" src="https://cdn.simpleicons.org/Debian" /> Debian based distros (Debian, Ubuntu, PopOs, etc.)
+Download the latest pineflash .deb file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
 
-Install items from dependencies list above.
-
-Download the latest pineflash_linux_x86_<version>.zip file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
-
-Then extract and install it.
+Then just run.
 ```
-unzip ./pineflash_linux_x86_*.zip
-sudo cp -r usr/* /usr/
+sudo apt install ./pineflash_*_amd64.deb
 ```
+
+### <img width="18" src="https://cdn.simpleicons.org/Linux/CC5500" /> Other Linux x86 distro's
+Download the latest pineflash .tar.xz file from the [releases page](https://github.com/Spagett1/PineFlash/releases).
+
+Extract the file.
+```
+tar -xf ./pineflash-*-x86_64.tar.xz
+```
+
+And copy the contents into your system 
+```
+doas cp -r ./usr /
+```
+> **_NOTE:_**  Make sure you install dfu-util manually if you have a pinecil v1 and choose this option. Window manager users should ensure they have a pokit agent installed and enabled.
+
+### <img width="18" src="https://cdn.simpleicons.org/Apple/818589" /> MacOs
+Sorry we dont have built apps for you yet, head to the build from source section and use the unix install script. 
+
+> **_NOTE:_** You will also need to run pineflash from the terminal, this is on the todo list to get fixed.
 
 </details>
 <div style="clear:both;">&nbsp;</div>
@@ -224,11 +236,13 @@ cargo build --release
 ```
 6. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
 
-7. Then copy the Pineflash.desktop file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers. (This does not apply to MacOs, you will have to run pineflash from the terminal for now, sorry.)
+7. Then copy the `assets/Pineflash.desktop` file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers. (This does not apply to MacOs, you will have to run pineflash from the terminal for now, sorry.)
 
-8. On linux, root permissions are needed for dfu-util and blisp if running from the terminal. In order to solve this you need to run the program with the following command  
-`pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`.   
-If you use the Gui app, then don't worry about it. It's already in the .desktop file and not necessary.
+8. Just run the program by typing it into the terminal.
+```
+pineflash
+```
+Alternatively just run it from your app launcher (unless your on macos).
 
 </details>
 <div style="clear:both;">&nbsp;</div>
@@ -239,11 +253,16 @@ If you use the Gui app, then don't worry about it. It's already in the .desktop 
 
 ## :runner: Run 
 
-<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux: Pineflash should appear in app launcher options. Alternatively, you can run the command:  
+<img width="17" src="https://cdn.simpleicons.org/Linux/CC5500" /> Linux: Pineflash should appear in app launcher options. Alternatively, you can run the command:  
 
-     `pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY pineflash`
+     `pineflash`
 
-<img width="17" src="https://cdn.simpleicons.org/Apple/187BC0" /> MacOS: Simply running `pineflash` will work fine as it doesn't need root privledges. Sorry, no launcher icon yet. 
+<img width="17" src="https://cdn.simpleicons.org/Apple/818589" /> MacOS: Sorry, no launcher icon yet, youll need to run this command to run pineflash.
+
+     `pineflash`
+
+<img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu.
+
 <br>
 
 <details>
