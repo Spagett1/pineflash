@@ -18,7 +18,7 @@ impl Flasher {
                     }
                 );
                 if self.config.iron == "Pinecil V1"  {
-                    self.config.int_name = "Pinecil".to_string();
+                    self.config.int_name = "Pinecilv1".to_string();
                 } else if self.config.iron == "Pinecil V2" {
                     self.config.int_name = "Pinecilv2".to_string();
                 }
@@ -42,19 +42,19 @@ impl Flasher {
                 });
                 if ui.button(RichText::new("📁").size(17.)).clicked() {
                     if let Some(path) = rfd::FileDialog::new().pick_file() {
-                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
+                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecilv1" || 
                             !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
                         {
                             self.toasts.dismiss_all_toasts();
                             self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                             self.config.logs.push_str("PineFlash: PineFlash: Incorrect filetype selected.\n");
+                            self.config.picked_path = None;
                         } else {
                             self.config.picked_path = Some(path.display().to_string());
                             self.config.version = "Custom".to_string();
                             self.toasts.dismiss_all_toasts();
                             self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                             self.config.logs.push_str("PineFlash: Custom file selected.\n");
-                            self.config.ready_to_flash = true;
                         }
                     }
                 }
@@ -63,9 +63,9 @@ impl Flasher {
 
             ui.label("Select Your Language.");
             ui.add_enabled_ui({
-                if self.config.version != "Select".to_string() 
-                    && !self.config.download_metadata 
-                {true} else {false}
+                // bool
+                self.config.version != *"Select" && 
+                !self.config.download_metadata
             }, |ui|{
                 menu::bar(ui, |ui|{
                     egui::ComboBox::from_label("  ")
@@ -81,26 +81,43 @@ impl Flasher {
                 });
             });
 
+            if self.config.picked_path.is_some() || self.config.version != *"Custom" && 
+                self.config.version != *"Select" && 
+                !self.config.download && 
+                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                self.config.iron_connected.as_ref() == Some(&"Both".to_string()){
 
-            // ui.vertical_centered(|ui|{
-
-            if self.config.version != "Custom".to_string() && self.config.version != "Select".to_string() && self.config.download == false {
                 self.config.ready_to_flash = true
-            } else if self.config.version == "Custom".to_string() && self.config.picked_path == None {
+
+            } else {
                 self.config.ready_to_flash = false
             }
 
             if !self.config.ready_to_flash {
-                ui.add_enabled(false, egui::Button::new("Update!")).on_disabled_hover_text("Select a firmware version or custom file");
-            } else {
-                if ui.button("Update!").clicked() {
-                    if self.config.version != "Custom".to_string() {
-                        self.config.download = true;
-                    } else {
-                        Flasher::flash(self)
-                    }
-                };
-            }
+                ui.add_enabled(false, egui::Button::new("Update!")).on_disabled_hover_text(
+                    // Tell user why they can not flash
+                    if  self.config.iron_connected.as_ref() == Some(&self.config.int_name) ||
+                        self.config.iron_connected.as_ref() == Some(&"Both".to_string())
+                        { "Select a firmware version or a custom file." } 
+                    else if self.config.iron_connected.is_some() && 
+                        self.config.iron_connected.as_ref() != Some(&self.config.int_name) &&
+                        self.config.iron_connected.as_ref() != Some(&"Both".to_string())
+                        {"The selected soldering iron does not match the one currently plugged in."}
+                    else if self.config.version != *"Custom" ||
+                        self.config.picked_path.is_some() && 
+                        self.config.version != *"Select"
+                        {"Connect your soldering iron and make sure it is in flashing mode."} 
+                    else 
+                        {"Please select a firmware version and\nplug your soldering iron in whilst in flashing mode."} 
+                );
+            } else if ui.button("Update!").clicked() {
+                if self.config.version != *"Custom" {
+                    self.config.download = true;
+                } else {
+                    Flasher::flash(self)
+                }
+            };
+            
             egui::CollapsingHeader::new("Logs")
                 .default_open(true)
                 .show(ui, |ui| {
