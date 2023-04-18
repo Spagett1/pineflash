@@ -63,9 +63,9 @@ impl Flasher {
 
             ui.label("Select Your Language.");
             ui.add_enabled_ui({
-                if self.config.version != "Select".to_string() 
-                    && !self.config.download_metadata 
-                {true} else {false}
+                // bool
+                self.config.version != *"Select" && 
+                !self.config.download_metadata
             }, |ui|{
                 menu::bar(ui, |ui|{
                     egui::ComboBox::from_label("  ")
@@ -81,9 +81,9 @@ impl Flasher {
                 });
             });
 
-            if self.config.picked_path.is_some() || self.config.version != "Custom".to_string() && 
-                self.config.version != "Select".to_string() && 
-                self.config.download == false && 
+            if self.config.picked_path.is_some() || self.config.version != *"Custom" && 
+                self.config.version != *"Select" && 
+                !self.config.download && 
                 self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
                 self.config.iron_connected.as_ref() == Some(&"Both".to_string()){
 
@@ -103,22 +103,21 @@ impl Flasher {
                         self.config.iron_connected.as_ref() != Some(&self.config.int_name) &&
                         self.config.iron_connected.as_ref() != Some(&"Both".to_string())
                         {"The selected soldering iron does not match the one currently plugged in."}
-                    else if self.config.version != "Custom".to_string() ||
+                    else if self.config.version != *"Custom" ||
                         self.config.picked_path.is_some() && 
-                        self.config.version != "Select".to_string() 
+                        self.config.version != *"Select"
                         {"Connect your soldering iron and make sure it is in flashing mode."} 
                     else 
                         {"Please select a firmware version and\nplug your soldering iron in whilst in flashing mode."} 
                 );
-            } else {
-                if ui.button("Update!").clicked() {
-                    if self.config.version != "Custom".to_string() {
-                        self.config.download = true;
-                    } else {
-                        Flasher::flash(self)
-                    }
-                };
-            }
+            } else if ui.button("Update!").clicked() {
+                if self.config.version != *"Custom" {
+                    self.config.download = true;
+                } else {
+                    Flasher::flash(self)
+                }
+            };
+            
             egui::CollapsingHeader::new("Logs")
                 .default_open(true)
                 .show(ui, |ui| {

@@ -18,7 +18,7 @@ use crate::Flasher;
 impl Flasher {
     pub fn flash(&mut self) {
         let mut firmware_path = "".to_string();
-            if self.config.version != "Custom".to_string() {
+            if self.config.version != *"Custom" {
 
 
                 let path: PathBuf = [ std::env::temp_dir(), format!("{}-{}.zip", self.config.version, self.config.int_name).as_str().into() ].iter().collect();
@@ -33,18 +33,18 @@ impl Flasher {
                 self.config.logs.push_str("PineFlash: File extracted successfully\n");
 
 
-                if cfg!(unix) && self.config.int_name == "Pinecil" {
+                if cfg!(unix) && self.config.int_name == "Pinecilv1" {
                     firmware_path = format!("{}/{}_{}.dfu", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
                 } else if cfg!(unix) && self.config.int_name == "Pinecilv2" {
                     firmware_path = format!("{}/{}_{}.bin", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
-                } else if cfg!(windows) && self.config.int_name == "Pinecil" {
+                } else if cfg!(windows) && self.config.int_name == "Pinecilv1" {
                     // Do windows functionality here.
                     firmware_path = format!("{}\\{}_{}.dfu", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
                 } else if cfg!(windows) && self.config.int_name == "Pinecilv2" {
                     firmware_path = format!("{}\\{}_{}.bin", target.as_os_str().to_str().unwrap(), self.config.int_name, self.config.lang);
                 }
 
-            } else if self.config.picked_path != None {
+            } else if self.config.picked_path.is_some() {
                 firmware_path = self.config.picked_path.as_ref().unwrap().to_string();
             }  else {
                 self.toasts.error("Please select a file or firmware version");

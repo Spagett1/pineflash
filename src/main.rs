@@ -71,7 +71,7 @@ impl Default for FlasherConfig {
             download_firm_notify: true, 
             picked_path: None,
             ready_to_flash: false,
-            logs: format!("Pineflash v{}\n", env!("CARGO_PKG_VERSION")).to_string(),
+            logs: format!("Pineflash v{}\n", env!("CARGO_PKG_VERSION")),
             json: "".to_string(),
             iron_connected: None,
             check_count: 0
@@ -205,7 +205,7 @@ impl eframe::App for Flasher {
                 },
             }
         }
-            if self.config.version != "Select".to_string() && self.config.version != "Custom".to_string() && self.config.download_metadata {
+            if !self.config.version.contains("Select") && !self.config.version.contains("Custom") && self.config.download_metadata {
                 let ctx = ctx.clone();
                 let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
                 let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
@@ -246,10 +246,10 @@ impl eframe::App for Flasher {
 
                     // let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
                     let json_path: PathBuf = [ std::env::temp_dir(), "metadata".into(), format!("{}.json", self.config.int_name ).into() ].iter().collect();
-                    self.config.json = fs::read_to_string(PathBuf::from(json_path)).unwrap();
+                    self.config.json = fs::read_to_string(json_path).unwrap();
 
 
-                    let value = serde_json::from_str::<YourValue>(&self.config.json.as_str()).unwrap();
+                    let value = serde_json::from_str::<YourValue>(self.config.json.as_str()).unwrap();
                     self.config.logs.push_str("PineFlash: Extraction of Language Info Successful.\n");
                     self.config.download_metadata = false;
                     for i in value.contents {
@@ -275,15 +275,19 @@ impl eframe::App for Flasher {
 
 fn main() {
 
-    let mut options = eframe::NativeOptions::default();
-    options.decorated = true;
-    options.follow_system_theme = false;
-    options.default_theme = Theme::Dark;
-    options.icon_data = Some(eframe::IconData { rgba: (ICON.to_vec()), width: (32), height: (32) });
-    options.resizable = true;
-    options.initial_window_size = Some(emath::Vec2{ x: 590., y: 500. });
-    // options.max_window_size = Some(emath::Vec2{ x: 300., y: 275. });
-    options.min_window_size = Some(emath::Vec2{ x: 590., y: 500. });
+    // let mut options = eframe::NativeOptions::default();
+    let options = eframe::NativeOptions { 
+            decorated: true, 
+            follow_system_theme: false, 
+            default_theme: Theme::Dark, 
+            icon_data: Some(eframe::IconData { rgba: (ICON.to_vec()), 
+            width: (32), height: (32) }), 
+            resizable: true, 
+            initial_window_size: Some(emath::Vec2{ x: 590., y: 500. }), 
+            min_window_size: Some(emath::Vec2{ x: 590., y: 500. }), 
+            ..Default::default() 
+        };
+
     eframe::run_native(
         "PineFlash",
         options,

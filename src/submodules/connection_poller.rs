@@ -20,16 +20,24 @@ impl Flasher {
         }
 
         for device in ports {
-            match device.port_type {
-                UsbPort(info) => {
-                        if info.serial_number.clone().unwrap().contains("000000020000") {
+
+            if let UsbPort(info) = device.port_type {
+                if info.serial_number.clone().unwrap().contains("000000020000") {
+                    // pinecil v2 connected
+                    v2 = true;
+                    type_of_pinecil = Some("Pinecilv2".to_string())
+                }
+            }
+            // match device.port_type {
+                // UsbPort(info) => {
+                        // if info.serial_number.clone().unwrap().contains("000000020000") {
                             // pinecil v2 connected
-                            v2 = true;
-                            type_of_pinecil = Some("Pinecilv2".to_string())
-                        }
-                    }
-                _ => {}
-            } 
+                            // v2 = true;
+                            // type_of_pinecil = Some("Pinecilv2".to_string())
+                        // }
+                    // }
+                // _ => {}
+            // } 
         }
         if v1 && v2 && self.config.iron_connected.as_ref() != Some(&"Both".to_string()) {
             type_of_pinecil = Some("Both".to_string());
