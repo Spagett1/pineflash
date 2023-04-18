@@ -43,6 +43,8 @@ struct FlasherConfig {
     ready_to_flash: bool,
     logs: String,
     json: String,
+    iron_connected: Option<String>,
+    check_count: i32,
 }
 struct Flasher {
     config: FlasherConfig,
@@ -70,7 +72,9 @@ impl Default for FlasherConfig {
             picked_path: None,
             ready_to_flash: false,
             logs: format!("Pineflash v{}\n", env!("CARGO_PKG_VERSION")).to_string(),
-            json: "".to_string()
+            json: "".to_string(),
+            iron_connected: None,
+            check_count: 0
         }
         
      }
@@ -89,8 +93,20 @@ impl Flasher {
 
 impl eframe::App for Flasher {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        
+        // always repaint to have accurate pinecil detection
+        ctx.request_repaint();
         ctx.set_pixels_per_point(1.80);
+
+
+        if self.config.check_count < 180 {
+            self.config.check_count += 1
+        } else {
+            self.config.iron_connected = Flasher::check_connections(self);
+            self.config.check_count = 0
+        }
+
+
+        
         let promise = self.config.promise.get_or_insert_with(|| {
                 let ctx = ctx.clone();
                 self.toasts.info("Fetching versions").set_duration(None).set_closable(false);

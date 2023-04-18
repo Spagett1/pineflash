@@ -51,7 +51,7 @@ impl Flasher {
             }
 
             self.config.logs.push_str(format!("PineFlash: Attempting to flash {} with the firmware {}\n", self.config.int_name, firmware_path).as_str());
-            if self.config.int_name == "Pinecil" {
+            if self.config.int_name == "Pinecilv1" {
 
                 #[cfg(target_os = "linux")]
                 let command = Command::new("pkexec")
