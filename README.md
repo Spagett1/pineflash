@@ -14,6 +14,7 @@ A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.
 * Auto-fetch the newest stable release of IronOS firmware.
 * Allows manual installs of beta versions using a browse to file feature.
 * Selectable options: pick the iron type, pick the firmware version and download it.
+* Boot logo art upload supported for V1 (use custom & folder icon)
 
 <br clear="both" />
 
@@ -293,7 +294,7 @@ Alternatively just run it from your app launcher (unless your on macos).
 - [ ] Launcher icon for macos, easier method to install
 - [ ] Improve UI (colors, design, workflow).
 - [ ] In app instructions for connecting pinecil to pc.
-- [ ] Changing boot logo support.
+- [ ] V2 boot logo art support when blisp supports it.
 
 ## :tea: Feel like supporting me?
 
