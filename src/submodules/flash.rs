@@ -94,7 +94,7 @@ impl Flasher {
 // #[cfg(target_family = "windows")]
 // println!("{:?}", path);
                 #[cfg(not(target_os = "linux"))]
-                let command = Command::new(command)
+                let command = Command::new(BLISP_COMMAND)
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")

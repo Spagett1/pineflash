@@ -298,8 +298,6 @@ impl eframe::App for Flasher {
 }
 
 fn main() {
-
-    // let mut options = eframe::NativeOptions::default();
     let options = eframe::NativeOptions { 
             decorated: true, 
             follow_system_theme: false, 
