@@ -1,9 +1,9 @@
-use eframe::{egui::{self, FontDefinitions, FontData, FontTweak}, epaint::{FontFamily}};
+use eframe::{egui::{self, FontDefinitions, FontData}, epaint::{FontFamily}};
 
 use crate::Flasher;
 
 impl Flasher {
-    pub fn configure_fonts(ctx: &egui::Context) {
+    pub fn configure_fonts(cc: egui::Context) {
         let mut fonts = FontDefinitions::default();
         // Imports the MesloLGS font from its ttf file in order to enable support for other characters
         fonts.font_data.insert(
@@ -17,7 +17,7 @@ impl Flasher {
             .push("MesloLGS".to_owned());
         
         
-        ctx.set_fonts(fonts);
+        cc.set_fonts(fonts);
         
     }
 }

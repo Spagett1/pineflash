@@ -46,8 +46,23 @@ struct FlasherConfig {
     iron_connected: Option<String>,
     check_count: i32,
 }
+
+#[derive(Serialize, Deserialize)]
+struct FlashSavedConfig {
+    pub dark_mode: bool,
+}
+
+impl Default for FlashSavedConfig {
+    fn default() -> Self {
+        Self { 
+            dark_mode: true, 
+        }
+    }
+}
+
 struct Flasher {
     config: FlasherConfig,
+    saved_config: FlashSavedConfig,
     toasts: Toasts,
 }
 
@@ -81,13 +96,22 @@ impl Default for FlasherConfig {
 }
 
 impl Flasher {
-    fn new(_cc: &CreationContext) -> Flasher {
+    fn new(cc: &CreationContext) -> Flasher {
         let config: FlasherConfig = FlasherConfig::default();
         // Flasher::configure_fonts(&cc.egui_ctx);
-
+        let saved_config: FlashSavedConfig = confy::load("PineFlash", None).unwrap_or_default();
         let toasts = Toasts::default().with_anchor(Anchor::TopRight).with_margin(emath::vec2(0.0, 40.0));
 
-        Flasher { config, toasts }
+
+        if saved_config.dark_mode {
+            cc.egui_ctx.set_visuals(egui::Visuals::dark());
+        } else {
+            cc.egui_ctx.set_visuals(egui::Visuals::light());
+        }
+
+        Flasher::configure_fonts(cc.egui_ctx.clone());
+
+        Flasher { config, toasts, saved_config }
     }
 }
 
