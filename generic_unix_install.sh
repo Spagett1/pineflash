@@ -12,6 +12,7 @@ if [ "$(uname)" == "Darwin" ]; then
   unzip "blisp-macos64-v0.0.3.zip"
   $root cp ./blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
+  $root cp ./target/release/ pineflash /usr/local/bin/
 elif [ "$(uname -m)" == "x86_64" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-linux64-v0.0.3.zip" -o "blisp-linux64-v0.0.3.zip"
   unzip "blisp-linux64-v0.0.3.zip"
@@ -19,6 +20,7 @@ elif [ "$(uname -m)" == "x86_64" ]; then
   $root chmod +x /usr/local/bin/blisp
   $root cp ./assets/Pineflash.desktop /usr/share/applications/Pineflash.desktop
   $root cp ./assets/pine64logo.png /usr/share/pixmaps/pine64logo.png
+  $root cp ./target/release/pineflash /usr/bin/pineflash
 else 
   git clone --recursive "https://github.com/pine64/blisp.git"
   cd blisp
@@ -31,7 +33,7 @@ else
   cd ../..
   $root cp ./assets/Pineflash.desktop /usr/share/applications/Pineflash.desktop
   $root cp ./assets/pine64logo.png /usr/share/pixmaps/pine64logo.png
-
+  $root cp ./target/release/pineflash /usr/bin/pineflash
 fi
 
-$root cp ./target/release/pineflash /usr/bin/pineflash
+
