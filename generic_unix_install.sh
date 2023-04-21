@@ -12,7 +12,7 @@ if [ "$(uname)" == "Darwin" ]; then
   unzip "blisp-macos64-v0.0.3.zip"
   $root cp ./blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
-  $root cp ./target/release/ pineflash /usr/local/bin/
+  $root cp ./target/release/pineflash /usr/local/bin/
 elif [ "$(uname -m)" == "x86_64" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-linux64-v0.0.3.zip" -o "blisp-linux64-v0.0.3.zip"
   unzip "blisp-linux64-v0.0.3.zip"
