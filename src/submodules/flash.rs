@@ -3,6 +3,8 @@ use std::time::Duration;
 use std::{process::Command};
 use std::io::{Read, Cursor};
 use std::path::PathBuf;
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
 #[cfg(target_family = "unix")]
 static DFU_COMMAND: &str = "dfu-util";
 #[cfg(target_family = "unix")]
@@ -61,12 +63,21 @@ impl Flasher {
                     .output()
                     .expect("Could not flash soldering iron");
 
-                #[cfg(not(target_os = "linux"))]
+                #[cfg(target_os = "macos")]
                 let command = Command::new(DFU_COMMAND)
                     .arg("-D")
                     .arg(firmware_path)
                     .output()
                     .expect("Could not flash soldering iron");
+
+                #[cfg(target_os = "windows")]
+                let command = Command::new(DFU_COMMAND)
+                    .creation_flags(0x00000008)
+                    .arg("-D")
+                    .arg(firmware_path)
+                    .output()
+                    .expect("Could not flash soldering iron");
+
 
                 let output: String = String::from_utf8(command.stdout).unwrap();
                 let output_err: String = String::from_utf8(command.stderr).unwrap();
@@ -91,14 +102,24 @@ impl Flasher {
                     .output()
                     .expect("Could not flash soldering iron");
 
-                #[cfg(not(target_os = "linux"))]
-                let command = BLISP_COMMAND;
-                #[cfg(not(target_os = "linux"))]
-                println!("{}", command);
+                #[cfg(target_os = "macos")]
+                let command = Command::new(BLISP_COMMAND)
+                    .arg("write")
+                    .arg("-c")
+                    .arg("bl70x")
+                    .arg("-p")
+                    .arg(self.config.v2_serial_path.clone().unwrap())
+                    .arg("--reset")
+                    .arg(firmware_path)
+                    .output()
+                    .expect("Could not flash soldering iron");
+
                 #[cfg(target_family = "windows")]
                 let command: PathBuf = [ std::env::current_dir().unwrap(), "tools".into(), BLISP_COMMAND.into() ].iter().collect();
-                #[cfg(not(target_os = "linux"))]
+
+                #[cfg(target_os = "windows")]
                 let command = Command::new(command)
+                    .creation_flags(0x00000008)
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")

@@ -37,7 +37,7 @@ impl Flasher {
         else if self.config.iron_connected.is_none() && type_of_pinecil.is_some() {
             self.config.logs.push_str(format!("Pineflash: {} detected\n", type_of_pinecil.clone().unwrap()).as_str());
             if v2 {
-                    self.config.logs.push_str(format!("PineFlash: The serial port is {} \n", self.config.v2_serial_path.clone().unwrap()).as_str());
+                    self.config.logs.push_str(format!("PineFlash: Serial port is {} \n", self.config.v2_serial_path.clone().unwrap()).as_str());
             }
         } 
         else if self.config.iron_connected.is_some() && type_of_pinecil.is_none() {
