@@ -115,11 +115,11 @@ impl Flasher {
                     else if self.config.iron_connected.is_some() && 
                         self.config.iron_connected.as_ref() != Some(&self.config.int_name) &&
                         self.config.iron_connected.as_ref() != Some(&"Both".to_string())
-                        {"The selected soldering iron does not match the one currently plugged in."}
+                        {"The selected soldering iron does \nnot match the one currently plugged in."}
                     else if self.config.version != *"Custom" ||
                         self.config.picked_path.is_some() && 
                         self.config.version != *"Select"
-                        {"Connect your soldering iron and make sure it is in flashing mode."} 
+                        {"Connect your soldering iron and \nmake sure it is in flashing mode."} 
                     else 
                         {"Please select a firmware version and\nplug your soldering iron in whilst in flashing mode."} 
                 );
