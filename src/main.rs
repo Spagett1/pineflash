@@ -307,7 +307,6 @@ impl eframe::App for Flasher {
                 self.config.flash_notified_count += 1
             } else {
                 Flasher::flash(self);
-                self.config.flash_notified_count = 0
             }
         }
     }

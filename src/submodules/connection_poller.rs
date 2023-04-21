@@ -15,7 +15,7 @@ impl Flasher {
             if device_info.vendor_id() == 10473 && device_info.product_id() == 393 {
                 // pinecil v1 connected
                 v1 = true;
-                type_of_pinecil = Some("Pinecilv1".to_string())
+                type_of_pinecil = Some("Pinecil".to_string())
             }
         }
 

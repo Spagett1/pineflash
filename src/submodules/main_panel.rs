@@ -30,7 +30,7 @@ impl Flasher {
                     }
                 );
                 if self.config.iron == "Pinecil V1"  {
-                    self.config.int_name = "Pinecilv1".to_string();
+                    self.config.int_name = "Pinecil".to_string();
                 } else if self.config.iron == "Pinecil V2" {
                     self.config.int_name = "Pinecilv2".to_string();
                 }
@@ -54,7 +54,7 @@ impl Flasher {
                     });
                 if ui.button(RichText::new("📁").size(17.)).clicked() {
                     if let Some(path) = rfd::FileDialog::new().pick_file() {
-                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecilv1" || 
+                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
                             !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
                         {
                             self.toasts.dismiss_all_toasts();
@@ -91,15 +91,15 @@ impl Flasher {
 
             });
 
-            if self.config.picked_path.is_some() &&
-                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
-                self.config.iron_connected.as_ref() == Some(&"Both".to_string()) || 
+            if self.config.picked_path.is_some() || //&&
+                // self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                // self.config.iron_connected.as_ref() == Some(&"Both".to_string()) || 
                 self.config.version != *"Custom" && 
                 self.config.version != *"Select" && 
-                !self.config.download && 
-                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
-                self.config.iron_connected.as_ref() == Some(&"Both".to_string()){
-
+                !self.config.download //&& 
+                // self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                // self.config.iron_connected.as_ref() == Some(&"Both".to_string())
+            {
                 self.config.ready_to_flash = true
 
             } else {
