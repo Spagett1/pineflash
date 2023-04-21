@@ -91,7 +91,10 @@ impl Flasher {
 
             });
 
-            if self.config.picked_path.is_some() || self.config.version != *"Custom" && 
+            if self.config.picked_path.is_some() &&
+                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                self.config.iron_connected.as_ref() == Some(&"Both".to_string()) || 
+                self.config.version != *"Custom" && 
                 self.config.version != *"Select" && 
                 !self.config.download && 
                 self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
@@ -124,7 +127,9 @@ impl Flasher {
                 if self.config.version != *"Custom" {
                     self.config.download = true;
                 } else {
-                    Flasher::flash(self)
+                    self.toasts.dismiss_all_toasts();
+                    self.toasts.info("Flashing.").set_duration(None).set_closable(false);
+                    self.config.flash = true;
                 }
             };
             
@@ -135,7 +140,7 @@ impl Flasher {
                         ui.output().copied_text = self.config.logs.clone();
 
                     }
-                    ScrollArea::vertical().show(ui, |ui|{
+                    ScrollArea::vertical().stick_to_bottom(true).show(ui, |ui|{
                         ui.monospace(self.config.logs.clone());
                     });
                 });

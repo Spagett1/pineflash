@@ -25,6 +25,7 @@ impl Flasher {
                 if info.serial_number.clone().unwrap().contains("000000020000") {
                     // pinecil v2 connected
                     v2 = true;
+                    self.config.v2_serial_path = Some(device.port_name.clone());
                     type_of_pinecil = Some("Pinecilv2".to_string())
                 }
             }
@@ -35,6 +36,9 @@ impl Flasher {
         }
         else if self.config.iron_connected.is_none() && type_of_pinecil.is_some() {
             self.config.logs.push_str(format!("Pineflash: {} detected\n", type_of_pinecil.clone().unwrap()).as_str());
+            if v2 {
+                    self.config.logs.push_str(format!("PineFlash: The serial port is {} \n", self.config.v2_serial_path.clone().unwrap()).as_str());
+            }
         } 
         else if self.config.iron_connected.is_some() && type_of_pinecil.is_none() {
             self.config.logs.push_str(format!("Pineflash: {} disconnected\n", self.config.iron_connected.clone().unwrap()).as_str());

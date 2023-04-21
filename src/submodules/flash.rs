@@ -84,20 +84,26 @@ impl Flasher {
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")
+                    .arg("-p")
+                    .arg(self.config.v2_serial_path.clone().unwrap())
                     .arg("--reset")
                     .arg(firmware_path)
                     .output()
                     .expect("Could not flash soldering iron");
 
+                #[cfg(not(target_os = "linux"))]
+                let command = BLISP_COMMAND;
+                #[cfg(not(target_os = "linux"))]
+                println!("{}", command);
                 #[cfg(target_family = "windows")]
                 let command: PathBuf = [ std::env::current_dir().unwrap(), "tools".into(), BLISP_COMMAND.into() ].iter().collect();
-// #[cfg(target_family = "windows")]
-// println!("{:?}", path);
                 #[cfg(not(target_os = "linux"))]
-                let command = Command::new(BLISP_COMMAND)
+                let command = Command::new(command)
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")
+                    .arg("-p")
+                    .arg(self.config.v2_serial_path.clone().unwrap())
                     .arg("--reset")
                     .arg(firmware_path)
                     .output()
@@ -106,10 +112,12 @@ impl Flasher {
                 let output: String = String::from_utf8(command.stdout).unwrap();
                 let output_err: String = String::from_utf8(command.stderr).unwrap();
                 self.toasts.dismiss_all_toasts();
-                if !output_err.as_str().contains("Device not found") && !output_err.as_str().contains("Failed") {
+                if !output_err.as_str().contains("Device not found") && !output_err.as_str().contains("Failed") && !output_err.as_str().contains("Error") {
                     self.toasts.info("Flashing completed").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                } else if output_err.as_str().contains("Not authorized"){
+                    self.toasts.error("Could not run command as admin,\n was your password wrong?").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                 } else {
-                    self.toasts.error("Flashing failed, is your pinecil plugged in?").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                    self.toasts.error("Flashing failed,\n your device may have been disconnected.").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                 }
                 self.config.logs.push_str(format!("Blisp: {}{}\n", output, output_err).as_str());
                 
@@ -128,6 +136,8 @@ impl Flasher {
                 self.config.download_firm_notify = true;
                 self.config.picked_path = None;
                 self.config.ready_to_flash = false;
+                self.config.flash_notified_count = 0;
+                self.config.flash = false;
 
             }
             

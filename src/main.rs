@@ -45,6 +45,9 @@ struct FlasherConfig {
     json: String,
     iron_connected: Option<String>,
     check_count: i32,
+    flash: bool,
+    flash_notified_count: i32, 
+    v2_serial_path: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -89,7 +92,10 @@ impl Default for FlasherConfig {
             logs: format!("Pineflash v{}\n", env!("CARGO_PKG_VERSION")),
             json: "".to_string(),
             iron_connected: None,
-            check_count: 0
+            check_count: 0,
+            flash: false,
+            flash_notified_count: 0,
+            v2_serial_path: None
         }
         
      }
@@ -120,7 +126,6 @@ impl eframe::App for Flasher {
         // always repaint to have accurate pinecil detection
         ctx.request_repaint();
         ctx.set_pixels_per_point(1.80);
-
 
         if self.config.check_count < 180 {
             self.config.check_count += 1
@@ -213,11 +218,11 @@ impl eframe::App for Flasher {
             match promise.ready() {                        
                 Some(Ok(_)) => {                               
                     self.toasts.dismiss_all_toasts();
-                    self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
                     self.config.logs.push_str("PineFlash: Download Complete.\n");
                     self.toasts.info("Flashing.").set_duration(None).set_closable(false);
                     self.config.download = false;
-                    Flasher::flash(self)
+                    // Flasher::flash(self)
+                    self.config.flash = true;
                 },
                 Some(Err(_)) => {
                     self.toasts.dismiss_all_toasts();
@@ -292,6 +297,17 @@ impl eframe::App for Flasher {
                 },
                 None => {
                 },
+            }
+
+
+        }
+
+        if self.config.flash {
+            if self.config.flash_notified_count < 60 {
+                self.config.flash_notified_count += 1
+            } else {
+                Flasher::flash(self);
+                self.config.flash_notified_count = 0
             }
         }
     }
