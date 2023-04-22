@@ -91,14 +91,14 @@ impl Flasher {
 
             });
 
-            if self.config.picked_path.is_some() || //&&
-                // self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
-                // self.config.iron_connected.as_ref() == Some(&"Both".to_string()) || 
+            if self.config.picked_path.is_some() &&
+                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                self.config.iron_connected.as_ref() == Some(&"Both".to_string()) || 
                 self.config.version != *"Custom" && 
                 self.config.version != *"Select" && 
-                !self.config.download //&& 
-                // self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
-                // self.config.iron_connected.as_ref() == Some(&"Both".to_string())
+                !self.config.download && 
+                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                self.config.iron_connected.as_ref() == Some(&"Both".to_string())
             {
                 self.config.ready_to_flash = true
 

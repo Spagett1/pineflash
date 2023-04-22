@@ -5,15 +5,6 @@ use std::io::{Read, Cursor};
 use std::path::PathBuf;
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
-#[cfg(target_family = "unix")]
-static DFU_COMMAND: &str = "dfu-util";
-#[cfg(target_family = "unix")]
-static BLISP_COMMAND: &str = "blisp";
-#[cfg(target_os = "windows")]
-static DFU_COMMAND: &str = "dfu-util.exe";
-#[cfg(target_os = "windows")]
-static BLISP_COMMAND: &str = "blisp.exe";
-
 
 use crate::Flasher;
 
@@ -57,21 +48,23 @@ impl Flasher {
 
                 #[cfg(target_os = "linux")]
                 let command = Command::new("pkexec")
-                    .arg(DFU_COMMAND)
+                    .arg("dfu-util")
                     .arg("-D")
                     .arg(firmware_path)
                     .output()
                     .expect("Could not flash soldering iron");
 
                 #[cfg(target_os = "macos")]
-                let command = Command::new(DFU_COMMAND)
+                let command = Command::new("dfu-util")
                     .arg("-D")
                     .arg(firmware_path)
                     .output()
                     .expect("Could not flash soldering iron");
 
                 #[cfg(target_os = "windows")]
-                let command = Command::new(DFU_COMMAND)
+                let command: PathBuf = [ std::env::current_dir().unwrap(), "tools".into(), "dfu-util.exe".into() ].iter().collect();
+                #[cfg(target_os = "windows")]
+                let command = Command::new(command)
                     .creation_flags(0x00000008)
                     .arg("-D")
                     .arg(firmware_path)
@@ -91,7 +84,7 @@ impl Flasher {
             } else if self.config.int_name == "Pinecilv2" {
                 #[cfg(target_os = "linux")]
                 let command = Command::new("pkexec")
-                    .arg(BLISP_COMMAND)
+                    .arg("blisp")
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")
@@ -103,7 +96,7 @@ impl Flasher {
                     .expect("Could not flash soldering iron");
 
                 #[cfg(target_os = "macos")]
-                let command = Command::new(BLISP_COMMAND)
+                let command = Command::new("blisp")
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")
@@ -115,7 +108,7 @@ impl Flasher {
                     .expect("Could not flash soldering iron");
 
                 #[cfg(target_family = "windows")]
-                let command: PathBuf = [ std::env::current_dir().unwrap(), "tools".into(), BLISP_COMMAND.into() ].iter().collect();
+                let command: PathBuf = [ std::env::current_dir().unwrap(), "tools".into(), "blisp.exe".into() ].iter().collect();
 
                 #[cfg(target_os = "windows")]
                 let command = Command::new(command)
