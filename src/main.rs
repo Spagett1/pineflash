@@ -2,13 +2,14 @@
 
 use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap, env};
 
-use eframe::{CreationContext, emath, Theme};
+use eframe::{CreationContext, emath};
 use eframe::egui;
 mod submodules;
 use egui_notify::{Toasts, Anchor};
 use serde::{Serialize, Deserialize};
 use tinyjson::JsonValue;
 use poll_promise::Promise;
+use egui::Context;
 
 const ICON: &[u8] = include_bytes!("../assets/pine64logo.ico");
 
@@ -122,7 +123,7 @@ impl Flasher {
 }
 
 impl eframe::App for Flasher {
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+    fn update(&mut self, ctx: &Context, _frame: &mut eframe::Frame) {
         // always repaint to have accurate pinecil detection
         ctx.request_repaint();
         ctx.set_pixels_per_point(1.80);
@@ -315,8 +316,8 @@ impl eframe::App for Flasher {
 fn main() {
     let options = eframe::NativeOptions { 
             decorated: true, 
-            follow_system_theme: false, 
-            default_theme: Theme::Dark, 
+            follow_system_theme: true, 
+            // default_theme: Theme::Dark, 
             icon_data: Some(eframe::IconData { rgba: (ICON.to_vec()), 
             width: (32), height: (32) }), 
             resizable: true, 
@@ -325,8 +326,11 @@ fn main() {
             ..Default::default() 
         };
 
-    eframe::run_native(
+    match eframe::run_native(
         "PineFlash",
         options,
-        Box::new(|cc| Box::new(Flasher::new(cc))));
+        Box::new(|cc| Box::new(Flasher::new(cc)))) {
+            Ok(_) => (),
+            Err(_) => println!("A massive error occured, not sure whats goin on here."),
+        }
 }

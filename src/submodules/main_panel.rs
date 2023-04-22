@@ -1,24 +1,13 @@
 use std::time::Duration;
 
-use eframe::{egui::{CentralPanel, self, menu, RichText, ScrollArea, Stroke}};
+use eframe::{egui::{CentralPanel, self, menu, RichText, ScrollArea}};
+use egui::Context;
 
 use crate::Flasher;
 
 impl Flasher {
-    pub fn render_main_windows(&mut self, ctx: &egui::Context) {
+    pub fn render_main_windows(&mut self, ctx: &Context) {
         CentralPanel::default().show(ctx, |ui|{
-
-            let _new_style = egui::style::WidgetVisuals {
-                bg_fill: egui::Color32::BLACK,
-                bg_stroke: Stroke { width: 1., color: egui::Color32::RED },
-                rounding: egui::Rounding { nw: 2., ne: 2., sw: 2., se: 2. },
-                fg_stroke: Stroke{ width: 1., color: egui::Color32::RED} ,
-                expansion: 2.,
-            };
-
-            // ctx.set_visuals(egui::style::Visuals { widgets: egui::style::Widgets { 
-                // noninteractive: new_style, inactive: new_style, hovered: new_style, active: new_style, open: new_style
-            // }, ..Default::default()});
 
             ui.label("Select your Soldering Iron");
             menu::bar(ui, |ui|{
@@ -137,8 +126,8 @@ impl Flasher {
                 .default_open(true)
                 .show(ui, |ui| {
                     if ui.button("Copy Log").clicked() {
-                        ui.output().copied_text = self.config.logs.clone();
-
+                        // ui.output().copied_text = self.config.logs.clone();
+                        ui.output_mut(|i| i.copied_text = self.config.logs.clone());
                     }
                     ScrollArea::vertical().stick_to_bottom(true).show(ui, |ui|{
                         ui.monospace(self.config.logs.clone());
