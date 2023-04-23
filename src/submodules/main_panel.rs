@@ -1,24 +1,13 @@
 use std::time::Duration;
 
-use eframe::{egui::{CentralPanel, self, menu, RichText, ScrollArea, Stroke}};
+use eframe::{egui::{CentralPanel, self, menu, RichText, ScrollArea}};
+use egui::Context;
 
 use crate::Flasher;
 
 impl Flasher {
-    pub fn render_main_windows(&mut self, ctx: &egui::Context) {
+    pub fn render_main_windows(&mut self, ctx: &Context) {
         CentralPanel::default().show(ctx, |ui|{
-
-            let _new_style = egui::style::WidgetVisuals {
-                bg_fill: egui::Color32::BLACK,
-                bg_stroke: Stroke { width: 1., color: egui::Color32::RED },
-                rounding: egui::Rounding { nw: 2., ne: 2., sw: 2., se: 2. },
-                fg_stroke: Stroke{ width: 1., color: egui::Color32::RED} ,
-                expansion: 2.,
-            };
-
-            // ctx.set_visuals(egui::style::Visuals { widgets: egui::style::Widgets { 
-                // noninteractive: new_style, inactive: new_style, hovered: new_style, active: new_style, open: new_style
-            // }, ..Default::default()});
 
             ui.label("Select your Soldering Iron");
             menu::bar(ui, |ui|{
@@ -30,7 +19,7 @@ impl Flasher {
                     }
                 );
                 if self.config.iron == "Pinecil V1"  {
-                    self.config.int_name = "Pinecilv1".to_string();
+                    self.config.int_name = "Pinecil".to_string();
                 } else if self.config.iron == "Pinecil V2" {
                     self.config.int_name = "Pinecilv2".to_string();
                 }
@@ -54,7 +43,7 @@ impl Flasher {
                     });
                 if ui.button(RichText::new("📁").size(17.)).clicked() {
                     if let Some(path) = rfd::FileDialog::new().pick_file() {
-                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecilv1" || 
+                        if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
                             !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
                         {
                             self.toasts.dismiss_all_toasts();
@@ -98,8 +87,8 @@ impl Flasher {
                 self.config.version != *"Select" && 
                 !self.config.download && 
                 self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
-                self.config.iron_connected.as_ref() == Some(&"Both".to_string()){
-
+                self.config.iron_connected.as_ref() == Some(&"Both".to_string())
+            {
                 self.config.ready_to_flash = true
 
             } else {
@@ -115,11 +104,11 @@ impl Flasher {
                     else if self.config.iron_connected.is_some() && 
                         self.config.iron_connected.as_ref() != Some(&self.config.int_name) &&
                         self.config.iron_connected.as_ref() != Some(&"Both".to_string())
-                        {"The selected soldering iron does not match the one currently plugged in."}
+                        {"The selected soldering iron does \nnot match the one currently plugged in."}
                     else if self.config.version != *"Custom" ||
                         self.config.picked_path.is_some() && 
                         self.config.version != *"Select"
-                        {"Connect your soldering iron and make sure it is in flashing mode."} 
+                        {"Connect your soldering iron and \nmake sure it is in flashing mode."} 
                     else 
                         {"Please select a firmware version and\nplug your soldering iron in whilst in flashing mode."} 
                 );
@@ -137,8 +126,8 @@ impl Flasher {
                 .default_open(true)
                 .show(ui, |ui| {
                     if ui.button("Copy Log").clicked() {
-                        ui.output().copied_text = self.config.logs.clone();
-
+                        // ui.output().copied_text = self.config.logs.clone();
+                        ui.output_mut(|i| i.copied_text = self.config.logs.clone());
                     }
                     ScrollArea::vertical().stick_to_bottom(true).show(ui, |ui|{
                         ui.monospace(self.config.logs.clone());

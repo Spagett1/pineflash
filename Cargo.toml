@@ -1,20 +1,20 @@
 [package]
 name = "pineflash"
-version = "0.4.5"
+version = "0.4.8"
 edition = "2021"
 build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-eframe = "0.20.1"
+eframe = "0.21.3"
 # egui_extras = "0.19.0"
 zip-extract = "0.1.1"
 ehttp = "0.2"
 # poll-promise = "0.1"
 poll-promise = "0.1"
 tinyjson = "2.5.0"
-egui-notify = "0.5.0"
+egui-notify = "0.6.0"
 rfd = "0.10.0"
 regex = "1.6.0"
 whoami = "1.2.3"
