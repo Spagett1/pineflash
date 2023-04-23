@@ -133,7 +133,7 @@ gcc
   <img width="17" src="https://cdn.simpleicons.org/apple/818589" /> MacOS
   </summary>
 
-Install [macports here](https://www.macports.org/install.php) which then allows easy install of all of these:
+First, install **[macports here](https://www.macports.org/install.php)**. That allows easy install of these:
 
 ```
 cmake
