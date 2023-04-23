@@ -84,36 +84,37 @@ doas cp -r ./usr /
 > **_NOTE:_**  Make sure you install dfu-util manually if you have a pinecil v1 and choose this option. Window manager users should ensure they have a pokit agent installed and enabled.
 
 ### <img width="18" src="https://cdn.simpleicons.org/Apple/818589" /> MacOs
-Sorry we dont have built apps for you yet, head to the build from source section and use the unix install script. 
 
-> **_NOTE:_** You will also need to run pineflash from the terminal, this is on the todo list to get fixed.
+Sorry we dont have built apps for you yet, head to the build from code section and use the Unix install script. 
+
+> **_NOTE:_** You will also need to start pineflash from the terminal, this is on the todo list to get fixed.
 
 </details>
 <div style="clear:both;">&nbsp;</div>
 
- 
 <details>
   <summary>
    
 ## :building_construction: Build from code 
  </summary>
 
-
 Use this build method if the premade binaries do not support your architecture or you have dev purposes.
 
 ### :bookmark_tabs: Build Dependancies
 
-Install these if you don't have them (not needed if using the PKGBUILD).
+- Install these if you do not have them (not needed if using the PKGBUILD).
+- Use the General list if you do not see your OS name.
 
+<div style="clear:both;">&nbsp;</div>
 
-<details>
-  <summary>
+  <details>
+    <summary>
 <img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependancy list
-</summary>
-
-This list covers linux distros which are not named below and macos.
+  </summary>
 
 If your operating system has its own section, then please go there; it has package names tailored to your distro.
+
+This list only covers linux distros which are not named below.
 
 If you had to install more dependencies to get it to work, please open an issue to let us know the specific OS and packages you used.
 
@@ -125,13 +126,30 @@ dfu-util - for pinecil V1 support
 polkit - Linux only
 gcc         
 ```
-</details>
-<div style="clear:both;">&nbsp;</div>
+  </details>
 
-<details>
-  <summary>
-<img width="17" src="https://cdn.simpleicons.org/debian/A81D33" /> Dependencies for Debian
-</summary>
+  <details>
+    <summary>
+  <img width="17" src="https://cdn.simpleicons.org/apple/818589" /> MacOS
+  </summary>
+
+Install [macports here](https://www.macports.org/install.php) which then allows easy install of all of these:
+
+```
+cmake
+rust
+git
+dfu-util
+polkit
+gcc12
+```
+
+  </details>
+
+  <details>
+    <summary>
+  <img width="17" src="https://cdn.simpleicons.org/debian/A81D33" /> Dependencies for Debian
+  </summary>
 
 ```
 cmake
@@ -154,9 +172,8 @@ This line will install everything:
 ```
 sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2.0-dev build-essential libfontconfig-dev fontconfig-config libgdk3.0-cli-dev libatk1.0-0 libatk1.0-dev libgtk-3-dev             
 ```
-
 </details>
-<div style="clear:both;">&nbsp;</div>
+
 <details>
   <summary>
 <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" /> Dependencies for Arch
@@ -183,6 +200,7 @@ sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-de
 
 </details>
 <div style="clear:both;">&nbsp;</div>
+
 <details>
   <summary>
   
@@ -212,10 +230,10 @@ cd PineFlash
 </details>
 <div style="clear:both;">&nbsp;</div>
 
-<details>
+  <details>
   <summary>
    
-### :weight_lifting_man: Build option 2: manual build
+### :weight_lifting_man: Build option 2, manual build
  </summary>
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
@@ -252,11 +270,8 @@ cargo build --release
 pineflash
 ```
 Alternatively just run it from your app launcher (unless your on macos).
-
-</details>
-<div style="clear:both;">&nbsp;</div>
- 
- 
+  </details>
+  
 </details>
 <div style="clear:both;">&nbsp;</div>
 
@@ -271,23 +286,27 @@ Alternatively just run it from your app launcher (unless your on macos).
      `pineflash`
 
 <img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu.
+<div style="clear:both;">&nbsp;</div>
 
+ <details>
+   <summary>
 
-## Boot Logo Art
-
+## :paintbrush: Boot Logo Art
+  </summary>
+  
 - Select Custom from version drop-down, then click on the folder icon to browse to the art file you want to load.
 - Currently only V1 supports Boot logos.
 - See [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/) to get premade art or details on how to make custom art.
 - [Work in progress](https://github.com/Ralim/IronOS/issues/1373#issuecomment-1414925011) by Ralim to get blisp to support logos for V2.
 - Presently, the only method for V2 is to make a custom version of IronOS firmware with logo art embeded in the code; this is for advanced users comfortable Github and code changes [see here](https://github.com/Ralim/IronOS-Meta/issues/32#issuecomment-1505172982).
 
-<br>
+ </details>
 
 <details>
   <summary>
  
  ## :electric_plug: Connect Pinecil to a PC
- </summary>
+  </summary>
 
 1. To do the firmware update, connect one end of a USB cable to the PC.
 2. Then, hold down the `[-]` button **before** plugging the usb-c cable to the back of Pinecil.
@@ -298,7 +317,6 @@ Alternatively just run it from your app launcher (unless your on macos).
 
 ## :spiral_calendar: Todo
 
-- [ ] Windows support.
 - [ ] MacOS premade binary
 - [ ] Launcher icon for macos, easier method to install
 - [ ] Improve UI (colors, design, workflow).
