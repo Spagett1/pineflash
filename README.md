@@ -285,7 +285,7 @@ Alternatively just run it from your app launcher (unless your on macos).
 
      `pineflash`
 
-<img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu.
+<img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu or desktop icon.
 <div style="clear:both;">&nbsp;</div>
 
  <details>
