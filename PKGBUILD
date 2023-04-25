@@ -71,7 +71,7 @@ build() {
   cargo build --offline --release
 
   cd blisp
-  mkdir build 
+  mkdir build
   cd build
   cmake -DBLISP_BUILD_CLI=ON ..
   cmake --build .
@@ -104,7 +104,7 @@ package() {
   install -D -v -m755 "target/release/pineflash" "${pkgdir}/usr/bin/pineflash"
   install -D -v -m755 "blisp/build/tools/blisp/blisp" "${pkgdir}/usr/bin/blisp"
 
-  install -D -v -m644 "Pineflash.desktop" "${pkgdir}/usr/share/applications/Pineflash.desktop"
+  install -D -v -m644 "assets/Pineflash.desktop" "${pkgdir}/usr/share/applications/Pineflash.desktop"
   install -D -v -m644 "assets/pine64logo.png" "${pkgdir}/usr/share/pixmaps/pine64logo.png"
   for _docfile in README.md; do
     install -D -v -m644 "${_docfile}" "${pkgdir}/usr/share/doc/${_pkgname}/${_docfile}"
