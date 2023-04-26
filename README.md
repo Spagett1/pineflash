@@ -6,7 +6,7 @@
 
 # PineFlash
 
-<img src="https://user-images.githubusercontent.com/77225642/232490633-7500925f-9f4b-4051-93cd-bbed0d8090be.png" align="right" width="425" style="float:left">
+<img src="https://user-images.githubusercontent.com/77225642/234575696-e6ea62ae-7189-4a9b-bcfb-7f0c36271ace.png" align="right" width="425" style="float:left">
 
 A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.  
 
@@ -301,8 +301,9 @@ Alternatively just run it from your app launcher (unless your on macos).
 - [x] Windows support.
 - [ ] MacOS premade binary
 - [ ] Launcher icon for macos, easier method to install
-- [ ] Improve UI (colors, design, workflow).
-- [ ] In app instructions for connecting pinecil to pc.
+- [x] Improve UI (colors, design, workflow).
+- [ ] Improve Light Mode.
+- [x] In app instructions for connecting pinecil to pc.
 - [ ] V2 boot logo art support when blisp supports it.
 
 ## :tea: Feel like supporting me?
