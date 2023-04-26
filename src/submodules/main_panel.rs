@@ -173,14 +173,28 @@ impl Flasher {
                             ui.horizontal(|ui|{
                                 ui.with_layout(egui::Layout::left_to_right(eframe::emath::Align::TOP), |ui| {
                                     ui.add_space(10.);
-                                    if ui.add_sized([80., 10.], Button::new("Previous").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() && self.config.current_step != 0 {
-                                        self.config.current_step -= 1;
+                                    if self.config.current_step == 0 {
+                                        ui.add_enabled_ui(false, |ui|{
+                                            ui.add_sized([80., 10.], Button::new("Previous").fill(egui::Color32::from_rgb(27, 27, 27)))
+                                        });
+                                    } else {
+                                        if ui.add_sized([80., 10.], Button::new("Previous").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
+                                            self.config.current_step -= 1;
+                                        }
                                     }
+
                                 });
                                 ui.with_layout(egui::Layout::right_to_left(eframe::emath::Align::TOP), |ui| {
                                     ui.add_space(10.);
-                                    if ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() && self.config.current_step != 2 {
-                                        self.config.current_step += 1;
+
+                                    if self.config.current_step == 2 {
+                                        ui.add_enabled_ui(false, |ui|{
+                                            ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27)))
+                                        });
+                                    } else {
+                                        if ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
+                                            self.config.current_step += 1;
+                                        }
                                     }
                                 });
                             });

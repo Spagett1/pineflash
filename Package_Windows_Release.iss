@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PineFlash"
-#define MyAppVersion "0.4.8"
+#define MyAppVersion "0.5.0"
 #define MyAppPublisher "Spagett"
 #define MyAppURL "https://github.com/Spagett1"
 #define MyAppExeName "pineflash.exe"
