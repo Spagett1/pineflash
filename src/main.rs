@@ -2,11 +2,12 @@
 
 use std::{fs::{File, self}, io::{Write, Read, Cursor}, time::Duration, path::PathBuf, collections::HashMap, env};
 
-use eframe::{CreationContext, emath};
+use eframe::{CreationContext, emath, epaint::{Color32, Stroke, Rounding}};
 use eframe::egui;
 mod submodules;
 use egui_notify::{Toasts, Anchor};
 use serde::{Serialize, Deserialize};
+use egui_extras::RetainedImage;
 use tinyjson::JsonValue;
 use poll_promise::Promise;
 use egui::Context;
@@ -49,6 +50,8 @@ struct FlasherConfig {
     flash: bool,
     flash_notified_count: i32, 
     v2_serial_path: Option<String>,
+    connection_guide_image: [RetainedImage; 3],
+    current_step: usize
 }
 
 #[derive(Serialize, Deserialize)]
@@ -96,7 +99,11 @@ impl Default for FlasherConfig {
             check_count: 0,
             flash: false,
             flash_notified_count: 0,
-            v2_serial_path: None
+            v2_serial_path: None,
+            connection_guide_image: [ RetainedImage::from_svg_bytes("Step1", include_bytes!("../assets/Step1.svg")).unwrap(),
+                                        RetainedImage::from_svg_bytes("Step2", include_bytes!("../assets/Step2.svg")).unwrap(), 
+                                        RetainedImage::from_svg_bytes("Step3", include_bytes!("../assets/Step3.svg")).unwrap() ],
+            current_step: 0
         }
         
      }
@@ -107,17 +114,44 @@ impl Flasher {
         let config: FlasherConfig = FlasherConfig::default();
         // Flasher::configure_fonts(&cc.egui_ctx);
         let saved_config: FlashSavedConfig = confy::load("PineFlash", None).unwrap_or_default();
-        let toasts = Toasts::default().with_anchor(Anchor::TopRight).with_margin(emath::vec2(0.0, 40.0));
+        let toasts = Toasts::default().with_anchor(Anchor::TopRight).with_margin(emath::vec2(0.0, 120.0));
+
+        let mut style: egui::Style = (*cc.egui_ctx.style()).clone();
+        style.spacing.item_spacing = egui::vec2(5.0, 10.0);
 
 
-        if saved_config.dark_mode {
-            cc.egui_ctx.set_visuals(egui::Visuals::dark());
-        } else {
+        cc.egui_ctx.set_style(style);
+        let new_style = egui::style::WidgetVisuals {
+
+            bg_fill: Color32::from_rgb(17, 17, 17),
+            weak_bg_fill: Color32::from_rgb(17, 17, 17),
+
+            rounding: Rounding { nw: 4., ne: 4., sw: 4., se: 4. },
+
+            bg_stroke: Stroke{ width: 1., color: Color32::from_rgb(140, 140, 140)} ,
+            fg_stroke: Stroke{ width: 1., color: Color32::from_rgb(140, 140, 140)} ,
+
+            expansion: 2.,
+        };
+        let new_hovered_style = egui::style::WidgetVisuals {
+
+            bg_fill: Color32::from_rgb(17, 17, 17),
+            weak_bg_fill: Color32::from_rgb(17, 17, 17),
+
+            rounding: Rounding { nw: 4., ne: 4., sw: 4., se: 4. },
+
+            bg_stroke: Stroke{ width: 1.5, color: egui::Color32::from_rgb(56, 55,55)},
+            fg_stroke: Stroke{ width: 1., color: Color32::from_rgb(140, 140, 140)} ,
+
+            expansion: 2.,
+        };
+        cc.egui_ctx.set_visuals(egui::style::Visuals { widgets: egui::style::Widgets {active: new_style, inactive: new_style, hovered: new_hovered_style, noninteractive: new_style, open: new_hovered_style}, ..Default::default()});
+
+        if !saved_config.dark_mode {
             cc.egui_ctx.set_visuals(egui::Visuals::light());
         }
 
         Flasher::configure_fonts(cc.egui_ctx.clone());
-
         Flasher { config, toasts, saved_config }
     }
 }
@@ -126,7 +160,7 @@ impl eframe::App for Flasher {
     fn update(&mut self, ctx: &Context, _frame: &mut eframe::Frame) {
         // always repaint to have accurate pinecil detection
         ctx.request_repaint();
-        ctx.set_pixels_per_point(1.80);
+        ctx.set_pixels_per_point(1.8);
 
         if self.config.check_count < 180 {
             self.config.check_count += 1
@@ -235,37 +269,37 @@ impl eframe::App for Flasher {
                 },
             }
         }
-            if !self.config.version.contains("Select") && !self.config.version.contains("Custom") && self.config.download_metadata {
-                let ctx = ctx.clone();
-                let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
-                let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
-                if self.config.download_notify {
-                    self.toasts.info("Downloading Language information.").set_duration(None).set_closable(false);
-                    self.config.download_notify = false
-                }
+        if !self.config.version.contains("Select") && !self.config.version.contains("Custom") && self.config.download_metadata {
+            let ctx = ctx.clone();
+            let url = format!("https://github.com/Ralim/IronOS/releases/download/{}/metadata.zip", self.config.version);
+            let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
+            if self.config.download_notify {
+                self.toasts.info("Downloading Language information.").set_duration(None).set_closable(false);
+                self.config.download_notify = false
+            }
 
-                let promise = self.config.promise_3.get_or_insert_with(|| {
-                    let (sender, promise) = Promise::new();
-                    let request = ehttp::Request::get(url);
-                    ehttp::fetch(request, move | result: ehttp::Result<ehttp::Response>|{
-                        let data = result.unwrap().bytes;
-                        let mut file = File::create(path).unwrap();
+            let promise = self.config.promise_3.get_or_insert_with(|| {
+                let (sender, promise) = Promise::new();
+                let request = ehttp::Request::get(url);
+                ehttp::fetch(request, move | result: ehttp::Result<ehttp::Response>|{
+                    let data = result.unwrap().bytes;
+                    let mut file = File::create(path).unwrap();
 
-                        if file.write_all(data.as_slice()).is_err() {
-                            println!("Could not write bytes to zip file");
-                        }
-                        let results = vec![];
+                    if file.write_all(data.as_slice()).is_err() {
+                        println!("Could not write bytes to zip file");
+                    }
+                    let results = vec![];
 
-                        sender.send(Ok(results));
-                        ctx.request_repaint(); // wake up UI thread
-                    });
-                    promise                                    
+                    sender.send(Ok(results));
+                    ctx.request_repaint(); // wake up UI thread
                 });
+                promise                                    
+            });
             match promise.ready() {                        
                 Some(Ok(_)) => {                               
                     self.toasts.dismiss_all_toasts();
                     self.config.logs.push_str("PineFlash: Download of Language Info Complete.\n");
-                    self.toasts.info("Download Complete.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
+                    self.toasts.info("Languages Downloaded.").set_duration(Some(Duration::from_secs(3))).set_closable(false);
                     let path: PathBuf = [ std::env::temp_dir(), "metadata.zip".into() ].iter().collect();
                     let mut file = File::open(path).unwrap();
                     let mut data = Vec::new();
@@ -274,14 +308,11 @@ impl eframe::App for Flasher {
 
                     zip_extract::extract(Cursor::new(data), &target_dir, false).unwrap();
 
-                    // let json_path = format!("/tmp/metadata/{}.json", self.config.int_name);
                     let json_path: PathBuf = [ std::env::temp_dir(), "metadata".into(), format!("{}.json", self.config.int_name ).into() ].iter().collect();
                     self.config.json = fs::read_to_string(json_path).unwrap();
 
-
-                    let value = serde_json::from_str::<YourValue>(self.config.json.as_str()).unwrap();
-                    self.config.logs.push_str("PineFlash: Extraction of Language Info Successful.\n");
                     self.config.download_metadata = false;
+                    let value: YourValue = serde_json::from_str(self.config.json.as_str()).unwrap();
                     for i in value.contents {
                         if !i.0.contains(".hex") {
                             let a = i.1;
@@ -317,12 +348,11 @@ fn main() {
     let options = eframe::NativeOptions { 
             decorated: true, 
             follow_system_theme: true, 
-            // default_theme: Theme::Dark, 
             icon_data: Some(eframe::IconData { rgba: (ICON.to_vec()), 
             width: (32), height: (32) }), 
             resizable: true, 
-            initial_window_size: Some(emath::Vec2{ x: 590., y: 500. }), 
-            min_window_size: Some(emath::Vec2{ x: 590., y: 500. }), 
+            initial_window_size: Some(emath::Vec2{ x: 690., y: 550. }), 
+            min_window_size: Some(emath::Vec2{ x: 690., y: 280. }), 
             ..Default::default() 
         };
 
