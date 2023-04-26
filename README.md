@@ -298,7 +298,7 @@ Alternatively just run it from your app launcher (unless your on macos).
 
 ## :spiral_calendar: Todo
 
-- [ ] Windows support.
+- [x] Windows support.
 - [ ] MacOS premade binary
 - [ ] Launcher icon for macos, easier method to install
 - [ ] Improve UI (colors, design, workflow).
