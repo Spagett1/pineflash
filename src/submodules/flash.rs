@@ -100,8 +100,6 @@ impl Flasher {
                     .arg("write")
                     .arg("-c")
                     .arg("bl70x")
-                    .arg("-p")
-                    .arg(self.config.v2_serial_path.clone().unwrap())
                     .arg("--reset")
                     .arg(firmware_path)
                     .output()

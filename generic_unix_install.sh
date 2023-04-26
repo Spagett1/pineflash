@@ -10,6 +10,7 @@ cargo build --release
 if [ "$(uname)" == "Darwin" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.3/blisp-macos64-v0.0.3.zip" -o "blisp-macos64-v0.0.3.zip"
   unzip "blisp-macos64-v0.0.3.zip"
+  chmod +x ./blisp
   $root cp ./blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
   $root cp ./target/release/pineflash /usr/local/bin/
