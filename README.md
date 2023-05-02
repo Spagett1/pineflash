@@ -162,23 +162,26 @@ sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2
 <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" /> Dependencies for Arch
  </summary>
 
+#### Runtime dependancies
 ```
-cmake
-rust (If doing development i recommend the `rustup` package)
-git
-dfu-util - for pinecil V1 support
-polkit
-gcc
-pkgconf
-glibc 
-base-devel 
+dfu-util
 fontconfig
-atmm
-gtk3         
+glibc
+gtk3
+polkit
+```
+#### Build dependancies
+```
+base-devel
+cargo-ndk # To verify some integrity checksums of rust modules
+git
+optipng
+pkgconf
+rust
 ```
 This line will install everything:
 ```
-sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-devel fontconfig atmm gtk3
+sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-devel fontconfig gtk3
 ```
 
 </details>
