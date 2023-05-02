@@ -122,6 +122,7 @@ cmake
 rust 
 git
 dfu-util - for pinecil V1 support
+blisp - for pinecil V2 support
 polkit - Linux only
 gcc         
 ```
@@ -164,7 +165,8 @@ sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2
 
 #### Runtime dependancies
 ```
-dfu-util
+dfu-util - for pinecil V1 support 
+blisp - for pinecil V2 support, find this in the AUR
 fontconfig
 glibc
 gtk3
@@ -179,7 +181,7 @@ optipng
 pkgconf
 rust
 ```
-This line will install everything:
+This line will install everything except blisp since its in the aur.
 ```
 sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-devel fontconfig gtk3
 ```
