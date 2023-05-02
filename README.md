@@ -203,12 +203,13 @@ cd PineFlash
 
 ### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
 1. All dependancies will be handled by the PKGBUILD
-2. Download the source code with the following commands.
+2. PineFlash is in the aur so you can install it just like any other aur package.
 ```
-git clone https://github.com/Spagett1/PineFlash/
-cd PineFlash
+git clone https://aur.archlinux.org/pineflash-git.git
+cd pineflash-git
+makepkg -si
 ```
-3. Just run `makepkg -si` in the main directory to build and install it.
+3. Alternatively just use your favourite aur helper.
 </details>
 <div style="clear:both;">&nbsp;</div>
 
