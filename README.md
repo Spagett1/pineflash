@@ -81,7 +81,7 @@ And copy the contents into your system
 ```
 doas cp -r ./usr /
 ```
-> **_NOTE:_**  Make sure you install dfu-util manually if you have a pinecil v1 and choose this option. Window manager users should ensure they have a pokit agent installed and enabled.
+> **_NOTE:_**  Make sure you install dfu-util manually and that it is at least version 0.11 as older versions can have issues. Window manager users should ensure they have a pokit agent installed and enabled.
 
 ### <img width="18" src="https://cdn.simpleicons.org/Apple/818589" /> MacOs
 Sorry we dont have built apps for you yet, head to the build from source section and use the unix install script. 
