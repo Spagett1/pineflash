@@ -22,11 +22,13 @@ impl Flasher {
         for device in ports {
 
             if let UsbPort(info) = device.port_type {
-                if info.serial_number.clone().unwrap().contains("000000020000") {
-                    // pinecil v2 connected
-                    v2 = true;
-                    self.config.v2_serial_path = Some(device.port_name.clone());
-                    type_of_pinecil = Some("Pinecilv2".to_string())
+                if let Some(serial_number) = info.serial_number {
+                    if serial_number.contains("000000020000") {
+                        // pinecil v2 connected
+                        v2 = true;
+                        self.config.v2_serial_path = Some(device.port_name.clone());
+                        type_of_pinecil = Some("Pinecilv2".to_string())
+                    }
                 }
             }
         }
