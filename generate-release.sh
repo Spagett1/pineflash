@@ -42,7 +42,7 @@ fpm -s dir -t pacman \
   --architecture $arch \
   --depends polkit \
   --depends dfu-util \
-  --depends blsip \
+  --depends blisp \
   --description "Flashing tool for pinecil soldering irons." \
   --url "https://github.com/Spagett1/PineFlash" \
   --maintainer "Spagett <laar@tutanota.com>" \
