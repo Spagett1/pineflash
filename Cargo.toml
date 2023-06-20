@@ -1,6 +1,6 @@
 [package]
 name = "pineflash"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 build = "build.rs"
 
@@ -9,7 +9,6 @@ build = "build.rs"
 [dependencies]
 eframe = "0.21.3"
 zip-extract = "0.1.1"
-ehttp = "0.2"
 poll-promise = "0.2.0"
 tinyjson = "2.5.0"
 egui-notify = "0.6.0"
@@ -22,6 +21,7 @@ serialport = "4.2.0"
 rusb = "0.9"
 confy = "0.5.1"
 egui_extras = { version = "0.21.0", features = ["image", "svg"] }
+curl = "0.4.44"
 
 [build-dependencies]
 winresource = "0.1.15"

@@ -3,7 +3,6 @@ use serialport::SerialPortType::UsbPort;
 
 impl Flasher {
     pub fn check_connections(&mut self) -> Option<String> {
-
         let ports = serialport::available_ports().expect("No ports found!");
         let mut type_of_pinecil: Option<String> = None;
         let mut v1: bool = false;
@@ -20,7 +19,6 @@ impl Flasher {
         }
 
         for device in ports {
-
             if let UsbPort(info) = device.port_type {
                 if let Some(serial_number) = info.serial_number {
                     if serial_number.contains("000000020000") {
@@ -35,15 +33,27 @@ impl Flasher {
         if v1 && v2 && self.config.iron_connected.as_ref() != Some(&"Both".to_string()) {
             type_of_pinecil = Some("Both".to_string());
             self.config.logs.push_str("Both v1 and v2 are detected")
-        }
-        else if self.config.iron_connected.is_none() && type_of_pinecil.is_some() {
-            self.config.logs.push_str(format!("Pineflash: {} detected\n", type_of_pinecil.clone().unwrap()).as_str());
+        } else if self.config.iron_connected.is_none() && type_of_pinecil.is_some() {
+            self.config.logs.push_str(
+                format!("Pineflash: {} detected\n", type_of_pinecil.clone().unwrap()).as_str(),
+            );
             if v2 {
-                    self.config.logs.push_str(format!("PineFlash: Serial port is {} \n", self.config.v2_serial_path.clone().unwrap()).as_str());
+                self.config.logs.push_str(
+                    format!(
+                        "PineFlash: Serial port is {} \n",
+                        self.config.v2_serial_path.clone().unwrap()
+                    )
+                    .as_str(),
+                );
             }
-        } 
-        else if self.config.iron_connected.is_some() && type_of_pinecil.is_none() {
-            self.config.logs.push_str(format!("Pineflash: {} disconnected\n", self.config.iron_connected.clone().unwrap()).as_str());
+        } else if self.config.iron_connected.is_some() && type_of_pinecil.is_none() {
+            self.config.logs.push_str(
+                format!(
+                    "Pineflash: {} disconnected\n",
+                    self.config.iron_connected.clone().unwrap()
+                )
+                .as_str(),
+            );
         }
         type_of_pinecil
     }

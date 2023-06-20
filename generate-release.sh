@@ -29,7 +29,7 @@ fpm -s dir -t deb \
   --license gpl2 \
   --version $ver \
   --architecture $arch \
-  --depends libpolkit-agent-1-0 \
+  --depends policykit-1 \
   --description "Flashing tool for pinecil soldering irons." \
   --url "https://github.com/Spagett1/PineFlash" \
   --maintainer "Spagett <laar@tutanota.com>" \
@@ -41,6 +41,8 @@ fpm -s dir -t pacman \
   --version $ver \
   --architecture $arch \
   --depends polkit \
+  --depends dfu-util \
+  --depends blsip \
   --description "Flashing tool for pinecil soldering irons." \
   --url "https://github.com/Spagett1/PineFlash" \
   --maintainer "Spagett <laar@tutanota.com>" \
