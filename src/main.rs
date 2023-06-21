@@ -21,7 +21,7 @@ use egui::Context;
 use egui_extras::RetainedImage;
 use egui_notify::{Anchor, Toasts};
 use serde::{Deserialize, Serialize};
-use tinyjson::JsonValue;
+use serde_json::Value;
 
 const ICON: &[u8] = include_bytes!("../assets/pine64logo.ico");
 
@@ -275,10 +275,9 @@ impl eframe::App for Flasher {
             let string =
                 String::from_utf8(std::fs::read(self.config.metadata_path.clone()).unwrap())
                     .unwrap();
-            let json: JsonValue = string.parse().unwrap();
+            let json: Value = serde_json::from_str(string.as_str()).unwrap();
             for i in 0..3 {
-                let version = json[i]["tag_name"].stringify().unwrap();
-                let version = &version[1..version.len() - 1];
+                let version = json[i]["tag_name"].as_str().unwrap();
                 self.config.vers.push(version.to_string());
             }
             self.config.versions_checked = true;
