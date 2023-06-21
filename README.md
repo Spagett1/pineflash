@@ -310,6 +310,7 @@ Alternatively just run it from your app launcher (unless your on macos).
 - [x] Improve UI (colors, design, workflow).
 - [ ] Improve Light Mode.
 - [x] In app instructions for connecting pinecil to pc.
+- [ ] Flatpak and/or Appimage support for linux.
 - [ ] V2 boot logo art support when blisp supports it.
 
 ## :tea: Feel like supporting me?
