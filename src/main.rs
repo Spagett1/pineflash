@@ -275,13 +275,25 @@ impl eframe::App for Flasher {
             let string =
                 String::from_utf8(std::fs::read(self.config.metadata_path.clone()).unwrap())
                     .unwrap();
-            let json: Value = serde_json::from_str(string.as_str()).unwrap();
-            for i in 0..3 {
-                let version = json[i]["tag_name"].as_str().unwrap();
-                self.config.vers.push(version.to_string());
+            let json: Result<Value, serde_json::Error> = serde_json::from_str(string.as_str());
+            if json.is_err() {
+                self.toasts.dismiss_all_toasts();
+                self.toasts
+                    .error("Could not access github, Online Files Will be Unavailable")
+                    .set_duration(Some(Duration::from_secs(5)))
+                    .set_closable(false);
+                self.config
+                    .logs
+                    .push_str("PineFlash: Invalid json downloaded, could not fetch versions.\n");
+                self.config.versions_checked = true;
+            } else {
+                for i in 0..3 {
+                    let version = json.as_ref().unwrap()[i]["tag_name"].as_str().unwrap();
+                    self.config.vers.push(version.to_string());
+                }
+                self.config.versions_checked = true;
+                self.config.download_metadata = true;
             }
-            self.config.versions_checked = true;
-            self.config.download_metadata = true;
         } else if !self.config.versions_checked
             && self.config.metadata_path.exists()
             && String::from_utf8(std::fs::read(self.config.metadata_path.clone()).unwrap())
