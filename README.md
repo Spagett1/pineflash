@@ -10,7 +10,7 @@
 
 A GUI tool to flash IronOS to the Pinecil V1, V2 and future other pine products.  
 
-If you need help, or just want to chat, I have a [discord server](https://discord.gg/urfvSx2B)
+If you need help, or just want to chat, I have a [discord server](https://discord.gg/47Z6uZyBq)
 
 ## Features
 * Auto-fetch the newest stable release of IronOS firmware.
