@@ -62,7 +62,7 @@ impl Flasher {
                                 );           
                             });
                             if ui.button(RichText::new(" ").size(15.)).clicked() {
-                                if let Some(path) = rfd::FileDialog::new().pick_file() {
+                                if let Some(path) = rfd::FileDialog::new().add_filter("Firmware files", &["bin","dfu"]).pick_file() {
                                     if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
                                         !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
                                     {
