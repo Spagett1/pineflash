@@ -19,6 +19,7 @@ use eframe::{
 mod submodules;
 use egui::Context;
 use egui_extras::RetainedImage;
+use egui_file::FileDialog;
 use egui_notify::{Anchor, Toasts};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -63,6 +64,7 @@ struct FlasherConfig {
     current_step: usize,
     json_checked: bool,
     metadata_path: PathBuf,
+    open_file_dialog: Option<FileDialog>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -101,7 +103,10 @@ impl Default for FlasherConfig {
             download_firm_notify: true,
             picked_path: None,
             ready_to_flash: false,
-            logs: format!("Pineflash v{}\n", env!("CARGO_PKG_VERSION")),
+            #[cfg(feature = "appimage")]
+            logs: format!("Pineflash v{}-A\n", env!("CARGO_PKG_VERSION")),
+            #[cfg(not(feature = "appimage"))]
+            logs: format!("Pineflash v{}-N\n", env!("CARGO_PKG_VERSION")),
             json: "".to_string(),
             iron_connected: None,
             check_count: 0,
@@ -120,6 +125,7 @@ impl Default for FlasherConfig {
             metadata_path: [std::env::temp_dir(), "metadata.json".into()]
                 .iter()
                 .collect(),
+            open_file_dialog: None,
         }
     }
 }
@@ -325,7 +331,7 @@ impl eframe::App for Flasher {
                 .iter()
                 .collect();
             if self.config.download_firm_notify {
-                let _ = std::fs::write(pathlock.clone(), "Locked");
+                let _ = std::fs::write(pathlock, "Locked");
                 self.toasts
                     .info("Downloading")
                     .set_duration(None)
@@ -403,7 +409,7 @@ impl eframe::App for Flasher {
                     .set_duration(None)
                     .set_closable(false);
                 let _ = std::fs::remove_file(path);
-                let _ = std::fs::write(pathlock.clone(), "Locked");
+                let _ = std::fs::write(pathlock, "Locked");
                 let version = self.config.version.clone();
                 std::thread::spawn(move || {
                     let mut data = Vec::new();
@@ -501,8 +507,8 @@ fn main() {
             height: (32),
         }),
         resizable: true,
-        initial_window_size: Some(emath::Vec2 { x: 690., y: 550. }),
-        min_window_size: Some(emath::Vec2 { x: 690., y: 280. }),
+        initial_window_size: Some(emath::Vec2 { x: 760., y: 680. }),
+        min_window_size: Some(emath::Vec2 { x: 760., y: 280. }),
         ..Default::default()
     };
 

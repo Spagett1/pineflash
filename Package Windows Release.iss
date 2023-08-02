@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PineFlash"
-#define MyAppVersion "0.5.1"
+#define MyAppVersion "0.5.2"
 #define MyAppPublisher "Spagett"
 #define MyAppURL "https://github.com/Spagett1"
 #define MyAppExeName "pineflash.exe"
@@ -38,7 +38,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "Z:\home\spagett\projects\PineFlash\target\x86_64-pc-windows-gnu\release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Z:\home\spagett\projects\PineFlash\tools\*"; DestDir: "{app}/tools/"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "Z:\home\spagett\projects\PineFlash\tools\win\*"; DestDir: "{app}/tools/"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

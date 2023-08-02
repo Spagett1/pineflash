@@ -3,9 +3,11 @@ use std::time::Duration;
 use eframe::{egui::{CentralPanel, self, RichText, ScrollArea, Button}, epaint::{Color32, Rounding}};
 use egui::Context;
 use egui::Vec2;
+use egui::emath;
+use egui_file::FileDialog;
+use simple_home_dir::home_dir;
 
 use crate::Flasher;
-
 impl Flasher {
     pub fn render_main_windows(&mut self, ctx: &Context) {
         CentralPanel::default().show(ctx, |ui|{
@@ -62,23 +64,51 @@ impl Flasher {
                                 );           
                             });
                             if ui.button(RichText::new(" ").size(15.)).clicked() {
-                                if let Some(path) = rfd::FileDialog::new().pick_file() {
-                                    if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
-                                        !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
-                                    {
-                                        self.toasts.dismiss_all_toasts();
-                                        self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
-                                        self.config.logs.push_str("PineFlash: PineFlash: Incorrect filetype selected.\n");
-                                        self.config.picked_path = None;
-                                    } else {
-                                        self.config.picked_path = Some(path.display().to_string());
-                                        self.config.version = "Custom".to_string();
-                                        self.toasts.dismiss_all_toasts();
-                                        self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
-                                        self.config.logs.push_str("PineFlash: Custom file selected.\n");
+                                let mut dialog = FileDialog::open_file(home_dir()).default_size(emath::Vec2 {x:264., y: 262.});
+                                dialog.open();
+                                self.config.open_file_dialog = Some(dialog);
+                            }
+                            if let Some(dialog) = &mut self.config.open_file_dialog {
+                                if dialog.show(ctx).selected() {
+                                    if let Some(file) = dialog.path() {
+                                        if !file.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
+                                            !file.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
+                                        {
+                                            self.toasts.dismiss_all_toasts();
+                                            self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                                            self.config.logs.push_str("PineFlash: Incorrect filetype selected.\n");
+                                            self.config.picked_path = None;
+                                        } else {
+                                            self.config.picked_path = Some(file.display().to_string());
+                                            self.config.version = "Custom".to_string();
+                                            self.toasts.dismiss_all_toasts();
+                                            self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                                            self.config.logs.push_str("PineFlash: Custom file selected.\n");
+                                        }
                                     }
                                 }
                             }
+                                // }
+                                // let mut dialog = egui_file::FileDialog::open_file(file.clone());
+                                // dialog.open();
+                                // dialog.show(ctx);
+                                // println!("{:?}", file);
+                                // if let Some(path) = rfd::FileDialog::new().pick_file() {
+                                //     if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
+                                //         !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
+                                //     {
+                                //         self.toasts.dismiss_all_toasts();
+                                //         self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                                //         self.config.logs.push_str("PineFlash: PineFlash: Incorrect filetype selected.\n");
+                                //         self.config.picked_path = None;
+                                //     } else {
+                                //         self.config.picked_path = Some(path.display().to_string());
+                                //         self.config.version = "Custom".to_string();
+                                //         self.toasts.dismiss_all_toasts();
+                                //         self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                                //         self.config.logs.push_str("PineFlash: Custom file selected.\n");
+                                //     }
+                                // }
                     });
                 });
                 ui.add_space(ui.available_width() - ((width - width_now) / 1.2));
@@ -177,10 +207,8 @@ impl Flasher {
                                         ui.add_enabled_ui(false, |ui|{
                                             ui.add_sized([80., 10.], Button::new("Previous").fill(egui::Color32::from_rgb(27, 27, 27)))
                                         });
-                                    } else {
-                                        if ui.add_sized([80., 10.], Button::new("Previous").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
+                                    } else if ui.add_sized([80., 10.], Button::new("Previous").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
                                             self.config.current_step -= 1;
-                                        }
                                     }
 
                                 });
@@ -191,11 +219,10 @@ impl Flasher {
                                         ui.add_enabled_ui(false, |ui|{
                                             ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27)))
                                         });
-                                    } else {
-                                        if ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
+                                    } else if ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
                                             self.config.current_step += 1;
-                                        }
                                     }
+                                    
                                 });
                             });
                             ui.add_space(5.);

@@ -84,9 +84,31 @@ impl Flasher {
             .as_str(),
         );
         if self.config.int_name == "Pinecil" {
+            #[cfg(feature = "appimage")]
+            let path = format!(
+                "{}/linux/dfu-util",
+                std::env::current_dir().unwrap().to_str().unwrap()
+            );
+            #[cfg(feature = "appimage")]
+            let tool_path: PathBuf = [std::env::temp_dir(), "flash_tools".into()]
+                .iter()
+                .collect();
+
+            #[cfg(feature = "appimage")]
+            let _ = std::fs::create_dir(tool_path.clone());
+            #[cfg(feature = "appimage")]
+            let dfupath: PathBuf = [tool_path, "dfu-util".into()].iter().collect();
+            #[cfg(feature = "appimage")]
+            std::fs::copy(path, dfupath.clone()).unwrap();
+            // println!("{}", path);
+
+            #[cfg(not(feature = "appimage"))]
+            let dfupath = "dfu-util";
+
             #[cfg(target_os = "linux")]
             let command = Command::new("pkexec")
-                .arg("dfu-util")
+                // .env("PATH", path)
+                .arg(dfupath)
                 .arg("-D")
                 .arg(firmware_path)
                 .output()
@@ -133,9 +155,31 @@ impl Flasher {
                 .logs
                 .push_str(format!("Dfu-Util: {}{}\n", output, output_err).as_str());
         } else if self.config.int_name == "Pinecilv2" {
+            #[cfg(feature = "appimage")]
+            let path = format!(
+                "{}/linux/blisp",
+                std::env::current_dir().unwrap().to_str().unwrap()
+            );
+            #[cfg(feature = "appimage")]
+            let tool_path: PathBuf = [std::env::temp_dir(), "flash_tools".into()]
+                .iter()
+                .collect();
+
+            #[cfg(feature = "appimage")]
+            let _ = std::fs::create_dir(tool_path.clone());
+            #[cfg(feature = "appimage")]
+            let blisppath: PathBuf = [tool_path, "blisp".into()].iter().collect();
+            #[cfg(feature = "appimage")]
+            std::fs::copy(path, blisppath.clone()).unwrap();
+            // println!("{}", path);
+
+            #[cfg(not(feature = "appimage"))]
+            let blisppath = "blisp";
+
             #[cfg(target_os = "linux")]
             let command = Command::new("pkexec")
-                .arg("blisp")
+                .env("PATH", "/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:linux")
+                .arg(blisppath)
                 .arg("write")
                 .arg("-c")
                 .arg("bl70x")
