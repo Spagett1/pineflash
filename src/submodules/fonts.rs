@@ -1,4 +1,7 @@
-use eframe::{egui::{self, FontDefinitions, FontData}, epaint::{FontFamily}};
+use eframe::{
+    egui::{self, FontData, FontDefinitions},
+    epaint::FontFamily,
+};
 
 use crate::Flasher;
 
@@ -25,9 +28,7 @@ impl Flasher {
             .get_mut(&FontFamily::Proportional)
             .unwrap()
             .push("MesloLGS".to_owned());
-        
-        
+
         cc.set_fonts(fonts);
-        
     }
 }

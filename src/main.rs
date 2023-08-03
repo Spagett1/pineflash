@@ -47,6 +47,7 @@ struct FlasherConfig {
     versions_checked: bool,
     vers: Vec<String>,
     download_metadata: bool,
+    blisp_version: String,
     run_once_vers: bool,
     download: bool,
     picked_path: Option<String>,
@@ -99,14 +100,20 @@ impl Default for FlasherConfig {
             run_once_vers: true,
             json_checked: false,
             download: false,
+            blisp_version: "".to_string(),
             download_versions: true,
             download_firm_notify: true,
             picked_path: None,
             ready_to_flash: false,
             #[cfg(feature = "appimage")]
-            logs: format!("Pineflash v{}-A\n", env!("CARGO_PKG_VERSION")),
+            logs: format!("Pineflash v{} Linux Appimage\n", env!("CARGO_PKG_VERSION")),
             #[cfg(not(feature = "appimage"))]
-            logs: format!("Pineflash v{}-N\n", env!("CARGO_PKG_VERSION")),
+            #[cfg(target_os = "linux")]
+            logs: format!("Pineflash v{} Linux Native\n", env!("CARGO_PKG_VERSION")),
+            #[cfg(target_os = "windows")]
+            logs: format!("Pineflash v{} Windows\n", env!("CARGO_PKG_VERSION")),
+            #[cfg(target_os = "macos")]
+            logs: format!("Pineflash v{} MacOs\n", env!("CARGO_PKG_VERSION")),
             json: "".to_string(),
             iron_connected: None,
             check_count: 0,
@@ -507,8 +514,8 @@ fn main() {
             height: (32),
         }),
         resizable: true,
-        initial_window_size: Some(emath::Vec2 { x: 760., y: 680. }),
-        min_window_size: Some(emath::Vec2 { x: 760., y: 280. }),
+        initial_window_size: Some(emath::Vec2 { x: 780., y: 680. }),
+        min_window_size: Some(emath::Vec2 { x: 780., y: 280. }),
         ..Default::default()
     };
 

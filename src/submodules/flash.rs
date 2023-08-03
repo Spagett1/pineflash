@@ -103,6 +103,7 @@ impl Flasher {
             // println!("{}", path);
 
             #[cfg(not(feature = "appimage"))]
+            #[cfg(target_os = "linux")]
             let dfupath = "dfu-util";
 
             #[cfg(target_os = "linux")]
@@ -174,6 +175,7 @@ impl Flasher {
             // println!("{}", path);
 
             #[cfg(not(feature = "appimage"))]
+            #[cfg(target_os = "linux")]
             let blisppath = "blisp";
 
             #[cfg(target_os = "linux")]

@@ -1,11 +1,20 @@
 use std::time::Duration;
+#[cfg(target_family = "windows")]
+use std::os::windows::process::CommandExt;
+#[cfg(target_family = "windows")]
+use std::path::PathBuf;
 
-use eframe::{egui::{CentralPanel, self, RichText, ScrollArea, Button}, epaint::{Color32, Rounding}};
+use eframe::{
+    egui::{self, Button, CentralPanel, RichText, ScrollArea},
+    epaint::{Color32, Rounding},
+};
+use egui::emath;
 use egui::Context;
 use egui::Vec2;
-use egui::emath;
 use egui_file::FileDialog;
 use simple_home_dir::home_dir;
+use std::process::Command;
+use version_compare::Version;
 
 use crate::Flasher;
 impl Flasher {
@@ -61,7 +70,7 @@ impl Flasher {
                                         }
 
                                     }
-                                );           
+                                );
                             });
                             if ui.button(RichText::new(" ").size(15.)).clicked() {
                                 let mut dialog = FileDialog::open_file(home_dir()).default_size(emath::Vec2 {x:264., y: 262.});
@@ -71,44 +80,81 @@ impl Flasher {
                             if let Some(dialog) = &mut self.config.open_file_dialog {
                                 if dialog.show(ctx).selected() {
                                     if let Some(file) = dialog.path() {
-                                        if !file.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
-                                            !file.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
-                                        {
+                                        if self.config.int_name == "Pinecilv2" {
+
+                                            #[cfg(feature = "appimage")]
+                                            let path = format!(
+                                                "{}/linux/blisp",
+                                                std::env::current_dir().unwrap().to_str().unwrap()
+                                            );
+                                            #[cfg(feature = "appimage")]
+                                            let tool_path: PathBuf = [std::env::temp_dir(), "flash_tools".into()]
+                                                .iter()
+                                                .collect();
+
+                                            #[cfg(feature = "appimage")]
+                                            let _ = std::fs::create_dir(tool_path.clone());
+                                            #[cfg(feature = "appimage")]
+                                            let blisppath: PathBuf = [tool_path, "blisp".into()].iter().collect();
+                                            #[cfg(feature = "appimage")]
+                                            std::fs::copy(path, blisppath.clone()).unwrap();
+                                            #[cfg(not(feature = "appimage"))]
+                                            #[cfg(target_os = "linux")]
+                                            let blisppath = "blisp";
+
+                                            #[cfg(target_os = "linux")]
+                                            let blisp_version = String::from_utf8( Command::new(blisppath)
+                                                .env("PATH", "/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:linux")
+                                                .arg("--version").output().expect("Could not find blisp").stdout).unwrap();
+                                            #[cfg(target_family = "windows")]
+                                            let blisp: PathBuf = [
+                                                std::env::current_dir().unwrap(),
+                                                "tools".into(),
+                                                "blisp.exe".into(),
+                                            ]
+                                            .iter()
+                                            .collect();
+
+                                            #[cfg(target_os = "windows")]
+                                            let blisp_version = String::from_utf8( Command::new(blisp)
+                                                .creation_flags(0x00000008)
+                                                .arg("--version").output().expect("Could not find blisp").stdout).unwrap();
+
+                                            let ver = blisp_version.split("\n");
+                                            for i in ver {
+                                                if i.contains("v") {
+                                                    for ii in i.split("v") {
+                                                        if ii.contains(".") {
+                                                            self.config.blisp_version = ii.to_string();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if !file.display().to_string().contains("dfu") && self.config.int_name == "Pinecil"  || self.config.int_name == "Pinecilv2" && !file.display().to_string().contains("bin") && !file.display().to_string().contains("dfu") {
                                             self.toasts.dismiss_all_toasts();
                                             self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                                             self.config.logs.push_str("PineFlash: Incorrect filetype selected.\n");
                                             self.config.picked_path = None;
-                                        } else {
+                                            
+                                        } else if Version::from(self.config.blisp_version.as_str()).unwrap() < Version::from("0.0.4").unwrap() && file.display().to_string().contains("dfu") && self.config.int_name == "Pinecilv2" {
+                                            self.toasts.dismiss_all_toasts();
+                                            self.toasts.error("Your version of blisp can not flash boot image files.\nPlease update it to version 0.0.4 or higher").set_duration(Some(Duration::from_secs(4))).set_closable(false);
+                                            self.config.logs.push_str(format!("PineFlash: Old blisp version {}.\n", self.config.blisp_version).as_str());
+                                            self.config.picked_path = None;
+
+                                        }
+                                        else {
                                             self.config.picked_path = Some(file.display().to_string());
                                             self.config.version = "Custom".to_string();
                                             self.toasts.dismiss_all_toasts();
                                             self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
                                             self.config.logs.push_str("PineFlash: Custom file selected.\n");
+
                                         }
                                     }
                                 }
                             }
-                                // }
-                                // let mut dialog = egui_file::FileDialog::open_file(file.clone());
-                                // dialog.open();
-                                // dialog.show(ctx);
-                                // println!("{:?}", file);
-                                // if let Some(path) = rfd::FileDialog::new().pick_file() {
-                                //     if !path.display().to_string().contains("dfu") && self.config.int_name == "Pinecil" || 
-                                //         !path.display().to_string().contains("bin") && self.config.int_name == "Pinecilv2" 
-                                //     {
-                                //         self.toasts.dismiss_all_toasts();
-                                //         self.toasts.error("File has the incorrect format").set_duration(Some(Duration::from_secs(4))).set_closable(false);
-                                //         self.config.logs.push_str("PineFlash: PineFlash: Incorrect filetype selected.\n");
-                                //         self.config.picked_path = None;
-                                //     } else {
-                                //         self.config.picked_path = Some(path.display().to_string());
-                                //         self.config.version = "Custom".to_string();
-                                //         self.toasts.dismiss_all_toasts();
-                                //         self.toasts.info("Custom file selected").set_duration(Some(Duration::from_secs(4))).set_closable(false);
-                                //         self.config.logs.push_str("PineFlash: Custom file selected.\n");
-                                //     }
-                                // }
                     });
                 });
                 ui.add_space(ui.available_width() - ((width - width_now) / 1.2));
@@ -129,18 +175,18 @@ impl Flasher {
                                         ui.selectable_value(&mut self.config.lang, code_name.to_string(), fancy_name);
                                     }
                                 }
-                            ); 
+                            );
                         })
                     });
                 })
             });
             if self.config.picked_path.is_some() &&
-                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
-                self.config.iron_connected.as_ref() == Some(&"Both".to_string()) || 
-                self.config.version != *"Custom" && 
-                self.config.version != *"Select" && 
-                !self.config.download && 
-                self.config.iron_connected.as_ref() == Some(&self.config.int_name) || 
+                self.config.iron_connected.as_ref() == Some(&self.config.int_name) ||
+                self.config.iron_connected.as_ref() == Some(&"Both".to_string()) ||
+                self.config.version != *"Custom" &&
+                self.config.version != *"Select" &&
+                !self.config.download &&
+                self.config.iron_connected.as_ref() == Some(&self.config.int_name) ||
                 self.config.iron_connected.as_ref() == Some(&"Both".to_string())
             {
                 self.config.ready_to_flash = true
@@ -156,22 +202,21 @@ impl Flasher {
 
             if !self.config.ready_to_flash {
 
-                // ui.add_enabled_ (false, ui.add_sized([20., 40.], egui::Button::new("Update!")).on_disabled_hover_text(
                 ui.add_enabled_ui(false, |ui| {
                     ui.add_sized([80., 10.], egui::Button::new("Update!")).on_disabled_hover_text(
                         // Tell user why they can not flash
                     if  self.config.iron_connected.as_ref() == Some(&self.config.int_name) ||
                         self.config.iron_connected.as_ref() == Some(&"Both".to_string())
                         { "Select a firmware version or a custom file." } 
-                    else if self.config.iron_connected.is_some() && 
+                    else if self.config.iron_connected.is_some() &&
                         self.config.iron_connected.as_ref() != Some(&self.config.int_name) &&
                         self.config.iron_connected.as_ref() != Some(&"Both".to_string())
                         {"The selected soldering iron does \nnot match the one currently plugged in."}
                     else if self.config.version != *"Custom" ||
-                        self.config.picked_path.is_some() && 
+                        self.config.picked_path.is_some() &&
                         self.config.version != *"Select"
                         {"Connect your soldering iron and \nmake sure it is in flashing mode."} 
-                    else 
+                    else
                         {"Please select a firmware version and\nplug your soldering iron in whilst in flashing mode."}
                     )
                 });
@@ -184,11 +229,10 @@ impl Flasher {
                     self.config.flash = true;
                 }
             };
-            
             ui.separator();
 
             egui::CollapsingHeader::new("Connection Guide")
-                .default_open(true)
+                .default_open(false)
                 .show_unindented(ui, |ui|
             {
                 ui.horizontal(|ui|{
@@ -196,7 +240,7 @@ impl Flasher {
                     egui::Frame::none()
                         .fill(egui::Color32::from_rgb(17, 17, 17))
                         .rounding(Rounding { nw: 4., ne: 4., sw: 4., se: 4. })
-                        .show(ui, |ui| 
+                        .show(ui, |ui|
                     {
                         ui.vertical(|ui|{
                             ui.image(self.config.connection_guide_image[self.config.current_step].texture_id(ctx), Vec2 { x: ui.available_width() - 10., y: (ui.available_width() - 10.) / 3.4 });
@@ -222,7 +266,6 @@ impl Flasher {
                                     } else if ui.add_sized([80., 10.], Button::new("Next").fill(egui::Color32::from_rgb(27, 27, 27))).clicked() {
                                             self.config.current_step += 1;
                                     }
-                                    
                                 });
                             });
                             ui.add_space(5.);
@@ -230,18 +273,16 @@ impl Flasher {
                     });
                 });
             });
-            
             egui::CollapsingHeader::new("Logs")
                 .default_open(false)
                 .show_unindented(ui, |ui|
             {
                 ui.horizontal(|ui|{
-
                     ui.add_space(10.);
                     egui::Frame::none()
                         .fill(egui::Color32::from_rgb(17, 17, 17))
                         .rounding(Rounding { nw: 4., ne: 4., sw: 4., se: 4. })
-                        .show(ui, |ui| 
+                        .show(ui, |ui|
                     {
                         ui.vertical(|ui|{
                         ui.add_space(10.);
