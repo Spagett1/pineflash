@@ -4,13 +4,13 @@ files="target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr
 arch="x86_64"
 cargo build --release
 cargo build --target x86_64-pc-windows-gnu --release
+cargo appimage
 
 # Generate windows release
 # Update version number 
 sed -i "s/#define MyAppVersion.*/#define MyAppVersion \"$ver\"/g" ./Package_Windows_Release.iss
 wine /home/spagett/.wine/drive_c/Program\ Files\ \(x86\)/Inno\ Setup\ 6/ISCC.exe ./Package_Windows_Release.iss
 mv PineFlash_Installer.exe pineflash-$ver-win64.exe
-
 
 # Generate rpm release
 fpm -s dir -t rpm \
