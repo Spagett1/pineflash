@@ -3,4 +3,5 @@
 /release-build
 /tools
 /PineFlash_Installer.exe
-/pineflash*/libs
+/pineflash*
+/libs
