@@ -16,7 +16,7 @@ If you need help, or just want to chat, I have a [discord server](https://discor
 * Auto-fetch the newest stable release of IronOS firmware.
 * Allows manual installs of beta versions using a browse to file feature.
 * Selectable options: pick the iron type, pick the firmware version and download it.
-* Boot logo art upload supported for V1 (use custom & folder icon)
+* Boot logo art upload supported for V1 and V2 (use custom & folder icon)
 
 <br clear="both" />
 
@@ -283,11 +283,11 @@ Alternatively just run it from your app launcher (unless your on macos).
 
 ## Boot Logo Art
 
-- Select Custom from version drop-down, then click on the folder icon to browse to the art file you want to load.
-- Currently only V1 supports Boot logos.
+- Select your Pinecil version.
+- Click on the folder icon to browse to the art file you want to load.
+- For the v2 you must have IronOs v2.22 installed to support boot logo.
+- If you encounter errors with flashing boot logo's to the v2 ensure your blisp version is at minimum 0.0.4.
 - See [IronOS-Meta](https://github.com/Ralim/IronOS-Meta/) to get premade art or details on how to make custom art.
-- [Work in progress](https://github.com/Ralim/IronOS/issues/1373#issuecomment-1414925011) by Ralim to get blisp to support logos for V2.
-- Presently, the only method for V2 is to make a custom version of IronOS firmware with logo art embeded in the code; this is for advanced users comfortable Github and code changes [see here](https://github.com/Ralim/IronOS-Meta/issues/32#issuecomment-1505172982).
 
 <br>
 
