@@ -102,13 +102,14 @@ impl Flasher {
                                             #[cfg(feature = "appimage")]
                                             std::fs::copy(path, blisppath.clone()).unwrap();
                                             #[cfg(not(feature = "appimage"))]
-                                            #[cfg(target_os = "linux")]
+                                            #[cfg(target_family = "unix")]
                                             let blisppath = "blisp";
 
-                                            #[cfg(target_os = "linux")]
+                                            #[cfg(target_family = "unix")]
                                             let blisp_version = String::from_utf8( Command::new(blisppath)
-                                                .env("PATH", "/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:linux")
+                                                .env("PATH", "/usr/local/sbin:/usr/local/bin:/usr/bin:/bin")
                                                 .arg("--version").output().expect("Could not find blisp").stdout).unwrap();
+                       
                                             #[cfg(target_family = "windows")]
                                             let blisp: PathBuf = [
                                                 std::env::current_dir().unwrap(),
