@@ -23,11 +23,10 @@ If you need help, or just want to chat, I have a [discord server](https://discor
 ## Supported Devices 
  | System  |<img width="17" src="https://cdn.simpleicons.org/Linux/187BC0" /> Linux  | <img width="15" src="https://cdn.simpleicons.org/Apple/187BC0" /> MacOS|  <img width="15" src="https://cdn.simpleicons.org/Windows11/187BC0" /> Windows|
  | :-----: | :-----: | :-----: | :-----: |
- | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />| <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
- | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |  <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
-<br clear="both" />
-
-
+ | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />*| <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
+ | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />*  |  <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
+<br clear="both" /
+* Pineflash on macos must be compiled from source.
 # :desktop_computer: Install Options
 
 
