@@ -1,12 +1,13 @@
 #!/bin/sh
 # Remove old versions
-rm pineflash*{.deb,.rpm,.exe} 2> /dev/null
+rm pineflash*{.deb,.rpm,.exe,.tar*,.AppImage} 2> /dev/null
 ver=$(grep "^version " Cargo.toml | cut -d\" -f2)
 # files=target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE
 arch="x86_64"
-cargo build --release
+cargo clean
 cargo build --target x86_64-pc-windows-gnu --release
-cargo appimage
+cargo appimage --features=appimage
+mv target/appimage/pineflash.AppImage "./pineflash-$ver-$arch.AppImage"
 
 # Generate windows release
 # Update version number 
@@ -24,10 +25,29 @@ distrobox enter --name fedora-dev -- cargo build --release && fpm -s dir -t rpm 
   --architecture $arch \
   --depends polkit \
   --depends dfu-util \
-  --description "Flashing tool for pinecil soldering irons." \
-  --url "https://github.com/Spagett1/PineFlash" \
-  --maintainer "Spagett <laar@tutanota.com>" \
+  -p "pineflash-fedora-$ver-$arch.rpm" \
+  --description "flashing tool for pinecil soldering irons." \
+  --url "https://github.com/spagett1/pineflash" \
+  --maintainer "spagett <laar@tutanota.com>" \
   target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE tools/linux/blisp=/usr/bin/blisp
+
+# Cleans for new environment
+cargo clean
+
+# Generate rpm release for rhel
+distrobox enter --name rhel-dev -- cargo build --release && fpm -s dir -t rpm \
+  --name pineflash \
+  --license gpl2 \
+  --version $ver \
+  --architecture $arch \
+  --depends polkit \
+  --depends dfu-util \
+  -p "pineflash-rhel9-$ver-$arch.rpm" \
+  --description "flashing tool for pinecil soldering irons." \
+  --url "https://github.com/spagett1/pineflash" \
+  --maintainer "spagett <laar@tutanota.com>" \
+  target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE tools/linux/blisp=/usr/bin/blisp
+
 
 # Cleans for new environment
 cargo clean

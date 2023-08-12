@@ -1,7 +1,10 @@
 use std::time::Duration;
 #[cfg(target_family = "windows")]
 use std::os::windows::process::CommandExt;
+
 #[cfg(target_family = "windows")]
+use std::path::PathBuf;
+#[cfg(feature = "appimage")]
 use std::path::PathBuf;
 
 use eframe::{

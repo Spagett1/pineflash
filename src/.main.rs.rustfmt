@@ -1,4 +1,5 @@
 #![windows_subsystem = "windows"]
+
 use std::{
     collections::HashMap,
     env,
@@ -44,7 +45,8 @@ struct FlasherConfig {
     code_names: Vec<String>,
     lang: String,
     versions_checked: bool,
-    vers: Vec<String>, download_metadata: bool,
+    vers: Vec<String>,
+    download_metadata: bool,
     blisp_version: String,
     run_once_vers: bool,
     download: bool,
@@ -152,8 +154,12 @@ impl Flasher {
             bg_fill: Color32::from_rgb(17, 17, 17),
             weak_bg_fill: Color32::from_rgb(17, 17, 17),
 
+            ddd
+
             rounding: Rounding {
                 nw: 4.,
+                djiwjd
+
                 ne: 4.,
                 sw: 4.,
                 se: 4.,
