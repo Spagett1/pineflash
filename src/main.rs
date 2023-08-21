@@ -523,6 +523,6 @@ fn main() {
         Box::new(|cc| Box::new(Flasher::new(cc))),
     ) {
         Ok(_) => (),
-        Err(_) => println!("A massive error occured, not sure whats goin on here."),
+        Err(error) => println!("A massive error occured, not sure whats goin on here: \n {}", error),
     }
 }
