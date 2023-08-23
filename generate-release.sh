@@ -80,7 +80,7 @@ distrobox enter --name arch-dev -- cargo build --release && fpm -s dir -t pacman
   --description "Flashing tool for pinecil soldering irons." \
   --url "https://github.com/Spagett1/PineFlash" \
   --maintainer "Spagett <laar@tutanota.com>" \
-  target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE
+  target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE tools/linux/blisp=/usr/bin/blisp
 # # Generate generic release
 # fpm -s dir -t tar \
 #   --name pineflash \
