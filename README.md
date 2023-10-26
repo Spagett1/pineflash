@@ -279,7 +279,9 @@ Alternatively just run it from your app launcher (unless your on macos).
 
 <img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu.  
 If there is error message like  
-`Cannot open DFU device ... (LIBUSB_ERROR_NOT_SUPPORTED)`
+```
+Cannot open DFU device ... (LIBUSB_ERROR_NOT_SUPPORTED)
+```
 during flash operation, then `WinUSB` drivers should be installed. See [here](https://github.com/libusb/libusb/wiki/Windows#user-content-How_to_use_libusb_on_Windows) for more details.
 
 
