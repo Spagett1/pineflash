@@ -8,8 +8,8 @@ fi
 cargo build --release
 
 if [ "$(uname)" == "Darwin" ]; then
-  curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-macos64-v0.0.4.zip" -o "blisp-macos64-v0.0.4.zip"
-  unzip "blisp-macos64-v0.0.4.zip"
+  curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-apple-x86_64-v0.0.4.zip" -o "blisp-apple-x86_64-v0.0.4.zip"
+  unzip "blisp-apple-x86_64-v0.0.4.zip"
   chmod +x ./blisp
   $root cp ./blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
