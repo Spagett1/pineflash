@@ -15,7 +15,7 @@ if [ "$(uname)" == "Darwin" ]; then
   $root chmod +x /usr/local/bin/blisp
   $root cp ./target/release/pineflash /usr/local/bin/
 elif [ "$(uname -m)" == "x86_64" ]; then
-  curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-linux64-v0.0.4.zip" -o "blisp-linux64-v0.0.4.zip"
+  curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-linux-x86_64-v0.0.4.zip" -o "blisp-linux64-v0.0.4.zip"
   unzip "blisp-linux64-v0.0.4.zip"
   $root cp ./blisp /usr/local/bin/blisp
   $root chmod +x /usr/local/bin/blisp
