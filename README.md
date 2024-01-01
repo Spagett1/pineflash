@@ -25,8 +25,8 @@ If you need help, or want to help out with development, I have a [discord server
  | :-----: | :-----: | :-----: | :-----: |
  | Pinecil V1 |<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />|<img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />*| <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
  | Pinecil V2 | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />   | <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />*  |  <img width="18" src="https://cdn.simpleicons.org/cachet/187BC0" />  |
-<br clear="both" /
-* Pineflash on macos must be compiled from source.
+* Pineflash on MacOS must be compiled from source.
+
 # :desktop_computer: Install Options
 
 
@@ -182,7 +182,7 @@ optipng
 pkgconf
 rust
 ```
-This line will install everything except blisp since its in the aur.
+This line will install everything except blisp since it's in the aur.
 ```
 sudo pacman -S --needed cmake rust git dfu-util polkit gcc pkgconf glibc base-devel fontconfig gtk3
 ```
@@ -208,7 +208,7 @@ cd PineFlash
 3. Run the `generic_unix_install.sh` file which will build and install Pineflash.
 
 ### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
-1. All dependancies will be handled by the PKGBUILD
+1. All dependencies will be handled by the PKGBUILD
 2. PineFlash is in the aur so you can install it just like any other aur package.
 ```
 git clone https://aur.archlinux.org/pineflash-git.git
@@ -271,17 +271,19 @@ Alternatively just run it from your app launcher (unless your on macos).
 
 <img width="17" src="https://cdn.simpleicons.org/Linux/CC5500" /> Linux: Pineflash should appear in app launcher options. Alternatively, you can run the command:  
 
-     `pineflash`
+    pineflash
 
-<img width="17" src="https://cdn.simpleicons.org/Apple/818589" /> MacOS: Sorry, no launcher icon yet, youll need to run this command to run pineflash.
+<img width="17" src="https://cdn.simpleicons.org/Apple/818589" /> MacOS: Sorry, no launcher icon yet, you'll need to run this command to run pineflash.
 
-     `pineflash`
+    pineflash
 
 <img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu.  
+
 If there is error message like  
 ```
 Cannot open DFU device ... (LIBUSB_ERROR_NOT_SUPPORTED)
 ```
+
 during flash operation, then `WinUSB` drivers should be installed. See [here](https://github.com/libusb/libusb/wiki/Windows#user-content-How_to_use_libusb_on_Windows) for more details.
 
 
