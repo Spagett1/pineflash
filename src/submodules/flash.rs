@@ -112,6 +112,7 @@ impl Flasher {
                 .arg(dfupath)
                 .arg("-D")
                 .arg(firmware_path)
+                .arg("-a 0") 
                 .output()
                 .expect("Could not flash soldering iron");
 
@@ -119,6 +120,7 @@ impl Flasher {
             let command = Command::new("dfu-util")
                 .arg("-D")
                 .arg(firmware_path)
+                .arg("-a 0")
                 .output()
                 .expect("Could not flash soldering iron");
 
@@ -135,6 +137,7 @@ impl Flasher {
                 .creation_flags(0x00000008)
                 .arg("-D")
                 .arg(firmware_path)
+                .arg("-a 0")
                 .output()
                 .expect("Could not flash soldering iron");
 
