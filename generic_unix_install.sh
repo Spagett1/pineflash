@@ -5,6 +5,12 @@ else
   root=sudo
 fi
 
+# Ensure cargo is installed before trying to proceed
+if ! command -v cargo > /dev/null 2>&1; then
+    echo "cargo command is not installed. Cannot proceed. Please ensure cargo is installed and on the PATH"
+    exit 1
+fi
+
 cargo build --release
 
 if [ "$(uname)" == "Darwin" ]; then
