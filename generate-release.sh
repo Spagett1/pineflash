@@ -1,9 +1,9 @@
 #!/bin/sh
 #
 # dev packages needed in each container
-# Packages-redhatbased: glib2-devel gcc atk-devel openssl-devel gtk3-devel systemd-devel
-# Packages-debianbased: gcc libglib2.0-dev libgtk-3-dev libssl-dev 
-# Packages-archbased: gtk3
+# Packages-redhatbased: glib2-devel gcc atk-devel openssl-devel gtk3-devel systemd-devel gem rpm-build
+# Packages-debianbased: gcc libglib2.0-dev libgtk-3-dev libssl-dev ruby libudev-dev
+# Packages-archbased: gtk3 rubygems
 #
 #
 # Remove old versions
@@ -25,7 +25,8 @@ mv PineFlash_Installer.exe pineflash-$ver-win64.exe
 # Cleans for new environment
 cargo clean
 # Generate rpm release
-distrobox enter --name fedora-dev -- cargo build --release && fpm -s dir -t rpm \
+distrobox enter --name fedora-dev -- cargo build --release 
+distrobox enter --name fedora-dev -- fpm -s dir -t rpm \
   --name pineflash \
   --license gpl2 \
   --version $ver \
@@ -42,7 +43,8 @@ distrobox enter --name fedora-dev -- cargo build --release && fpm -s dir -t rpm 
 cargo clean
 
 # Generate rpm release for rhel
-distrobox enter --name rhel-dev -- cargo build --release && fpm -s dir -t rpm \
+distrobox enter --name rhel-dev -- cargo build --release
+distrobox enter --name rhel-dev -- fpm -s dir -t rpm \
   --name pineflash \
   --license gpl2 \
   --version $ver \
@@ -59,7 +61,8 @@ distrobox enter --name rhel-dev -- cargo build --release && fpm -s dir -t rpm \
 # Cleans for new environment
 cargo clean
 
-distrobox enter --name debian-dev -- cargo build --release && fpm -s dir -t deb \
+distrobox enter --name debian-dev -- cargo build --release
+distrobox enter --name debian-dev -- fpm -s dir -t deb \
   --name pineflash \
   --license gpl2 \
   --version $ver \
@@ -76,7 +79,8 @@ distrobox enter --name debian-dev -- cargo build --release && fpm -s dir -t deb 
 cargo clean
 
 # # Generate arch release
-distrobox enter --name arch-dev -- cargo build --release && fpm -s dir -t pacman \
+distrobox enter --name arch-dev -- cargo build --release
+distrobox enter --name arch-dev -- fpm -s dir -t pacman \
   --name pineflash \
   --license gpl2 \
   --version $ver \
