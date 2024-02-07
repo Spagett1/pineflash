@@ -516,7 +516,6 @@ fn main() {
         min_window_size: Some(emath::Vec2 { x: 780., y: 280. }),
         ..Default::default()
     };
-
     match eframe::run_native(
         "PineFlash",
         options,

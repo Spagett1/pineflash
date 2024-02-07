@@ -1,4 +1,11 @@
 #!/bin/sh
+#
+# dev packages needed in each container
+# Packages-redhatbased: glib2-devel gcc atk-devel openssl-devel gtk3-devel systemd-devel
+# Packages-debianbased: gcc libglib2.0-dev libgtk-3-dev libssl-dev 
+# Packages-archbased: gtk3
+#
+#
 # Remove old versions
 rm pineflash*{.deb,.rpm,.exe,.tar*,.AppImage} 2> /dev/null
 ver=$(grep "^version " Cargo.toml | cut -d\" -f2)
