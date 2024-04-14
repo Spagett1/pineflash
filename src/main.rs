@@ -9,7 +9,7 @@ use std::{
 };
 
 use curl::easy::Easy;
-use eframe::egui;
+use eframe::{egui::{self, ImageSource}, epaint::ColorImage};
 use eframe::{
     emath,
     epaint::{Color32, Rounding, Stroke},
@@ -17,7 +17,6 @@ use eframe::{
 };
 mod submodules;
 use egui::Context;
-use egui_extras::RetainedImage;
 use egui_file::FileDialog;
 use egui_notify::{Anchor, Toasts};
 use serde::{Deserialize, Serialize};
@@ -59,7 +58,7 @@ struct FlasherConfig {
     flash: bool,
     flash_notified_count: i32,
     v2_serial_path: Option<String>,
-    connection_guide_image: [RetainedImage; 3],
+    // connection_guide_image: Vec<ColorImage>,
     current_step: usize,
     json_checked: bool,
     metadata_path: PathBuf,
@@ -118,14 +117,15 @@ impl Default for FlasherConfig {
             flash: false,
             flash_notified_count: 0,
             v2_serial_path: None,
-            connection_guide_image: [
-                RetainedImage::from_svg_bytes("Step1", include_bytes!("../assets/Step1.svg"))
-                    .unwrap(),
-                RetainedImage::from_svg_bytes("Step2", include_bytes!("../assets/Step2.svg"))
-                    .unwrap(),
-                RetainedImage::from_svg_bytes("Step3", include_bytes!("../assets/Step3.svg"))
-                    .unwrap(),
-            ],
+            // connection_guide_image: [
+                //
+                // RetainedImage::from_svg_bytes("Step1", include_bytes!("../assets/Step1.svg"))
+                //     .unwrap(),
+                // RetainedImage::from_svg_bytes("Step2", include_bytes!("../assets/Step2.svg"))
+                //     .unwrap(),
+                // RetainedImage::from_svg_bytes("Step3", include_bytes!("../assets/Step3.svg"))
+                //     .unwrap(),
+            // ],
             current_step: 0,
             metadata_path: [std::env::temp_dir(), "metadata.json".into()]
                 .iter()
@@ -503,24 +503,31 @@ impl eframe::App for Flasher {
 }
 
 fn main() {
-    let options = eframe::NativeOptions {
-        decorated: true,
-        follow_system_theme: true,
-        icon_data: Some(eframe::IconData {
-            rgba: (ICON.to_vec()),
-            width: (32),
-            height: (32),
-        }),
-        resizable: true,
-        initial_window_size: Some(emath::Vec2 { x: 780., y: 680. }),
-        min_window_size: Some(emath::Vec2 { x: 780., y: 280. }),
-        ..Default::default()
-    };
+    let options = eframe::NativeOptions::default();
+    // let options = eframe::NativeOptions {
+    //     decorated: true,
+    //     follow_system_theme: true,
+    //     icon_data: Some(eframe::IconData {
+    //         rgba: (ICON.to_vec()),
+    //         width: (32),
+    //         height: (32),
+    //     }),
+    //     resizable: true,
+    //     initial_window_size: Some(emath::Vec2 { x: 780., y: 680. }),
+    //     min_window_size: Some(emath::Vec2 { x: 780., y: 280. }),
+    //     ..Default::default()
+    // };
     match eframe::run_native(
         "PineFlash",
         options,
-        Box::new(|cc| Box::new(Flasher::new(cc))),
-    ) {
+        // Box::new(|cc| Box::new(egui_extras::install_image_loaders(&cc.egui_ctx) Flasher::new(cc))),
+        //
+        Box::new(|cc| {
+            // This gives us image support:
+            egui_extras::install_image_loaders(&cc.egui_ctx);
+            Box::new(Flasher::new(cc))
+        }),
+        ) {
         Ok(_) => (),
         Err(error) => println!("A massive error occured, not sure whats goin on here: \n {}", error),
     }

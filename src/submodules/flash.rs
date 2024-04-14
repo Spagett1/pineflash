@@ -86,7 +86,7 @@ impl Flasher {
         if self.config.int_name == "Pinecil" {
             #[cfg(feature = "appimage")]
             let path = format!(
-                "{}/linux/dfu-util",
+                "{}/appimage/dfu-util",
                 std::env::current_dir().unwrap().to_str().unwrap()
             );
             #[cfg(feature = "appimage")]

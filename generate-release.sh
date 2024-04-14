@@ -7,6 +7,8 @@
 #
 #
 # Remove old versions
+. "$HOME/.cargo/env"
+PATH=$PATH:/home/spagett/.local/share/gem/ruby/3.0.0/bin:/home/spagett/bin
 rm pineflash*{.deb,.rpm,.exe,.tar*,.AppImage} 2> /dev/null
 ver=$(grep "^version " Cargo.toml | cut -d\" -f2)
 # files=target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE
@@ -43,23 +45,23 @@ distrobox enter --name fedora-dev -- fpm -s dir -t rpm \
 cargo clean
 
 # Generate rpm release for rhel
-distrobox enter --name rhel-dev -- cargo build --release
-distrobox enter --name rhel-dev -- fpm -s dir -t rpm \
-  --name pineflash \
-  --license gpl2 \
-  --version $ver \
-  --architecture $arch \
-  --depends polkit \
-  --depends dfu-util \
-  -p "pineflash-rhel9-$ver-$arch.rpm" \
-  --description "flashing tool for pinecil soldering irons." \
-  --url "https://github.com/spagett1/pineflash" \
-  --maintainer "spagett <laar@tutanota.com>" \
-  target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE tools/linux/blisp=/usr/bin/blisp
+# distrobox enter --name rhel-dev -- cargo build --release
+# distrobox enter --name rhel-dev -- fpm -s dir -t rpm \
+#   --name pineflash \
+#   --license gpl2 \
+#   --version $ver \
+#   --architecture $arch \
+#   --depends polkit \
+#   --depends dfu-util \
+#   -p "pineflash-rhel9-$ver-$arch.rpm" \
+#   --description "flashing tool for pinecil soldering irons." \
+#   --url "https://github.com/spagett1/pineflash" \
+#   --maintainer "spagett <laar@tutanota.com>" \
+#   target/release/pineflash=/usr/bin/pineflash assets/Pineflash.desktop=/usr/share/applications/Pineflash.desktop assets/pine64logo.png=/usr/share/pixmaps/pine64logo.png LICENSE=/usr/share/licenses/pineflash/LICENSE tools/linux/blisp=/usr/bin/blisp
 
 
 # Cleans for new environment
-cargo clean
+# cargo clean
 
 distrobox enter --name debian-dev -- cargo build --release
 distrobox enter --name debian-dev -- fpm -s dir -t deb \

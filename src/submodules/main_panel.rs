@@ -8,7 +8,7 @@ use std::path::PathBuf;
 use std::path::PathBuf;
 
 use eframe::{
-    egui::{self, Button, CentralPanel, RichText, ScrollArea},
+    egui::{self, Button, CentralPanel, Image, RichText, ScrollArea},
     epaint::{Color32, Rounding},
 };
 use egui::emath;
@@ -247,7 +247,17 @@ impl Flasher {
                         .show(ui, |ui|
                     {
                         ui.vertical(|ui|{
-                            ui.image(self.config.connection_guide_image[self.config.current_step].texture_id(ctx), Vec2 { x: ui.available_width() - 10., y: (ui.available_width() - 10.) / 3.4 });
+                            // ui.image(self.config.connection_guide_image[self.config.current_step].texture_id(ctx), Vec2 { x: ui.available_width() - 10., y: (ui.available_width() - 10.) / 3.4 });
+                            // let image = Image::from_uri(self.config.connection_guide_image[self.config.current_step]);
+                            if self.config.current_step == 0 {
+                                ui.add(Image::new(egui::include_image!("../../assets/Step1.svg")).fit_to_exact_size(Vec2 { x: ui.available_width() - 10., y: (ui.available_width() - 10.) / 3.4 }));
+                            } else if self.config.current_step == 1 {
+                                ui.add(Image::new(egui::include_image!("../../assets/Step2.svg")).fit_to_exact_size(Vec2 { x: ui.available_width() - 10., y: (ui.available_width() - 10.) / 3.4 }));
+
+                            } else if self.config.current_step == 2 {
+                                ui.add(Image::new(egui::include_image!("../../assets/Step3.svg")).fit_to_exact_size(Vec2 { x: ui.available_width() - 10., y: (ui.available_width() - 10.) / 3.4 }));
+                            }
+                            
                             ui.horizontal(|ui|{
                                 ui.with_layout(egui::Layout::left_to_right(eframe::emath::Align::TOP), |ui| {
                                     ui.add_space(10.);
