@@ -102,14 +102,14 @@ Sorry we dont have built apps for you yet, head to the build from source section
 
 Use this build method if the premade binaries do not support your architecture or you have dev purposes.
 
-### :bookmark_tabs: Build Dependancies
+### :bookmark_tabs: Build Dependencies
 
 Install these if you don't have them (not needed if using the PKGBUILD).
 
 
 <details>
   <summary>
-<img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependancy list
+<img width="17" src="https://cdn.simpleicons.org/windowsterminal/F46D01" /> General dependency list
 </summary>
 
 This list covers linux distros which are not named below and macos.
@@ -147,14 +147,15 @@ libglib2.0-dev
 build-essential    
 libfontconfig-dev 
 fontconfig-config  
-libgdk3.0-cli-dev
+librust-gdk-sys-dev
 libatk1.0-0   
 libatk1.0-dev       
 libgtk-3-dev             
+librust-libudev-dev
 ```
 This line will install everything:
 ```
-sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2.0-dev build-essential libfontconfig-dev fontconfig-config libgdk3.0-cli-dev libatk1.0-0 libatk1.0-dev libgtk-3-dev             
+sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2.0-dev build-essential libfontconfig-dev fontconfig-config librust-gdk-sys-dev libatk1.0-0 libatk1.0-dev libgtk-3-dev librust-libudev-dev
 ```
 
 </details>
@@ -164,7 +165,7 @@ sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2
 <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" /> Dependencies for Arch
  </summary>
 
-#### Runtime dependancies
+#### Runtime dependencies
 ```
 dfu-util - for pinecil V1 support 
 blisp - for pinecil V2 support, find this in the AUR
@@ -173,7 +174,7 @@ glibc
 gtk3
 polkit
 ```
-#### Build dependancies
+#### Build dependencies
 ```
 base-devel
 cargo-ndk # To verify some integrity checksums of rust modules
@@ -227,7 +228,7 @@ makepkg -si
 
 Old school style, this is recommended if you have issues with the scripts or want to help develop PineFlash.
  
-1. Install all the build dependancies listed above.
+1. Install all the build dependencies listed above.
 
 2. Download the source code.
 
