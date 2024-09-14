@@ -147,14 +147,15 @@ libglib2.0-dev
 build-essential    
 libfontconfig-dev 
 fontconfig-config  
-libgdk3.0-cli-dev
+librust-gdk-sys-dev
 libatk1.0-0   
 libatk1.0-dev       
 libgtk-3-dev             
+librust-libudev-dev
 ```
 This line will install everything:
 ```
-sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2.0-dev build-essential libfontconfig-dev fontconfig-config libgdk3.0-cli-dev libatk1.0-0 libatk1.0-dev libgtk-3-dev             
+sudo apt install cmake rust-all git dfu-util policykit-1 g++ pkg-config libglib2.0-dev build-essential libfontconfig-dev fontconfig-config librust-gdk-sys-dev libatk1.0-0 libatk1.0-dev libgtk-3-dev librust-libudev-dev
 ```
 
 </details>
