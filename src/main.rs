@@ -529,6 +529,6 @@ fn main() {
         }),
         ) {
         Ok(_) => (),
-        Err(error) => println!("A massive error occured, not sure whats goin on here: \n {}", error),
+        Err(error) => panic!("A massive error occured, not sure whats goin on here: \n {}"),
     }
 }
