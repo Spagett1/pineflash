@@ -263,7 +263,11 @@ impl eframe::App for Flasher {
 
                 if internet {
                     let json = String::from_utf8(data).unwrap();
-                    std::fs::write(path, json).unwrap();
+                    if handle.response_code().unwrap() == 200 {
+                        std::fs::write(path, json).unwrap();
+                    } else {
+                        std::fs::write(path, format!("GitHub Error: {}", json)).unwrap();
+                    }
                 } else {
                     std::fs::write(path, "No Internet").unwrap();
                 }
@@ -290,12 +294,18 @@ impl eframe::App for Flasher {
             if json.is_err() {
                 self.toasts.dismiss_all_toasts();
                 self.toasts
-                    .error("Could not access github, Online Files Will be Unavailable")
+                    .error("Could not access GitHub, Online Files Will be Unavailable")
                     .set_duration(Some(Duration::from_secs(5)))
                     .set_closable(false);
-                self.config
-                    .logs
-                    .push_str("PineFlash: Invalid json downloaded, could not fetch versions.\n");
+                if string.starts_with("GitHub Error: ") {
+                    self.config
+                        .logs
+                        .push_str(format!("PineFlash: {}. Could not fetch versions.\n", string.as_str()).as_str());
+                } else {
+                    self.config
+                        .logs
+                        .push_str("PineFlash: Invalid JSON downloaded, could not fetch versions.\n");
+                }
                 self.config.versions_checked = true;
             } else {
                 for i in 0..3 {
