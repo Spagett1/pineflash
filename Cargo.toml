@@ -25,6 +25,8 @@ confy = "0.5.1"
 curl = "0.4.44"
 simple-home-dir = "0.1.2"
 version-compare = "0.1.1"
+log = "0.4.26"
+env_logger = "0.11.6"
 
 [build-dependencies]
 winresource = "0.1.15"

@@ -19,6 +19,7 @@ mod submodules;
 use egui::Context;
 use egui_file::FileDialog;
 use egui_notify::{Anchor, Toasts};
+use log::{debug, error, info, log_enabled, trace, warn, Level};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -298,8 +299,60 @@ impl eframe::App for Flasher {
                     .push_str("PineFlash: Invalid json downloaded, could not fetch versions.\n");
                 self.config.versions_checked = true;
             } else {
-                for i in 0..3 {
-                    let version = json.as_ref().unwrap()[i]["tag_name"].as_str().unwrap();
+                // Find N (3) versions to display to the user
+                // The first N-1 slots may include prereleases for an upcoming version.
+                // The latest stable version should always be included.
+                // Prereleases for fully released versions should not be included.
+                // Remaining slots will be filled with old stable versions.
+                // GitHub Draft releases should never be included.
+                const DESIRED_VERSIONS: u8 = 3; // How many versions do we want to find
+                let mut versions_found: u8 = 0; // How many versions have we accepted to display
+                let mut stable_version_accepted: bool = false; // Have we accepted a stable version yet
+                let mut index: usize = 0; // Which release are we currently evaluating
+                debug!("Choosing versions to display to the user");
+                while versions_found < DESIRED_VERSIONS {
+                    // Find the release we are evaluating
+                    let release = &json.as_ref().unwrap()[index];
+                    let version = release["tag_name"].as_str().unwrap();
+                    debug!("Currently evaluating candidate {}: '{}'", index, version);
+                    trace!("'{}': {:#?}", version, release);
+                    // If this release is a draft, skip it
+                    if release["draft"] == true {
+                        debug!("'{}' is a draft release; skipping", version);
+                        index += 1;
+                        continue;
+                    };
+                    // If this is a prerelease and we are currently trying to fill the last version slot,
+                    // skip this release, as we want to offer at least one stable version
+                    if release["prerelease"] == true && versions_found >= DESIRED_VERSIONS - 1 {
+                        debug!(
+                            "'{}' is a prerelease, but we want a stable version; skipping",
+                            version
+                        );
+                        index += 1;
+                        continue;
+                    };
+                    // If this is a prerelease and we have already accepted a stable version, skip this version,
+                    // as we do not want to offer prereleases of old versions
+                    if release["prerelease"] == true && stable_version_accepted == true {
+                        debug!("'{}' is a prerelease for an old version; skipping", version);
+                        index += 1;
+                        continue;
+                    };
+                    // If this is a stable version, record that we have found one, as we don't want
+                    // any (more) prereleases after this
+                    if release["prerelease"] == false {
+                        trace!(
+                            "'{}', is a stable version; no longer accepting prereleases",
+                            version
+                        );
+                        stable_version_accepted = true;
+                    };
+
+                    // We will offer this version to the user; count it; extract and store the git tag
+                    versions_found += 1;
+                    index += 1;
+                    debug!("'{}' will be offered to the user", version);
                     self.config.vers.push(version.to_string());
                 }
                 self.config.versions_checked = true;
@@ -503,6 +556,7 @@ impl eframe::App for Flasher {
 }
 
 fn main() {
+    env_logger::init();
     let options = eframe::NativeOptions::default();
     // let options = eframe::NativeOptions {
     //     decorated: true,
