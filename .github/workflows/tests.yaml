@@ -1,0 +1,33 @@
+name: Cargo Tests
+
+on:
+  - push
+  - pull_request
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Build and Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+        toolchain:
+          - stable
+          - beta
+          - nightly
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install ${{ matrix.toolchain}} Rust toolchain
+        run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+      - if: matrix.os == 'ubuntu-latest'
+        name: Install Linux build dependencies
+        run: sudo apt-get -yq install libgtk-3-dev libudev-dev
+      - name: Run cargo tests
+        run: cargo test --verbose
