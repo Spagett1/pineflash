@@ -13,6 +13,9 @@ fi
 
 cargo build --release
 
+# Ensure /usr/local/bin exists which may not in newer macs
+$root mkdir -p /usr/local/bin
+
 if [ "$(uname)" == "Darwin" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-apple-x86_64-v0.0.4.zip" -o "blisp-apple-x86_64-v0.0.4.zip"
   unzip "blisp-apple-x86_64-v0.0.4.zip"
