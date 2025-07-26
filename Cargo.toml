@@ -33,4 +33,4 @@ appimage = []
 
 [package.metadata.appimage]
 auto_link = true
-assets = ["tools/linux", "tools/appimage"]
+assets = []

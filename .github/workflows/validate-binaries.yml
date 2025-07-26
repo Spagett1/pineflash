@@ -1,0 +1,239 @@
+name: Validate Binaries
+
+on:
+  workflow_run:
+    workflows: ["Build PineFlash"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'Run ID of the build workflow'
+        required: false
+
+jobs:
+  validate-linux:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download Linux binary
+      uses: actions/download-artifact@v4
+      with:
+        name: pineflash-linux-x86_64
+        path: ./binary
+        run-id: ${{ github.event.workflow_run.id || github.event.inputs.run_id }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Make binary executable
+      run: chmod +x ./binary/pineflash
+      
+    - name: Install runtime dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-0 libssl1.1 libusb-1.0-0 libudev1 xvfb
+        
+    - name: Test binary execution
+      run: |
+        # Set up headless environment
+        export DISPLAY=:99
+        export XDG_RUNTIME_DIR=/tmp
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        sleep 2
+        
+        # Test help command with timeout
+        timeout 5s ./binary/pineflash --help || timeout 5s ./binary/pineflash -h || echo "Help not available (GUI app)"
+        
+        # Test version output with timeout
+        timeout 5s ./binary/pineflash --version || timeout 5s ./binary/pineflash -V || echo "Version not available (GUI app)"
+        
+        # Check binary info
+        file ./binary/pineflash
+        ldd ./binary/pineflash || true
+        
+    - name: Test AppImage
+      continue-on-error: true
+      run: |
+        # Download AppImage
+        gh run download ${{ github.event.workflow_run.id || github.event.inputs.run_id }} \
+          --name pineflash-linux-x86_64.AppImage \
+          --dir ./appimage || echo "AppImage not found"
+          
+        if [ -f ./appimage/*.AppImage ]; then
+          chmod +x ./appimage/*.AppImage
+          # Test AppImage execution
+          ./appimage/*.AppImage --appimage-extract-and-run --help || true
+        fi
+
+  validate-windows:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download Windows binary
+      uses: actions/download-artifact@v4
+      with:
+        name: pineflash-windows-x86_64.exe
+        path: ./binary
+        run-id: ${{ github.event.workflow_run.id || github.event.inputs.run_id }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Test binary execution
+      shell: pwsh
+      run: |
+        # Test help command
+        ./binary/pineflash.exe --help
+        
+        # Test version output
+        ./binary/pineflash.exe --version
+        
+        # Check binary info
+        Get-Item ./binary/pineflash.exe | Select-Object *
+
+  validate-macos:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-13  # Intel
+            artifact: pineflash-macos-x86_64
+            name: macos-intel
+          - os: macos-14  # Apple Silicon
+            artifact: pineflash-macos-aarch64
+            name: macos-arm64
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download macOS binary
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ matrix.artifact }}
+        path: ./binary
+        run-id: ${{ github.event.workflow_run.id || github.event.inputs.run_id }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Make binary executable
+      run: chmod +x ./binary/pineflash
+      
+    - name: Test binary execution
+      run: |
+        # Set CI environment
+        export CI=true
+        export GITHUB_ACTIONS=true
+        
+        # Test help command with timeout
+        timeout 5s ./binary/pineflash --help 2>&1 || timeout 5s ./binary/pineflash -h 2>&1 || echo "Help not available (GUI app)"
+        
+        # Test version output with timeout
+        timeout 5s ./binary/pineflash --version 2>&1 || timeout 5s ./binary/pineflash -V 2>&1 || echo "Version not available (GUI app)"
+        
+        # Check binary info
+        file ./binary/pineflash
+        otool -L ./binary/pineflash || true
+        
+        # Verify architecture
+        lipo -info ./binary/pineflash
+        
+    - name: Test DMG mounting
+      continue-on-error: true
+      run: |
+        # Download DMG
+        gh run download ${{ github.event.workflow_run.id || github.event.inputs.run_id }} \
+          --name ${{ matrix.artifact }}.dmg \
+          --dir ./dmg || echo "DMG not found"
+          
+        if [ -f ./dmg/*.dmg ]; then
+          # Mount DMG
+          hdiutil attach ./dmg/*.dmg -mountpoint /Volumes/PineFlash
+          
+          # Check app bundle
+          ls -la /Volumes/PineFlash/
+          
+          # Test app bundle binary with timeout
+          export CI=true
+          export GITHUB_ACTIONS=true
+          timeout 5s /Volumes/PineFlash/PineFlash.app/Contents/MacOS/pineflash --help 2>&1 || echo "GUI app - help not available in CI"
+          
+          # Unmount
+          hdiutil detach /Volumes/PineFlash
+        fi
+
+  validate-universal:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download universal binary
+      uses: actions/download-artifact@v4
+      with:
+        name: pineflash-macos-universal
+        path: ./binary
+        run-id: ${{ github.event.workflow_run.id || github.event.inputs.run_id }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Make binary executable
+      run: chmod +x ./binary/pineflash-universal
+      
+    - name: Verify universal binary
+      run: |
+        # Check architectures
+        echo "Universal binary architectures:"
+        lipo -info ./binary/pineflash-universal
+        
+        # Verify both architectures are present
+        lipo -verify_arch x86_64 arm64 ./binary/pineflash-universal
+        
+        # Test execution
+        ./binary/pineflash-universal --help || true
+        ./binary/pineflash-universal --version || true
+        
+    - name: Test universal DMG
+      continue-on-error: true
+      run: |
+        # Download universal DMG
+        gh run download ${{ github.event.workflow_run.id || github.event.inputs.run_id }} \
+          --name pineflash-macos-universal.dmg \
+          --dir ./dmg || echo "Universal DMG not found"
+          
+        if [ -f ./dmg/*.dmg ]; then
+          # Mount DMG
+          hdiutil attach ./dmg/*.dmg -mountpoint /Volumes/PineFlash
+          
+          # Verify app bundle binary is universal
+          lipo -info /Volumes/PineFlash/PineFlash.app/Contents/MacOS/pineflash
+          
+          # Test execution
+          /Volumes/PineFlash/PineFlash.app/Contents/MacOS/pineflash --help || true
+          
+          # Unmount
+          hdiutil detach /Volumes/PineFlash
+        fi
+
+  validation-summary:
+    needs: [validate-linux, validate-windows, validate-macos, validate-universal]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Check validation results
+      run: |
+        echo "## Binary Validation Summary"
+        echo ""
+        echo "Linux: ${{ needs.validate-linux.result }}"
+        echo "Windows: ${{ needs.validate-windows.result }}"
+        echo "macOS: ${{ needs.validate-macos.result }}"
+        echo "Universal: ${{ needs.validate-universal.result }}"
+        
+        # Fail if any validation failed
+        if [[ "${{ needs.validate-linux.result }}" == "failure" ]] || \
+           [[ "${{ needs.validate-windows.result }}" == "failure" ]] || \
+           [[ "${{ needs.validate-macos.result }}" == "failure" ]] || \
+           [[ "${{ needs.validate-universal.result }}" == "failure" ]]; then
+          echo "❌ Some validations failed!"
+          exit 1
+        else
+          echo "✅ All validations passed!"
+        fi

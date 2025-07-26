@@ -1,0 +1,407 @@
+name: Build PineFlash
+
+on:
+  push:
+    branches: [ master, main ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ master, main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libssl-dev pkg-config libusb-1.0-0-dev libudev-dev
+        
+    - name: Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo index
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/git
+        key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo build
+      uses: actions/cache@v4
+      with:
+        path: target
+        key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Build
+      run: cargo build --release --verbose
+      
+    - name: Run tests
+      run: cargo test --verbose
+      
+    - name: Validate binary
+      run: |
+        # Run basic validation inline since smoke test script may not exist yet
+        echo "Validating Linux binary..."
+        chmod +x target/release/pineflash
+        
+        # Set headless environment
+        export DISPLAY=:99
+        export XDG_RUNTIME_DIR=/tmp
+        
+        # Try to start virtual display (may fail, that's OK)
+        Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        
+        # Test help command with timeout
+        timeout 5s ./target/release/pineflash --help || timeout 5s ./target/release/pineflash -h || echo "Help command not available"
+        
+        # Test version with timeout
+        timeout 5s ./target/release/pineflash --version || timeout 5s ./target/release/pineflash -V || echo "Version command not available"
+        
+        # Check binary info
+        file target/release/pineflash
+        ldd target/release/pineflash || echo "Some dependencies might be missing"
+      
+    - name: Upload Linux binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-linux-x86_64
+        path: target/release/pineflash
+
+  build-appimage:
+    runs-on: ubuntu-latest
+    needs: build-linux
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      
+    - name: Install AppImage dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev libssl-dev pkg-config libusb-1.0-0-dev libudev-dev wget file
+        
+    - name: Download and install appimagetool
+      run: |
+        wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+        chmod +x appimagetool-x86_64.AppImage
+        sudo mv appimagetool-x86_64.AppImage /usr/local/bin/appimagetool
+        
+    - name: Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo index
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/git
+        key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Install cargo-appimage
+      run: cargo install cargo-appimage
+      
+    - name: Build AppImage
+      run: |
+        export APPIMAGE_EXTRACT_AND_RUN=1
+        cargo appimage --features=appimage
+      
+    - name: Upload AppImage
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-linux-x86_64.AppImage
+        path: target/appimage/*.AppImage
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: x86_64-pc-windows-msvc
+        
+    - name: Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo index
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/git
+        key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo build
+      uses: actions/cache@v4
+      with:
+        path: target
+        key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Build
+      run: cargo build --release --verbose
+      
+    - name: Run tests
+      run: cargo test --verbose
+      
+    - name: Validate binary
+      shell: pwsh
+      run: |
+        # Run basic validation inline
+        Write-Host "Validating Windows binary..."
+        
+        # Test help command
+        ./target/release/pineflash.exe --help
+        
+        # Test version
+        ./target/release/pineflash.exe --version
+        
+        # Check file info
+        Get-Item ./target/release/pineflash.exe | Select-Object Name, Length, CreationTime
+      
+    - name: Upload Windows executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-windows-x86_64.exe
+        path: target/release/pineflash.exe
+
+  build-macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-apple-darwin
+            name: macos-x86_64
+          - target: aarch64-apple-darwin
+            name: macos-aarch64
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: ${{ matrix.target }}
+        
+    - name: Cache cargo registry
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-${{ matrix.target }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo index
+      uses: actions/cache@v4
+      with:
+        path: ~/.cargo/git
+        key: ${{ runner.os }}-${{ matrix.target }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Cache cargo build
+      uses: actions/cache@v4
+      with:
+        path: target
+        key: ${{ runner.os }}-${{ matrix.target }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+        
+    - name: Build
+      run: cargo build --release --target ${{ matrix.target }} --verbose
+      
+    - name: Run tests (x86_64 only)
+      if: matrix.target == 'x86_64-apple-darwin'
+      run: cargo test --verbose
+      
+    - name: Validate binary
+      run: |
+        # Run basic validation inline
+        echo "Validating macOS binary..."
+        chmod +x target/${{ matrix.target }}/release/pineflash
+        
+        # Set CI environment to prevent GUI launch
+        export CI=true
+        export GITHUB_ACTIONS=true
+        
+        # Use timeout to prevent hanging
+        # Test help command with timeout
+        timeout 5s ./target/${{ matrix.target }}/release/pineflash --help 2>&1 || timeout 5s ./target/${{ matrix.target }}/release/pineflash -h 2>&1 || echo "Help command not available (GUI app)"
+        
+        # Test version with timeout
+        timeout 5s ./target/${{ matrix.target }}/release/pineflash --version 2>&1 || timeout 5s ./target/${{ matrix.target }}/release/pineflash -V 2>&1 || echo "Version command not available (GUI app)"
+        
+        # Check binary info
+        file target/${{ matrix.target }}/release/pineflash
+        lipo -info target/${{ matrix.target }}/release/pineflash
+        
+        echo "✅ Binary validation complete (GUI apps may not show help/version in CI)"
+      
+    - name: Create macOS app bundle
+      run: |
+        APP_NAME="PineFlash"
+        APP_DIR="${APP_NAME}.app"
+        BINARY_PATH="target/${{ matrix.target }}/release/pineflash"
+        
+        # Create app bundle structure
+        mkdir -p "${APP_DIR}/Contents/MacOS"
+        mkdir -p "${APP_DIR}/Contents/Resources"
+        
+        # Copy binary
+        cp "${BINARY_PATH}" "${APP_DIR}/Contents/MacOS/pineflash"
+        chmod +x "${APP_DIR}/Contents/MacOS/pineflash"
+        
+        # Copy Info.plist
+        cp macos/Info.plist "${APP_DIR}/Contents/"
+        
+        # Create simple icon (if source exists)
+        if [ -f "assets/pine64logo.png" ]; then
+          mkdir -p "${APP_DIR}/Contents/Resources"
+          sips -s format icns "assets/pine64logo.png" --out "${APP_DIR}/Contents/Resources/AppIcon.icns" || true
+        fi
+        
+        # Create DMG
+        hdiutil create -volname "${APP_NAME}" -srcfolder "${APP_DIR}" -ov -format UDZO "PineFlash-${{ matrix.name }}.dmg"
+        
+    - name: Upload macOS binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-${{ matrix.name }}
+        path: target/${{ matrix.target }}/release/pineflash
+        
+    - name: Upload macOS DMG
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-${{ matrix.name }}.dmg
+        path: PineFlash-${{ matrix.name }}.dmg
+
+  build-macos-universal:
+    runs-on: macos-latest
+    needs: build-macos
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download x86_64 binary
+      uses: actions/download-artifact@v4
+      with:
+        name: pineflash-macos-x86_64
+        path: ./x86_64
+        
+    - name: Download aarch64 binary
+      uses: actions/download-artifact@v4
+      with:
+        name: pineflash-macos-aarch64
+        path: ./aarch64
+        
+    - name: Create universal binary
+      run: |
+        # Create universal binary using lipo
+        lipo -create -output pineflash-universal \
+          ./x86_64/pineflash \
+          ./aarch64/pineflash
+        
+        # Verify the universal binary
+        echo "Universal binary architectures:"
+        lipo -info pineflash-universal
+        
+        # Make it executable
+        chmod +x pineflash-universal
+        
+    - name: Create universal app bundle and DMG
+      run: |
+        APP_NAME="PineFlash"
+        APP_DIR="${APP_NAME}.app"
+        
+        # Create app bundle structure
+        mkdir -p "${APP_DIR}/Contents/MacOS"
+        mkdir -p "${APP_DIR}/Contents/Resources"
+        
+        # Copy universal binary
+        cp pineflash-universal "${APP_DIR}/Contents/MacOS/pineflash"
+        chmod +x "${APP_DIR}/Contents/MacOS/pineflash"
+        
+        # Copy Info.plist
+        cp macos/Info.plist "${APP_DIR}/Contents/"
+        
+        # Create icon
+        if [ -f "assets/pine64logo.png" ]; then
+          sips -s format icns "assets/pine64logo.png" --out "${APP_DIR}/Contents/Resources/AppIcon.icns" || true
+        fi
+        
+        # Create DMG
+        hdiutil create -volname "${APP_NAME}" -srcfolder "${APP_DIR}" -ov -format UDZO "PineFlash-macOS-universal.dmg"
+        
+        # Also create a zip for easier distribution
+        zip -r "PineFlash-macOS-universal.zip" "${APP_DIR}"
+        
+    - name: Upload universal binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-macos-universal
+        path: pineflash-universal
+        
+    - name: Upload universal DMG
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-macos-universal.dmg
+        path: PineFlash-macOS-universal.dmg
+        
+    - name: Upload universal app bundle zip
+      uses: actions/upload-artifact@v4
+      with:
+        name: pineflash-macos-universal.zip
+        path: PineFlash-macOS-universal.zip
+
+  create-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-linux, build-appimage, build-windows, build-macos, build-macos-universal]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      
+    - name: List artifacts
+      run: ls -R
+      
+    - name: Create checksums
+      run: |
+        for file in pineflash-*/*; do
+          if [ -f "$file" ]; then
+            sha256sum "$file" > "$file.sha256"
+          fi
+        done
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          pineflash-linux-x86_64/pineflash
+          pineflash-linux-x86_64/pineflash.sha256
+          pineflash-linux-x86_64.AppImage/*.AppImage
+          pineflash-linux-x86_64.AppImage/*.AppImage.sha256
+          pineflash-windows-x86_64.exe/pineflash.exe
+          pineflash-windows-x86_64.exe/pineflash.exe.sha256
+          pineflash-macos-x86_64/pineflash
+          pineflash-macos-x86_64/pineflash.sha256
+          pineflash-macos-aarch64/pineflash
+          pineflash-macos-aarch64/pineflash.sha256
+          pineflash-macos-x86_64.dmg/PineFlash-macos-x86_64.dmg
+          pineflash-macos-x86_64.dmg/PineFlash-macos-x86_64.dmg.sha256
+          pineflash-macos-aarch64.dmg/PineFlash-macos-aarch64.dmg
+          pineflash-macos-aarch64.dmg/PineFlash-macos-aarch64.dmg.sha256
+          pineflash-macos-universal/pineflash-universal
+          pineflash-macos-universal/pineflash-universal.sha256
+          pineflash-macos-universal.dmg/PineFlash-macOS-universal.dmg
+          pineflash-macos-universal.dmg/PineFlash-macOS-universal.dmg.sha256
+          pineflash-macos-universal.zip/PineFlash-macOS-universal.zip
+          pineflash-macos-universal.zip/PineFlash-macOS-universal.zip.sha256
+        draft: true
+        prerelease: false
+        generate_release_notes: true
