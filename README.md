@@ -85,9 +85,15 @@ doas cp -r ./usr /
 > **_NOTE:_**  Make sure you install dfu-util manually and that it is at least version 0.11 as older versions can have issues. Window manager users should ensure they have a pokit agent installed and enabled.
 
 ### <img width="18" src="https://cdn.simpleicons.org/Apple/818589" /> MacOs
-Sorry we dont have built apps for you yet, head to the build from source section and use the unix install script. 
+Sorry we dont have built apps for you yet, head to the build from source section and use the unix install script.
 
-> **_NOTE:_** You will also need to run pineflash from the terminal, this is on the todo list to get fixed.
+If you want a local `.app` bundle with a launcher icon instead of terminal-only usage, you can also run:
+
+```
+./tools/macos/package_macos_app.sh --install "$HOME/Applications"
+```
+
+> **_NOTE:_** `blisp` will be bundled automatically when it is available locally or already on your PATH. `dfu-util` is still required separately for Pinecil V1 support.
 
 </details>
 <div style="clear:both;">&nbsp;</div>
@@ -205,7 +211,7 @@ Handy scripts will compile and install PineFlash for you.
 git clone https://github.com/Spagett1/PineFlash/
 cd PineFlash
 ```
-3. Run the `generic_unix_install.sh` file which will build and install Pineflash.
+3. Run the `generic_unix_install.sh` file which will build and install Pineflash. On macOS it will install `PineFlash.app` into `~/Applications`.
 
 ### <img width="17" src="https://cdn.simpleicons.org/archlinux/187BC0" />  Build on Arch based distro's (Arch, Artix, Manjaro, Endeavor, Arch Arm, etc.) 
 1. All dependencies will be handled by the PKGBUILD
@@ -252,7 +258,9 @@ cargo build --release
 ```
 6. The resulting binary will be in `target/release/pineflash`, this can be moved into your path (`/usr/bin/pineflash`) or just run as a portable executable.
 
-7. Then copy the `assets/Pineflash.desktop` file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers. (This does not apply to MacOs, you will have to run pineflash from the terminal for now, sorry.)
+7. Linux: copy the `assets/Pineflash.desktop` file to `/usr/share/applications` and copy `assets/pine64logo.png` to `/usr/share/pixmaps` for the shortcut to show up in launchers.
+
+   MacOS: run `./tools/macos/package_macos_app.sh --install "$HOME/Applications"` if you want a local `PineFlash.app` bundle with a launcher icon.
 
 8. Just run the program by typing it into the terminal.
 ```
@@ -273,9 +281,11 @@ Alternatively just run it from your app launcher (unless your on macos).
 
     pineflash
 
-<img width="17" src="https://cdn.simpleicons.org/Apple/818589" /> MacOS: Sorry, no launcher icon yet, you'll need to run this command to run pineflash.
+<img width="17" src="https://cdn.simpleicons.org/Apple/818589" /> MacOS: You can still run Pineflash from the terminal with:
 
     pineflash
+
+If you used `./tools/macos/package_macos_app.sh --install "$HOME/Applications"`, you can also launch `PineFlash.app` from Finder, Spotlight, or Launchpad.
 
 <img width="17" src="https://cdn.simpleicons.org/Windows/187BC0" /> Windows: Just run pineflash from the start menu.  
 
