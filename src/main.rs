@@ -9,7 +9,7 @@ use std::{
 };
 
 use curl::easy::Easy;
-use eframe::{egui::{self, ImageSource}, epaint::ColorImage};
+use eframe::egui::{self};
 use eframe::{
     emath,
     epaint::{Color32, Rounding, Stroke},
@@ -21,8 +21,6 @@ use egui_file::FileDialog;
 use egui_notify::{Anchor, Toasts};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-
-const ICON: &[u8] = include_bytes!("../assets/pine64logo.ico");
 
 #[derive(Serialize, Deserialize)]
 struct Language {
