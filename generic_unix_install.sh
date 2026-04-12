@@ -15,11 +15,12 @@ cargo build --release
 
 if [ "$(uname)" == "Darwin" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-apple-x86_64-v0.0.4.zip" -o "blisp-apple-x86_64-v0.0.4.zip"
-  unzip "blisp-apple-x86_64-v0.0.4.zip"
+  unzip -o "blisp-apple-x86_64-v0.0.4.zip"
   chmod +x ./blisp
-  $root cp ./blisp /usr/local/bin/blisp
-  $root chmod +x /usr/local/bin/blisp
-  $root cp ./target/release/pineflash /usr/local/bin/
+  chmod +x ./tools/macos/package_macos_app.sh
+  ./tools/macos/package_macos_app.sh --skip-build --install "$HOME/Applications" --blisp "$(pwd)/blisp"
+  echo "PineFlash.app installed to $HOME/Applications"
+  echo "If you want the CLI binary on your PATH as well, copy ./target/release/pineflash into /usr/local/bin."
 elif [ "$(uname -m)" == "x86_64" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-linux-x86_64-v0.0.4.zip" -o "blisp-linux64-v0.0.4.zip"
   unzip "blisp-linux64-v0.0.4.zip"
