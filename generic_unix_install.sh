@@ -15,7 +15,7 @@ cargo build --release
 
 if [ "$(uname)" == "Darwin" ]; then
   curl -L "https://github.com/pine64/blisp/releases/download/v0.0.4/blisp-apple-x86_64-v0.0.4.zip" -o "blisp-apple-x86_64-v0.0.4.zip"
-  unzip -o "blisp-apple-x86_64-v0.0.4.zip"
+  unzip "blisp-apple-x86_64-v0.0.4.zip"
   chmod +x ./blisp
   chmod +x ./tools/macos/package_macos_app.sh
   ./tools/macos/package_macos_app.sh --skip-build --install "$HOME/Applications" --blisp "$(pwd)/blisp"
